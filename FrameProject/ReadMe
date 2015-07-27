@@ -1,52 +1,52 @@
-¿ò¼ÜÊ¹ÓÃËµÃ÷£º
-	¸Ã¿ò¼Ü¼¯³ÉÊ¹ÓÃÁËÈçÏÂµÚÈı·½¿â£º
-	1.SweetDialog£¨¶Ô»°¿ò£©¡¢Progresswheel£¨Ô²ĞÎ½ø¶ÈÌõ£©¡¢nineoldandroids.jar£¨¶¯»­¼æÈİ°ü£©
-	2.ResideMenu£¨²à»¬²Ëµ¥£©
-	3.android-async-http-1.4.8.jar£¨Òì²½ÍøÂçÇëÇó£©
-	4.androidEventBus£¨ÊÂ¼ş¶©ÔÄ´¦Àí£©
-	5.Ò»Ğ©¹¤¾ßÀà
-	ÒÔÉÏ¿â¾ùÒÑ½øĞĞ¼òµ¥¼¯³É£¬Ò²¿ÉÍÑÀë¿ò¼Ü¶ÀÁ¢Ê¹ÓÃ¡£
+æ¡†æ¶ä½¿ç”¨è¯´æ˜ï¼š
+	è¯¥æ¡†æ¶é›†æˆä½¿ç”¨äº†å¦‚ä¸‹ç¬¬ä¸‰æ–¹åº“ï¼š
+	1.SweetDialogï¼ˆå¯¹è¯æ¡†ï¼‰ã€Progresswheelï¼ˆåœ†å½¢è¿›åº¦æ¡ï¼‰ã€nineoldandroids.jarï¼ˆåŠ¨ç”»å…¼å®¹åŒ…ï¼‰
+	2.ResideMenuï¼ˆä¾§æ»‘èœå•ï¼‰
+	3.android-async-http-1.4.8.jarï¼ˆå¼‚æ­¥ç½‘ç»œè¯·æ±‚ï¼‰
+	4.androidEventBusï¼ˆäº‹ä»¶è®¢é˜…å¤„ç†ï¼‰
+	5.ä¸€äº›å·¥å…·ç±»
+	ä»¥ä¸Šåº“å‡å·²è¿›è¡Œç®€å•é›†æˆï¼Œä¹Ÿå¯è„±ç¦»æ¡†æ¶ç‹¬ç«‹ä½¿ç”¨ã€‚
 	
-Activity£ºFrameBaseActivity
-	Ê¹ÓÃÊ±¼Ì³ĞFrameBaseActivity¡£Èë¿Ú·½·¨ÎªonMyActivityCreated()¡£
-	Ê¹ÓÃreplaceFragment()»òÕßsetMyContentView()À´ÉèÖÃÏÔÊ¾ÄÚÈİ¡£
+Activityï¼šFrameBaseActivity
+	ä½¿ç”¨æ—¶ç»§æ‰¿FrameBaseActivityã€‚å…¥å£æ–¹æ³•ä¸ºonMyActivityCreated()ã€‚
+	ä½¿ç”¨replaceFragment()æˆ–è€…setMyContentView()æ¥è®¾ç½®æ˜¾ç¤ºå†…å®¹ã€‚
 	
-	Toolbar£º
-		Ê¹ÓÃToolbar´úÌæActionbar¡£Í¨¹ıhideToolbarºÍshowToolbar¿ØÖÆToolbarµÄÏÔÊ¾Òş²Ø£¨Ä¬ÈÏÏÔÊ¾£©£¬Í¨¹ıgetToolbar»ñÈ¡Toolbar¶ÔÏó¡£ToolbarÓÃ·¨£¬×ÔĞĞ°Ù¶È¡£
-		ÒªÉèÖÃÊ¹ÓÃToolbarÓÒÉÏ½ÇµÄ²Ëµ¥£¬ÖØĞ´onCreateMyToolbarMenu()·½·¨£¬ÊµÏÖ·½Ê½Í¬Ô­ÉúµÄonCreateOptionsMenu()¡£²Ëµ¥µã»÷ÊÂ¼ş»ñÈ¡ÔÚonMyToolbarMenuItemClicked()ÖĞ£¬Í¨¹ıitemµÄid½øĞĞÅĞ¶Ï¡£
+	Toolbarï¼š
+		ä½¿ç”¨Toolbarä»£æ›¿Actionbarã€‚é€šè¿‡hideToolbarå’ŒshowToolbaræ§åˆ¶Toolbarçš„æ˜¾ç¤ºéšè—ï¼ˆé»˜è®¤æ˜¾ç¤ºï¼‰ï¼Œé€šè¿‡getToolbarè·å–Toolbarå¯¹è±¡ã€‚Toolbarç”¨æ³•ï¼Œè‡ªè¡Œç™¾åº¦ã€‚
+		è¦è®¾ç½®ä½¿ç”¨Toolbarå³ä¸Šè§’çš„èœå•ï¼Œé‡å†™onCreateMyToolbarMenu()æ–¹æ³•ï¼Œå®ç°æ–¹å¼åŒåŸç”Ÿçš„onCreateOptionsMenu()ã€‚èœå•ç‚¹å‡»äº‹ä»¶è·å–åœ¨onMyToolbarMenuItemClicked()ä¸­ï¼Œé€šè¿‡itemçš„idè¿›è¡Œåˆ¤æ–­ã€‚
 	
-	²à»¬²Ëµ¥ResideMenu£º
-		Ê¹ÓÃinitResideMenu()½øĞĞ³õÊ¼»¯ÉèÖÃ²¢·µ»ØResideMenu¶ÔÏó¡£Ò²¿ÉÊ¹ÓÃgetResideMenu()»ñµÃResideMenu¶ÔÏó£¨Èç¹ûÖ®Ç°Î´µ÷ÓÃinitResideMenu£¬ÄÇÃ´½«»á½øĞĞÄ¬ÈÏ³õÊ¼»¯£©¡£
-		²à»¬²Ëµ¥·ÖÎªÁ½²¿·Ö£º²Ëµ¥Í·ºÍ²Ëµ¥Ïî¡£Ìí¼Ó²Ëµ¥Í·¿ÉÒÔÌí¼ÓÈÎÒâView£¬Ê¹ÓÃresidemenu.addMenuHeader(View)·½·¨Ìí¼Ó£»²Ëµ¥ÏîÎªResideMenuItem¶ÔÏó£¬Ö±½ÓÊ¹ÓÃaddMenuItemToMenu()»òaddMenuItemsToMenu()Ìí¼Ó¡£
-		Ê¹ÓÃ²à»¬²Ëµ¥ºó£¬Ä¬ÈÏ½çÃæµÄËùÓĞ×óÓÒ»¬¶¯»á´¥·¢²Ëµ¥¿ª¹Ø£¬ÆäËû×é¼ş²»ÄÜ½ÓÊÜ»¬¶¯ÊÂ¼ş¡£Èç¹ûÓĞ»¬¶¯ÁĞ±í»òÆäËûĞèÒª½ÓÊÕ»¬¶¯ÊÂ¼ş£¬ÔòÊ¹ÓÃaddIgnoredView()£¬½«ÆäÌí¼Ó¡£Ìí¼Óºó£¬ÔÚ¸ÃViewÉÏµÄ»¬¶¯ÊÂ¼ş²»»á´ò¿ª²Ëµ¥¡£
+	ä¾§æ»‘èœå•ResideMenuï¼š
+		ä½¿ç”¨initResideMenu()è¿›è¡Œåˆå§‹åŒ–è®¾ç½®å¹¶è¿”å›ResideMenuå¯¹è±¡ã€‚ä¹Ÿå¯ä½¿ç”¨getResideMenu()è·å¾—ResideMenuå¯¹è±¡ï¼ˆå¦‚æœä¹‹å‰æœªè°ƒç”¨initResideMenuï¼Œé‚£ä¹ˆå°†ä¼šè¿›è¡Œé»˜è®¤åˆå§‹åŒ–ï¼‰ã€‚
+		ä¾§æ»‘èœå•åˆ†ä¸ºä¸¤éƒ¨åˆ†ï¼šèœå•å¤´å’Œèœå•é¡¹ã€‚æ·»åŠ èœå•å¤´å¯ä»¥æ·»åŠ ä»»æ„Viewï¼Œä½¿ç”¨residemenu.addMenuHeader(View)æ–¹æ³•æ·»åŠ ï¼›èœå•é¡¹ä¸ºResideMenuItemå¯¹è±¡ï¼Œç›´æ¥ä½¿ç”¨addMenuItemToMenu()æˆ–addMenuItemsToMenu()æ·»åŠ ã€‚
+		ä½¿ç”¨ä¾§æ»‘èœå•åï¼Œé»˜è®¤ç•Œé¢çš„æ‰€æœ‰å·¦å³æ»‘åŠ¨ä¼šè§¦å‘èœå•å¼€å…³ï¼Œå…¶ä»–ç»„ä»¶ä¸èƒ½æ¥å—æ»‘åŠ¨äº‹ä»¶ã€‚å¦‚æœæœ‰æ»‘åŠ¨åˆ—è¡¨æˆ–å…¶ä»–éœ€è¦æ¥æ”¶æ»‘åŠ¨äº‹ä»¶ï¼Œåˆ™ä½¿ç”¨addIgnoredView()ï¼Œå°†å…¶æ·»åŠ ã€‚æ·»åŠ åï¼Œåœ¨è¯¥Viewä¸Šçš„æ»‘åŠ¨äº‹ä»¶ä¸ä¼šæ‰“å¼€èœå•ã€‚
 	
-	AndroidEventBus£º
-		Ö±½ÓÊ¹ÓÃregisterEventBus×¢²á¼´¿É,×¢²áºó»á×Ô¶¯ÔÚonDestroyÖĞ×¢Ïú¡£
-		Ê¹ÓÃ·½·¨²»Í¬ÓÚEventBus£¬Ê¹ÓÃ×¢½â½øĞĞÊÂ¼şÅĞ¶¨¡£ÏêÏ¸Ê¹ÓÃ×ÔĞĞ°Ù¶È¡£
+	AndroidEventBusï¼š
+		ç›´æ¥ä½¿ç”¨registerEventBusæ³¨å†Œå³å¯,æ³¨å†Œåä¼šè‡ªåŠ¨åœ¨onDestroyä¸­æ³¨é”€ã€‚
+		ä½¿ç”¨æ–¹æ³•ä¸åŒäºEventBusï¼Œä½¿ç”¨æ³¨è§£è¿›è¡Œäº‹ä»¶åˆ¤å®šã€‚è¯¦ç»†ä½¿ç”¨è‡ªè¡Œç™¾åº¦ã€‚
 		
 Fragment: FrameBaseFragment
-	Ê¹ÓÃÊ±¼Ì³ĞFragmentBaseFragment¡£Èë¿Ú·½·¨ÎªonMyFragmentCreate()¡£
-	Ê¹ÓÃsetMyContentView()ÉèÖÃÏÔÊ¾ÄÚÈİ¡£replaceFragment()½«»áreplaceĞÂµÄFragmentÈ¡´ú×Ô¼º¡£
-	Ê¹ÓÃfindViewById¿ÉÒÔ»ñÈ¡µ½ÄÚÈİÖĞµÄ×é¼ş¡£
+	ä½¿ç”¨æ—¶ç»§æ‰¿FragmentBaseFragmentã€‚å…¥å£æ–¹æ³•ä¸ºonMyFragmentCreate()ã€‚
+	ä½¿ç”¨setMyContentView()è®¾ç½®æ˜¾ç¤ºå†…å®¹ã€‚replaceFragment()å°†ä¼šreplaceæ–°çš„Fragmentå–ä»£è‡ªå·±ã€‚
+	ä½¿ç”¨findViewByIdå¯ä»¥è·å–åˆ°å†…å®¹ä¸­çš„ç»„ä»¶ã€‚
 	
-	Toolbar£º
-		ÒªÊ¹ÓÃToolbar£¬¿ÉÊ¹ÓÃcontext.getToolbar»ñÈ¡µ½¶ÔÏó¡£
-		ToolbarµÄ²Ëµ¥£¬ÖØĞ´onCreateMyToolbarMenuºÍonMyToolbarMenuItemClicked¡£¸ù¾İĞèÒª½øĞĞmenu.clear()£¬²»È»»áºÍactivityµÄ²Ëµ¥½øĞĞµş¼Ó£¬Ò»ÆğÏÔÊ¾¡£
+	Toolbarï¼š
+		è¦ä½¿ç”¨Toolbarï¼Œå¯ä½¿ç”¨context.getToolbarè·å–åˆ°å¯¹è±¡ã€‚
+		Toolbarçš„èœå•ï¼Œé‡å†™onCreateMyToolbarMenuå’ŒonMyToolbarMenuItemClickedã€‚æ ¹æ®éœ€è¦è¿›è¡Œmenu.clear()ï¼Œä¸ç„¶ä¼šå’Œactivityçš„èœå•è¿›è¡Œå åŠ ï¼Œä¸€èµ·æ˜¾ç¤ºã€‚
 		
-	AndroidEventBus£º
-		Ö±½ÓÊ¹ÓÃregisterEventBus×¢²á¼´¿É,×¢²áºó»á×Ô¶¯ÔÚonDestroyÖĞ×¢Ïú¡£
+	AndroidEventBusï¼š
+		ç›´æ¥ä½¿ç”¨registerEventBusæ³¨å†Œå³å¯,æ³¨å†Œåä¼šè‡ªåŠ¨åœ¨onDestroyä¸­æ³¨é”€ã€‚
 
 
-³£ÓÃ¹¤¾ßÀà£º
-	HttpUtils£º Ê¹ÓÃÔ­ÉúAPI½øĞĞhttpÒì²½ÇëÇó¡£
+å¸¸ç”¨å·¥å…·ç±»ï¼š
+	HttpUtilsï¼š ä½¿ç”¨åŸç”ŸAPIè¿›è¡Œhttpå¼‚æ­¥è¯·æ±‚ã€‚
 	
-	AsyncHttpUtils:	¼òµ¥ÔÙ·â×°android-async-http¿â
-		Ê¹ÓÃdoHttpRequestForXXXXµÄ·½·¨½øĞĞ²»Í¬·µ»ØÖµµÄÇëÇó£¬¾ßÌå²é¿´¸ÃÀàÔ´´úÂë¡£
-		²ÎÊıÀàRequestParamsÊ¹ÓÃput(key,value)Ìí¼Ó²ÎÊı¡£Ò²¿ÉÌí¼Ó¶ÔÏóÀàĞÍ²ÎÊı¡£
+	AsyncHttpUtils:	ç®€å•å†å°è£…android-async-httpåº“
+		ä½¿ç”¨doHttpRequestForXXXXçš„æ–¹æ³•è¿›è¡Œä¸åŒè¿”å›å€¼çš„è¯·æ±‚ï¼Œå…·ä½“æŸ¥çœ‹è¯¥ç±»æºä»£ç ã€‚
+		å‚æ•°ç±»RequestParamsä½¿ç”¨put(key,value)æ·»åŠ å‚æ•°ã€‚ä¹Ÿå¯æ·»åŠ å¯¹è±¡ç±»å‹å‚æ•°ã€‚
 	
-	LogUtils£º ÈÕÖ¾¼ÇÂ¼Àà
-		Ê¹ÓÃÊ±£¬¸ü¸ÄÆäÖĞisDebugÎªtrue£¬TAGÎªËùĞè±êÊ¶¡£
+	LogUtilsï¼š æ—¥å¿—è®°å½•ç±»
+		ä½¿ç”¨æ—¶ï¼Œæ›´æ”¹å…¶ä¸­isDebugä¸ºtrueï¼ŒTAGä¸ºæ‰€éœ€æ ‡è¯†ã€‚
 		LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
 		
-	ToastUtils:	ÍÂË¾Àà
-		¶ÔToastÀà½øĞĞ¼òµ¥·â×°¡£
+	ToastUtils:	åå¸ç±»
+		å¯¹Toastç±»è¿›è¡Œç®€å•å°è£…ã€‚
