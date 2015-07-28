@@ -48,7 +48,7 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         getToolbar().setTitle("My App");
         getToolbar().setSubtitle("My sub title");
         //左上角按钮，可以绑定点击事件。
-        getToolbar().setNavigationIcon(android.R.drawable.ic_menu_sort_by_size);
+        getToolbar().setNavigationIcon(R.mipmap.ic_action_slide_close);
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

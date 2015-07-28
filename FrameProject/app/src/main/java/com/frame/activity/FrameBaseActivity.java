@@ -16,9 +16,9 @@ import android.widget.FrameLayout;
 
 import com.demo.frameproject.R;
 import com.frame.fragment.FrameBaseFragment;
+import com.frame.utils.KeyBoardUtils;
 import com.frame.view.residemenu.ResideMenu;
 import com.frame.view.residemenu.ResideMenuItem;
-import com.frame.utils.KeyBoardUtils;
 
 import org.simple.eventbus.EventBus;
 
@@ -46,6 +46,9 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      */
     private ResideMenu mResideMenu;
 
+    /**
+     * 是否注册了EventBus，true时会在onDestroy()中自动注销
+     */
     private boolean isregisterEventBus = false;
 
     @Override
@@ -116,7 +119,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      * Toolbar菜单被点击事件监听
      *
      * @param item
-     * @return
+     * @return false点击事件继续发放，true消费该事件
      */
     protected abstract boolean onMyToolbarMenuItemClicked(MenuItem item);
 
