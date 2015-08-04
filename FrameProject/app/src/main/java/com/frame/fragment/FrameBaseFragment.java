@@ -21,7 +21,7 @@ import com.frame.utils.KeyBoardUtils;
 import org.simple.eventbus.EventBus;
 
 /**
- * Description
+ * Description  框架基础Fragment
  * Created by chenqiao on 2015/7/16.
  */
 public abstract class FrameBaseFragment extends Fragment {
