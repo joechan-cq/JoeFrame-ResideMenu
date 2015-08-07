@@ -6,9 +6,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.demo.frameproject.R;
+import com.frame.annotations.ViewInject;
 import com.frame.fragment.FrameBaseFragment;
 
 import org.simple.eventbus.Subscriber;
@@ -18,11 +20,15 @@ import org.simple.eventbus.Subscriber;
  * Created by chenqiao on 2015/7/23.
  */
 public class SecondFragment extends FrameBaseFragment {
+
+    @ViewInject(R.id.button)
+    private Button startBtn;
+
     @Override
     protected void onMyFragmentCreate(Bundle savedInstanceState) {
         registerEventBus();
         setMyContentView(R.layout.second);
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DemoSecondActivity.class);

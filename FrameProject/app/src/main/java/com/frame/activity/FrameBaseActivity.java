@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.demo.frameproject.R;
+import com.frame.annotations.ViewInject;
 import com.frame.fragment.FrameBaseFragment;
 import com.frame.utils.KeyBoardUtils;
 import com.frame.view.residemenu.ResideMenu;
@@ -22,6 +23,7 @@ import com.frame.view.residemenu.ResideMenuItem;
 
 import org.simple.eventbus.EventBus;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
@@ -118,7 +120,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * Toolbar菜单被点击事件监听
      *
-     * @param item
+     * @param item 菜单项
      * @return false点击事件继续发放，true消费该事件
      */
     protected abstract boolean onMyToolbarMenuItemClicked(MenuItem item);
@@ -126,7 +128,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 获取内容布局id
      *
-     * @return
+     * @return 根布局Id
      */
     public int getRootFrameLayoutId() {
         return R.id.rootlayout_baseactivity;
@@ -135,17 +137,42 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 设置Activity的中心内容
      *
-     * @param layoutResID
+     * @param layoutResID 资源Id
      */
     protected void setMyContentView(int layoutResID) {
         if (mContentLayout != null) {
             LayoutInflater.from(this).inflate(layoutResID, mContentLayout, true);
         }
+        autoInjectViewField();
     }
 
     protected void setMyContentView(View view) {
         mContentLayout.removeAllViews();
         mContentLayout.addView(view);
+        autoInjectViewField();
+    }
+
+    /**
+     * 解析注解，给带有@ViewInject注解的View赋值
+     */
+    private void autoInjectViewField() {
+        try {
+            Class<?> clazz = this.getClass();
+            Field[] fields = clazz.getDeclaredFields();//获得Activity中声明的字段
+            for (Field field : fields) {
+                // 查看这个字段是否有我们自定义的注解类标志的
+                if (field.isAnnotationPresent(ViewInject.class)) {
+                    ViewInject inject = field.getAnnotation(ViewInject.class);
+                    int id = inject.value();
+                    if (id > 0) {
+                        field.setAccessible(true);
+                        field.set(this, mContentLayout.findViewById(id));//给我们要找的字段设置值
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -192,7 +219,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 侧滑菜单相关
      */
-    //侧滑时页面缩小系数
+//侧滑时页面缩小系数
     private static float DEFAULT_SCALE = 0.6f;
     //默认侧滑方向
     private int direction = ResideMenu.DIRECTION_LEFT;
@@ -216,7 +243,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 获取侧滑菜单对象,如果为null则进行实例化
      *
-     * @return
+     * @return 侧滑菜单实例
      */
     public ResideMenu getResideMenu() {
         if (mResideMenu != null) {
@@ -275,7 +302,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 添加滑动事件忽略View
      *
-     * @param view
+     * @param view 需要自己处理滑动事件的View
      */
     protected void addIgnoredView(View view) {
         if (mResideMenu != null) {

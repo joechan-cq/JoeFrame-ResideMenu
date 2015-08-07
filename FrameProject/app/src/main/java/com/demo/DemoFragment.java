@@ -5,8 +5,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.demo.frameproject.R;
+import com.frame.annotations.ViewInject;
 import com.frame.fragment.FrameBaseFragment;
 
 /**
@@ -14,11 +16,15 @@ import com.frame.fragment.FrameBaseFragment;
  * Created by chenqiao on 2015/7/20.
  */
 public class DemoFragment extends FrameBaseFragment {
+
+    @ViewInject(R.id.juemp)
+    private Button btn;
+
     @Override
     protected void onMyFragmentCreate(Bundle savedInstanceState) {
         setMyContentView(R.layout.weblayout);
 
-        findViewById(R.id.juemp).setOnClickListener(new View.OnClickListener() {
+        btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 replaceFragment(new SecondFragment(), "Second");

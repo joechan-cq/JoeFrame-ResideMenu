@@ -16,9 +16,12 @@ import android.widget.FrameLayout;
 
 import com.demo.frameproject.R;
 import com.frame.activity.FrameBaseActivity;
+import com.frame.annotations.ViewInject;
 import com.frame.utils.KeyBoardUtils;
 
 import org.simple.eventbus.EventBus;
+
+import java.lang.reflect.Field;
 
 /**
  * Description  框架基础Fragment
@@ -105,12 +108,37 @@ public abstract class FrameBaseFragment extends Fragment {
     protected void setMyContentView(int resID) {
         frameLayout.removeAllViews();
         contentView = LayoutInflater.from(context).inflate(resID, frameLayout);
+        autoInjectViewField();
     }
 
     protected void setMyContentView(View view) {
         contentView = view;
         frameLayout.removeAllViews();
         frameLayout.addView(view);
+        autoInjectViewField();
+    }
+
+    /**
+     * 解析注解，给带有@ViewInject注解的View赋值
+     */
+    private void autoInjectViewField() {
+        try {
+            Class<?> clazz = this.getClass();
+            Field[] fields = clazz.getDeclaredFields();//获得Fragment中声明的字段
+            for (Field field : fields) {
+                // 查看这个字段是否有我们自定义的注解类标志的
+                if (field.isAnnotationPresent(ViewInject.class)) {
+                    ViewInject inject = field.getAnnotation(ViewInject.class);
+                    int id = inject.value();
+                    if (id > 0) {
+                        field.setAccessible(true);
+                        field.set(this, frameLayout.findViewById(id));//给我们要找的字段设置值
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
