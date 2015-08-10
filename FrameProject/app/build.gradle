@@ -5,7 +5,7 @@ android {
     buildToolsVersion "22.0.1"
 
     defaultConfig {
-        applicationId "com.ebanswers.frameproject"
+        applicationId "com.joe.frameproject"
         minSdkVersion 11
         targetSdkVersion 22
         versionCode 1
