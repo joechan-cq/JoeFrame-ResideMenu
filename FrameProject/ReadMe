@@ -41,6 +41,7 @@ Fragment: FrameBaseFragment
 	
 	Toolbar：
 		要使用Toolbar，可使用context.getToolbar获取到对象。
+		需要在Fragment中改写Toolbar的菜单，要设置setHasOptionMenu(true)。
 		Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。根据需要进行menu.clear()，不然会和activity的菜单进行叠加，一起显示。
 		
 	AndroidEventBus：
@@ -54,7 +55,7 @@ Fragment: FrameBaseFragment
 		使用doHttpRequestForXXXX的方法进行不同返回值的请求，具体查看该类源代码。
 		参数类RequestParams使用put(key,value)添加参数。也可添加对象类型参数。
 	
-	LogUtils： 日志记录类
+	LogUtils：	日志记录类
 		使用时，更改其中isDebug为true，TAG为所需标识。
 		LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
 		
