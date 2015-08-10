@@ -10,6 +10,7 @@
 更新：
 	1.添加流式线性布局和竖型Viewpager。
 	2.添加最基础的注解绑定View功能。
+	3.封装了Webview，可使用WebViewType进行快速配置。
 	
 Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onMyActivityCreated()。
