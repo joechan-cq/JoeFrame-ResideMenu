@@ -9,13 +9,14 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.demo.frameproject.R;
-import com.frame.adapter.CommonAdapter;
-import com.frame.adapter.ViewHolder;
-import com.frame.annotations.ViewInject;
-import com.frame.fragment.FrameBaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import joe.framelibrary.frame.adapter.CommonAdapter;
+import joe.framelibrary.frame.adapter.ViewHolder;
+import joe.framelibrary.frame.annotations.ViewInject;
+import joe.framelibrary.frame.fragment.FrameBaseFragment;
 
 /**
  * Description

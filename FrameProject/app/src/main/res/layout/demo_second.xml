@@ -4,15 +4,15 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/mytitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="this is second fragment"
-        android:id="@+id/mytitle" />
+        android:text="this is second fragment" />
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="open activity"
-        android:id="@+id/button"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"
+        android:text="open activity" />
 </LinearLayout>

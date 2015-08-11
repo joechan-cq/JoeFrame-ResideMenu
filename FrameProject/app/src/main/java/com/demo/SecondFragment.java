@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.demo.frameproject.R;
-import com.frame.annotations.ViewInject;
-import com.frame.fragment.FrameBaseFragment;
 
 import org.simple.eventbus.Subscriber;
+
+import joe.framelibrary.frame.annotations.ViewInject;
+import joe.framelibrary.frame.fragment.FrameBaseFragment;
 
 /**
  * Description

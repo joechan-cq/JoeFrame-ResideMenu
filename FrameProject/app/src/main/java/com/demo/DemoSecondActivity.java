@@ -5,10 +5,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.demo.frameproject.R;
-import com.frame.activity.FrameSecondaryActivity;
-import com.frame.annotations.ViewInject;
 
 import org.simple.eventbus.EventBus;
+
+import joe.framelibrary.frame.activity.FrameSecondaryActivity;
+import joe.framelibrary.frame.annotations.ViewInject;
 
 /**
  * Description
