@@ -64,7 +64,7 @@ public class ProgressWheel extends View {
     private RectF circleBounds = new RectF();
 
     //Animation
-    //The amount of degrees per second
+    //The amount of degrees per demo_second
     private float spinSpeed = 230.0f;
     //private float spinSpeed = 120.0f;
     // The last time the spinner was animated
@@ -636,8 +636,8 @@ public class ProgressWheel extends View {
     }
 
     /**
-     * @return the base spinning speed, in full circle turns per second
-     * (1.0 equals on full turn in one second), this value also is applied for
+     * @return the base spinning speed, in full circle turns per demo_second
+     * (1.0 equals on full turn in one demo_second), this value also is applied for
      * the smoothness when setting a progress
      */
     public float getSpinSpeed() {
@@ -645,11 +645,11 @@ public class ProgressWheel extends View {
     }
 
     /**
-     * Sets the base spinning speed, in full circle turns per second
-     * (1.0 equals on full turn in one second), this value also is applied for
+     * Sets the base spinning speed, in full circle turns per demo_second
+     * (1.0 equals on full turn in one demo_second), this value also is applied for
      * the smoothness when setting a progress
      *
-     * @param spinSpeed the desired base speed in full turns per second
+     * @param spinSpeed the desired base speed in full turns per demo_second
      */
     public void setSpinSpeed(float spinSpeed) {
         this.spinSpeed = spinSpeed * 360.0f;

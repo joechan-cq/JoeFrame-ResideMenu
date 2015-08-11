@@ -21,7 +21,7 @@ public class DemoSecondActivity extends FrameSecondaryActivity {
 
     @Override
     protected void onMySecondaryActivityCreated(Bundle saveInstanceState) {
-        setMyContentView(R.layout.secondactivity);
+        setMyContentView(R.layout.demo_secondactivity);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

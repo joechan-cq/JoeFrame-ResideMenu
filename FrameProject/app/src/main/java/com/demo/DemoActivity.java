@@ -24,7 +24,7 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
     @Override
     protected void onMyActivityCreated(Bundle savedInstanceState) {
         //设置显示内容,可使用setMyContentView，也可使用replaceFragment
-        //setMyContentView(R.layout.layout);
+        //setMyContentView(R.demo_layout.demo_layout);
         replaceFragment(new DemoFragment(), null);
 
 
@@ -32,7 +32,7 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         residemenu = initResideMenu(DIRECTION_LEFT, R.mipmap.default_menu_background);
         //添加菜单项
         firstitem = new ResideMenuItem(this, R.mipmap.ic_launcher, "first item");
-        seconditem = new ResideMenuItem(this, R.mipmap.ic_launcher, "second item");
+        seconditem = new ResideMenuItem(this, R.mipmap.ic_launcher, "demo_second item");
         firstitem.setOnClickListener(this);
         seconditem.setOnClickListener(this);
         addMenuItemToMenu(firstitem);
@@ -47,6 +47,7 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         getToolbar().setLogo(R.mipmap.ic_launcher);//LOGO,无点击事件
         getToolbar().setTitle("My App");
         getToolbar().setSubtitle("My sub title");
+        getToolbar().setBackgroundColor(getResources().getColor(R.color.material_blue_grey_95));
         //左上角按钮，可以绑定点击事件。
         getToolbar().setNavigationIcon(R.mipmap.ic_action_slide_close);
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
@@ -107,6 +108,18 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
                     .setTitleText("Good job!")
                     .setContentText("You clicked the button!")
                     .show();
+        }
+    }
+
+    /**
+     * 监听返回键，如果侧滑菜单打开则关闭侧滑菜单，否则进行super调用
+     */
+    @Override
+    public void onBackPressed() {
+        if (residemenu.isOpened()) {
+            residemenu.closeMenu();
+        } else {
+            super.onBackPressed();
         }
     }
 }

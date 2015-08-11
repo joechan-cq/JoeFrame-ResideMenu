@@ -11,10 +11,13 @@
 	1.添加流式线性布局和竖型Viewpager。
 	2.添加最基础的注解绑定View功能。
 	3.封装了Webview，可使用WebViewType进行快速配置。
+	4.添加通用型ListView和GridView的Adapter——CommonAdapter，内部已集成ViewHolder重用。
+	5.添加button的background设置API兼容。
 	
 Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onMyActivityCreated()。
 	使用replaceFragment()或者setMyContentView()来设置显示内容。
+	请在根布局中设置背景色，不然就是透明的。
 	可使用注解形式替代findViewById：
 			@ViewInject(R.id.xxx)
 			private Button btn;
@@ -22,7 +25,7 @@ Activity：FrameBaseActivity
 			btn=(Button)findViewById(R.id.xxx);
 	
 	Toolbar：
-		使用Toolbar代替Actionbar。通过hideToolbar和showToolbar控制Toolbar的显示隐藏（默认显示），通过getToolbar获取Toolbar对象。Toolbar用法，自行百度。
+		使用Toolbar代替Actionbar。通过hideToolbar和showToolbar控制Toolbar的显示隐藏（默认显示），通过getToolbar获取Toolbar对象。Toolbar用法，请查询资料。
 		要设置使用Toolbar右上角的菜单，重写onCreateMyToolbarMenu()方法，实现方式同原生的onCreateOptionsMenu()。菜单点击事件获取在onMyToolbarMenuItemClicked()中，通过item的id进行判断。
 	
 	侧滑菜单ResideMenu：
@@ -32,11 +35,12 @@ Activity：FrameBaseActivity
 	
 	AndroidEventBus：
 		直接使用registerEventBus注册即可,注册后会自动在onDestroy中注销。
-		使用方法不同于EventBus，使用注解进行事件判定。详细使用自行百度。
+		使用方法不同于EventBus，使用注解进行事件判定。详细使用请查阅资料。
 		
 Fragment: FrameBaseFragment
 	使用时继承FragmentBaseFragment。入口方法为onMyFragmentCreate()。
 	使用setMyContentView()设置显示内容。replaceFragment()将会replace新的Fragment取代自己。
+	请在根布局中设置背景色，不然就是透明的。
 	使用findViewById或注解@ViewInject可以获取到内容中的组件。
 	
 	Toolbar：

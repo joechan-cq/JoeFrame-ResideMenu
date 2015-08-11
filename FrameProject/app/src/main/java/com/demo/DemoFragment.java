@@ -6,10 +6,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.demo.frameproject.R;
+import com.frame.adapter.CommonAdapter;
+import com.frame.adapter.ViewHolder;
 import com.frame.annotations.ViewInject;
 import com.frame.fragment.FrameBaseFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Description
@@ -17,12 +23,15 @@ import com.frame.fragment.FrameBaseFragment;
  */
 public class DemoFragment extends FrameBaseFragment {
 
-    @ViewInject(R.id.juemp)
+    @ViewInject(R.id.jump)
     private Button btn;
+
+    @ViewInject(R.id.listView)
+    private ListView listView;
 
     @Override
     protected void onMyFragmentCreate(Bundle savedInstanceState) {
-        setMyContentView(R.layout.weblayout);
+        setMyContentView(R.layout.demo_weblayout);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,6 +41,21 @@ public class DemoFragment extends FrameBaseFragment {
         });
         //要使Fragment重写Toolbar的菜单栏，需设置true
         setHasOptionsMenu(true);
+
+        List<String> data = new ArrayList<String>();
+        data.add("hello world");
+        data.add("it's a test");
+        data.add("it's a demo");
+        data.add("welcome frame");
+        data.add("author Joe");
+
+        CommonAdapter myAdapter = new CommonAdapter<String>(context, data, R.layout.demo_listitem) {
+            @Override
+            public void convert(ViewHolder holder, String item) {
+                holder.setText(R.id.itemtextview, item);
+            }
+        };
+        listView.setAdapter(myAdapter);
     }
 
     //重写Toolbar的菜单
