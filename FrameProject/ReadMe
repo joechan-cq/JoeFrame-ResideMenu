@@ -61,8 +61,10 @@ AndroidEventBus：
 		回调方法onSuccess和onFailed中会有http状态码及其所表示的含义。
 		
 	LogUtils：	日志记录类
-		使用时，更改其中isDebug为true，TAG为所需标识。
-		LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
+		使用方法：LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
+		使用时，更改其中isDebugModel为true，TAG为所需标识。如果需要保存到SD卡，更改LogUtils下的isSaveDebugInfo和isSaveCrashInfo，以及更改CACHE_DIR_NAME。同时添加对应权限：
+		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+		<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 		
 	ToastUtils:	吐司类
 		对Toast类进行简单封装。
