@@ -9,11 +9,11 @@ import android.widget.ImageView;
 
 import com.demo.frameproject.R;
 
-import joe.framelibrary.frame.activity.FrameBaseActivity;
-import joe.framelibrary.frame.dialog.SweetAlertDialog;
-import joe.framelibrary.frame.utils.ToastUtils;
-import joe.framelibrary.frame.view.residemenu.ResideMenu;
-import joe.framelibrary.frame.view.residemenu.ResideMenuItem;
+import joe.frame.activity.FrameBaseActivity;
+import joe.frame.dialog.SweetAlertDialog;
+import joe.frame.utils.ToastUtils;
+import joe.frame.view.residemenu.ResideMenu;
+import joe.frame.view.residemenu.ResideMenuItem;
 
 
 public class DemoActivity extends FrameBaseActivity implements View.OnClickListener {

@@ -13,8 +13,8 @@ import com.demo.frameproject.R;
 
 import org.simple.eventbus.Subscriber;
 
-import joe.framelibrary.frame.annotations.ViewInject;
-import joe.framelibrary.frame.fragment.FrameBaseFragment;
+import joe.frame.annotations.ViewInject;
+import joe.frame.fragment.FrameBaseFragment;
 
 /**
  * Description

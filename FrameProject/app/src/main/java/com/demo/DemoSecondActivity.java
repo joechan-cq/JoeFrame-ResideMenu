@@ -8,8 +8,8 @@ import com.demo.frameproject.R;
 
 import org.simple.eventbus.EventBus;
 
-import joe.framelibrary.frame.activity.FrameSecondaryActivity;
-import joe.framelibrary.frame.annotations.ViewInject;
+import joe.frame.activity.FrameSecondaryActivity;
+import joe.frame.annotations.ViewInject;
 
 /**
  * Description

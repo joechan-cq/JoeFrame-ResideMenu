@@ -13,10 +13,10 @@ import com.demo.frameproject.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import joe.framelibrary.frame.adapter.CommonAdapter;
-import joe.framelibrary.frame.adapter.ViewHolder;
-import joe.framelibrary.frame.annotations.ViewInject;
-import joe.framelibrary.frame.fragment.FrameBaseFragment;
+import joe.frame.adapter.CommonAdapter;
+import joe.frame.adapter.ViewHolder;
+import joe.frame.annotations.ViewInject;
+import joe.frame.fragment.FrameBaseFragment;
 
 /**
  * Description

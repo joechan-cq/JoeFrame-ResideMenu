@@ -74,7 +74,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/success_circle" />
 
-        <joe.framelibrary.frame.dialog.SuccessTickView
+        <joe.frame.dialog.SuccessTickView
             android:id="@+id/success_tick"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -110,7 +110,7 @@
         android:orientation="vertical"
         android:visibility="gone">
 
-        <joe.framelibrary.frame.view.progresswheel.ProgressWheel
+        <joe.frame.view.progresswheel.ProgressWheel
             android:id="@+id/progressWheel"
             android:layout_width="80dp"
             android:layout_height="80dp"

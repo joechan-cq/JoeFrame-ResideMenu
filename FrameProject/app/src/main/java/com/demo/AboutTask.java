@@ -8,9 +8,9 @@ import com.loopj.android.http.TextHttpResponseHandler;
 import org.apache.http.Header;
 import org.json.JSONObject;
 
-import joe.framelibrary.frame.utils.AsyncHttpUtils;
-import joe.framelibrary.frame.utils.LogUtils;
-import joe.framelibrary.frame.utils.ToastUtils;
+import joe.frame.utils.AsyncHttpUtils;
+import joe.frame.utils.LogUtils;
+import joe.frame.utils.ToastUtils;
 
 /**
  * Description
