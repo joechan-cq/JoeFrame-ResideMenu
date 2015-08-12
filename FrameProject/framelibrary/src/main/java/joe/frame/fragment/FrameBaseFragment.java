@@ -76,6 +76,11 @@ public abstract class FrameBaseFragment extends Fragment {
         isregisterEventBus = true;
     }
 
+    protected void registerEventBusForSticky() {
+        EventBus.getDefault().registerSticky(this);
+        isregisterEventBus = true;
+    }
+
     /**
      * 重写onDestroy，如果注册了EventBus，则需要注销
      */
