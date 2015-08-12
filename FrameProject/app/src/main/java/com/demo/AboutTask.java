@@ -2,15 +2,14 @@ package com.demo;
 
 import android.content.Context;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.TextHttpResponseHandler;
-
-import org.apache.http.Header;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import joe.frame.utils.AsyncHttpUtils;
 import joe.frame.utils.LogUtils;
-import joe.frame.utils.ToastUtils;
+import joe.frame.utils.http.FrameHttpRspJson;
+import joe.frame.utils.http.FrameHttpRspString;
+import joe.frame.utils.http.HttpMethod;
 
 /**
  * Description
@@ -36,25 +35,36 @@ public class AboutTask {
     }
 
     public void getAboutForString() {
-        AsyncHttpUtils.doHttpRequestForString(AsyncHttpUtils.GET, "http://qkhf.device.53iq.com/api/about", new TextHttpResponseHandler() {
-            @Override
-            public void onFailure(int i, Header[] headers, String s, Throwable throwable) {
+        AsyncHttpUtils.doHttpRequestForString(HttpMethod.GET, "http://qkhf.device.53iq.com/api/about", new FrameHttpRspString() {
 
+            @Override
+            public void onSuccess(int statusCode, String codeMsg, String rspResult) {
+                LogUtils.d("joe====result:" + rspResult + " statuscode=" + statusCode);
             }
 
             @Override
-            public void onSuccess(int i, Header[] headers, String s) {
-                LogUtils.d("joe=====" + s);
+            public void onFailed(int statusCode, String codeMsg, String rspResult, Throwable throwable) {
+
             }
         });
     }
 
     public void getAboutForJson(final Context context) {
-        AsyncHttpUtils.doHttpRequestForJson(AsyncHttpUtils.GET, "http://qkhf.device.53iq.com/api/about", new JsonHttpResponseHandler() {
+        AsyncHttpUtils.doHttpRequestForJson(HttpMethod.GET, "http://qkhf.device.53iq.com/api/about", new FrameHttpRspJson() {
+
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                LogUtils.d("joe json======" + response.toString());
-                ToastUtils.show(context, response.toString());
+            public void onSuccess(int statusCode, String codeMsg, JSONObject rspJSONObject) {
+                LogUtils.d("joe====jsonresult:" + rspJSONObject.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, String codeMsg, JSONArray rspJSONArray) {
+
+            }
+
+            @Override
+            public void onFailed(int statusCode, String codeMsg, Object rspResult, Throwable throwable) {
+
             }
         });
     }

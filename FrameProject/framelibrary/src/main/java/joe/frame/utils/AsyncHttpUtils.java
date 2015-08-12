@@ -3,18 +3,18 @@ package joe.frame.utils;
 import android.content.Context;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.BinaryHttpResponseHandler;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.loopj.android.http.TextHttpResponseHandler;
+
+import joe.frame.utils.http.FrameHttpRspBytes;
+import joe.frame.utils.http.FrameHttpRspJson;
+import joe.frame.utils.http.FrameHttpRspString;
+import joe.frame.utils.http.FrameRequestParams;
+import joe.frame.utils.http.HttpMethod;
 
 /**
  * Description  异步网络请求类，再封装android-async-http类
  * Created by chenqiao on 2015/7/20.
  */
 public class AsyncHttpUtils {
-    public static final int GET = 0x09;
-    public static final int POST = 0x10;
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -27,7 +27,7 @@ public class AsyncHttpUtils {
      * @param params        访问参数
      * @param response      结果回调
      */
-    public static void doHttpRequestForString(int requestMethod, Context context, String url, RequestParams params, TextHttpResponseHandler response) {
+    public static void doHttpRequestForString(HttpMethod requestMethod, Context context, String url, FrameRequestParams params, FrameHttpRspString response) {
         switch (requestMethod) {
             case GET:
                 client.get(context, url, params, response);
@@ -47,7 +47,7 @@ public class AsyncHttpUtils {
      * @param url           访问地址
      * @param response      结果回调
      */
-    public static void doHttpRequestForString(int requestMethod, Context context, String url, TextHttpResponseHandler response) {
+    public static void doHttpRequestForString(HttpMethod requestMethod, Context context, String url, FrameHttpRspString response) {
         doHttpRequestForString(requestMethod, context, url, null, response);
     }
 
@@ -59,7 +59,7 @@ public class AsyncHttpUtils {
      * @param params        访问参数
      * @param response      结果回调
      */
-    public static void doHttpRequestForString(int requestMethod, String url, RequestParams params, TextHttpResponseHandler response) {
+    public static void doHttpRequestForString(HttpMethod requestMethod, String url, FrameRequestParams params, FrameHttpRspString response) {
         doHttpRequestForString(requestMethod, null, url, params, response);
     }
 
@@ -70,7 +70,7 @@ public class AsyncHttpUtils {
      * @param url           访问地址
      * @param response      结果回调
      */
-    public static void doHttpRequestForString(int requestMethod, String url, TextHttpResponseHandler response) {
+    public static void doHttpRequestForString(HttpMethod requestMethod, String url, FrameHttpRspString response) {
         doHttpRequestForString(requestMethod, url, null, response);
     }
 
@@ -84,7 +84,7 @@ public class AsyncHttpUtils {
      * @param params        访问参数
      * @param response      结果回调
      */
-    public static void doHttpRequestForJson(int requestMethod, Context context, String url, RequestParams params, JsonHttpResponseHandler response) {
+    public static void doHttpRequestForJson(HttpMethod requestMethod, Context context, String url, FrameRequestParams params, FrameHttpRspJson response) {
         switch (requestMethod) {
             case GET:
                 client.get(context, url, params, response);
@@ -103,7 +103,7 @@ public class AsyncHttpUtils {
      * @param url           访问地址
      * @param response      结果回调
      */
-    public static void doHttpRequestForJson(int requestMethod, Context context, String url, JsonHttpResponseHandler response) {
+    public static void doHttpRequestForJson(HttpMethod requestMethod, Context context, String url, FrameHttpRspJson response) {
         doHttpRequestForJson(requestMethod, context, url, null, response);
     }
 
@@ -115,7 +115,7 @@ public class AsyncHttpUtils {
      * @param params        访问参数
      * @param response      结果回调
      */
-    public static void doHttpRequestForJson(int requestMethod, String url, RequestParams params, JsonHttpResponseHandler response) {
+    public static void doHttpRequestForJson(HttpMethod requestMethod, String url, FrameRequestParams params, FrameHttpRspJson response) {
         doHttpRequestForJson(requestMethod, null, url, params, response);
     }
 
@@ -126,7 +126,7 @@ public class AsyncHttpUtils {
      * @param url           访问地址
      * @param response      结果回调
      */
-    public static void doHttpRequestForJson(int requestMethod, String url, JsonHttpResponseHandler response) {
+    public static void doHttpRequestForJson(HttpMethod requestMethod, String url, FrameHttpRspJson response) {
         doHttpRequestForJson(requestMethod, url, null, response);
     }
 
@@ -139,7 +139,7 @@ public class AsyncHttpUtils {
      * @param params        访问参数
      * @param response      结果回调
      */
-    public static void doHttpRequestForByte(int requestMethod, Context context, String url, RequestParams params, BinaryHttpResponseHandler response) {
+    public static void doHttpRequestForByte(HttpMethod requestMethod, Context context, String url, FrameRequestParams params, FrameHttpRspBytes response) {
         switch (requestMethod) {
             case GET:
                 client.get(context, url, params, response);
@@ -158,7 +158,7 @@ public class AsyncHttpUtils {
      * @param url           访问地址
      * @param response      结果回调
      */
-    public static void doHttpRequestForByte(int requestMethod, Context context, String url, BinaryHttpResponseHandler response) {
+    public static void doHttpRequestForByte(HttpMethod requestMethod, Context context, String url, FrameHttpRspBytes response) {
         doHttpRequestForByte(requestMethod, context, url, null, response);
     }
 
@@ -170,7 +170,7 @@ public class AsyncHttpUtils {
      * @param params        访问参数
      * @param response      结果回调
      */
-    public static void doHttpRequestForByte(int requestMethod, String url, RequestParams params, BinaryHttpResponseHandler response) {
+    public static void doHttpRequestForByte(HttpMethod requestMethod, String url, FrameRequestParams params, FrameHttpRspBytes response) {
         doHttpRequestForByte(requestMethod, null, url, params, response);
     }
 
@@ -181,7 +181,7 @@ public class AsyncHttpUtils {
      * @param url           访问地址
      * @param response      结果回调
      */
-    public static void doHttpRequestForByte(int requestMethod, String url, BinaryHttpResponseHandler response) {
+    public static void doHttpRequestForByte(HttpMethod requestMethod, String url, FrameHttpRspBytes response) {
         doHttpRequestForByte(requestMethod, url, null, response);
     }
 
