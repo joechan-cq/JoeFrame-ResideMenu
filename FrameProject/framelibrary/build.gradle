@@ -22,6 +22,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.1'
     compile files('libs/android-async-http-1.4.8.jar')
-    compile files('libs/androideventbus-1.0.4.jar')
     compile files('libs/nineoldandroids-library-2.4.0.jar')
 }
