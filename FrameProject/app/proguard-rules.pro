@@ -15,11 +15,3 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
--libraryjars libs/android-async-http-1.4.8.jar
--keep class com.loopj.android.http.* {*;}
-
--libraryjars libs/nineoldandroids-library-2.4.0.jar
--keep class com.nineoldandroids.* {*;}
-
--libraryjars libs/androideventbus-1.0.4.jar
--keep class org.simple.eventbus.* {*;}
