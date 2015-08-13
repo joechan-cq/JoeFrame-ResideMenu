@@ -246,7 +246,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 获取侧滑菜单对象,如果为null则进行实例化
+     * 获取侧滑菜单对象
      *
      * @return 侧滑菜单实例
      */
@@ -254,7 +254,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         if (mResideMenu != null) {
             return mResideMenu;
         } else {
-            return initResideMenu(R.mipmap.default_menu_background);
+            return null;
         }
     }
 
