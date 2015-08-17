@@ -45,6 +45,13 @@ public class LogUtils {
         if (isDebugModel) {
             Log.d(tag, "--> " + msg);
         }
+        if (isSaveDebugInfo) {
+            new Thread() {
+                public void run() {
+                    write(time() + tag + " --> " + msg + "\n");
+                }
+            }.start();
+        }
     }
 
     public static void i(final String tag, final String msg) {
@@ -67,13 +74,13 @@ public class LogUtils {
      */
     public static void e(final String tag, final String msg) {
         if (isDebugModel) {
-            Log.e(tag, "--> " + msg);
+            Log.e(tag, " [CRASH] --> " + msg);
         }
 
-        if (isSaveDebugInfo) {
+        if (isSaveCrashInfo) {
             new Thread() {
                 public void run() {
-                    write(time() + tag + " --> " + msg + "\n");
+                    write(time() + tag + " [CRASH] --> " + msg + "\n");
                 }
             }.start();
         }
@@ -101,9 +108,16 @@ public class LogUtils {
         }
     }
 
-    public static void d(String msg) {
+    public static void d(final String msg) {
         if (isDebugModel) {
             Log.d(TAG, "--> " + msg);
+        }
+        if (isSaveDebugInfo) {
+            new Thread() {
+                public void run() {
+                    write(time() + TAG + " --> " + msg + "\n");
+                }
+            }.start();
         }
     }
 
@@ -126,13 +140,13 @@ public class LogUtils {
      */
     public static void e(final String msg) {
         if (isDebugModel) {
-            Log.e(TAG, "--> " + msg);
+            Log.e(TAG, " [CRASH] --> " + msg);
         }
 
-        if (isSaveDebugInfo) {
+        if (isSaveCrashInfo) {
             new Thread() {
                 public void run() {
-                    write(time() + TAG + " --> " + msg + "\n");
+                    write(time() + TAG + "[CRASH] --> " + msg + "\n");
                 }
             }.start();
         }
