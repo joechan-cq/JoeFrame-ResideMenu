@@ -51,37 +51,48 @@ public class HexUtils {
     /**
      * bytes转换成十六进制字符串
      *
-     * @param b byte数组
-     * @return String 每个Byte值之间空格分隔
+     * @param src byte数组
+     * @return String
      */
-    public static String byte2HexStr(byte[] b) {
-        String stmp = "";
-        StringBuilder sb = new StringBuilder("");
-        for (int n = 0; n < b.length; n++) {
-            stmp = Integer.toHexString(b[n] & 0xFF);
-            sb.append((stmp.length() == 1) ? "0" + stmp : stmp);
-//			sb.append(" ");
+    public static String bytesToHexString(byte[] src) {
+        StringBuilder stringBuilder = new StringBuilder("");
+        if (src == null || src.length <= 0) {
+            return null;
         }
-        return sb.toString().toUpperCase().trim();
+        for (int i = 0; i < src.length; i++) {
+            int v = src[i] & 0xFF;
+            String hv = Integer.toHexString(v);
+            if (hv.length() < 2) {
+                stringBuilder.append(0);
+            }
+            stringBuilder.append(hv);
+        }
+        return stringBuilder.toString();
     }
 
     /**
      * bytes字符串转换为Byte值
      *
-     * @param src Byte字符串，每个Byte之间没有分隔符
+     * @param hexString Byte字符串，每个Byte之间没有分隔符
      * @return byte[]
      */
-    public static byte[] hexStr2Bytes(String src) {
-        int m = 0, n = 0;
-        int l = src.length() / 2;
-        System.out.println(l);
-        byte[] ret = new byte[l];
-        for (int i = 0; i < l; i++) {
-            m = i * 2 + 1;
-            n = m + 1;
-            ret[i] = Byte.decode("0x" + src.substring(i * 2, m) + src.substring(m, n));
+    public static byte[] hexStr2Bytes(String hexString) {
+        if (hexString == null || hexString.equals("")) {
+            return null;
         }
-        return ret;
+        hexString = hexString.toUpperCase();
+        int length = hexString.length() / 2;
+        char[] hexChars = hexString.toCharArray();
+        byte[] d = new byte[length];
+        for (int i = 0; i < length; i++) {
+            int pos = i * 2;
+            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+        }
+        return d;
+    }
+
+    private static byte charToByte(char c) {
+        return (byte) "0123456789ABCDEF".indexOf(c);
     }
 
     /**
