@@ -81,6 +81,7 @@ public class SwitchButton extends View {
             state = STATE_ON;
             lastState = state;
         }
+        a.recycle();
     }
 
     @Override
