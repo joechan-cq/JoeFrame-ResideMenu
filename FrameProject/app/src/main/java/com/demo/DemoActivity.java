@@ -49,6 +49,7 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         getToolbar().setTitle("My App");
         getToolbar().setSubtitle("My sub title");
         getToolbar().setBackgroundColor(getResources().getColor(R.color.material_blue_grey_95));
+        getToolbar().setPopupTheme(R.style.MenuTheme);
         //左上角按钮，可以绑定点击事件。
         getToolbar().setNavigationIcon(R.mipmap.ic_action_slide_close);
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {

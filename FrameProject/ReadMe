@@ -30,6 +30,13 @@ Activity：FrameBaseActivity
 	Toolbar：
 		使用Toolbar代替Actionbar。通过hideToolbar和showToolbar控制Toolbar的显示隐藏（默认显示），通过getToolbar获取Toolbar对象。Toolbar用法，请查询资料。
 		要设置使用Toolbar右上角的菜单，重写onCreateMyToolbarMenu()方法，实现方式同原生的onCreateOptionsMenu()。菜单点击事件获取在onMyToolbarMenuItemClicked()中，通过item的id进行判断。
+		要改变弹出菜单，可使用getToobar().setPopupTheme(styleId)来设置：
+		<style name="PopupMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
+			<item name="android:textColorPrimary">@color/grey</item>
+			<item name="android:textColorSecondary">@color/grey</item>
+			<item name="android:background">@color/white</item>
+		</style>
+		
 	
 	侧滑菜单ResideMenu：
 		使用initResideMenu()进行初始化设置并返回ResideMenu对象。也可使用getResideMenu()获得ResideMenu对象（如果之前未调用initResideMenu，那么将会进行默认初始化）。

@@ -10,6 +10,12 @@
         <!--<item name="android:background">@color/turquoise</item>-->
     </style>
 
+    <!-- Toolbar menu default theme -->
+    <style name="PopupMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/grey</item>
+        <item name="android:textColorSecondary">@color/grey</item>
+        <item name="android:background">@color/white</item>
+    </style>
 
     <!-- sweet dialog -->
     <style name="alert_dialog" parent="android:Theme.Dialog">

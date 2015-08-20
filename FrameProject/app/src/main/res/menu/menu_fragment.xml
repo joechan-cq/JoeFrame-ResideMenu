@@ -16,5 +16,10 @@
         android:id="@+id/action_three"
         android:orderInCategory="100"
         android:title="three"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_four"
+        android:orderInCategory="100"
+        android:title="four"
+        app:showAsAction="ifRoom" />
 </menu>
