@@ -188,19 +188,4 @@ public class RoundImageView extends ImageView {
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
-
-    /**
-     * 销毁View的时候，回收Bitmap
-     */
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (bm != null) {
-            if (!bm.isRecycled()) {
-                bm.recycle();
-                bm = null;
-            }
-        }
-        System.gc();
-    }
 }
