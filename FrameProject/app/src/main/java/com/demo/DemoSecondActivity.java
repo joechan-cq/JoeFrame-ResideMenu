@@ -23,6 +23,9 @@ public class DemoSecondActivity extends FrameSecondaryActivity {
     @Override
     protected void onMySecondaryActivityCreated(Bundle saveInstanceState) {
         setMyContentView(R.layout.demo_secondactivity);
+        setToolbarTitle("Myproject", true);
+        getToolbar().setSubtitle("sub title");
+        getToolbar().setNavigationIcon(R.mipmap.ic_launcher);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,5 +37,10 @@ public class DemoSecondActivity extends FrameSecondaryActivity {
     @Override
     protected void onToolbarBackClicked() {
         finish();
+    }
+
+    @Override
+    protected boolean setToolbarAsActionbar() {
+        return true;
     }
 }

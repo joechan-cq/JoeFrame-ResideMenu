@@ -28,14 +28,21 @@ Activity：FrameBaseActivity
 			btn=(Button)findViewById(R.id.xxx);
 	
 	Toolbar：
+		设置标题，直接在Activity中使用setToolbarTitle（title,isCenter）来设置，根据inCenter的值，将会显示在不同位置。
+		设置标题颜色和字体大小，1、getToolbar.setTitleColor
 		使用Toolbar代替Actionbar。通过hideToolbar和showToolbar控制Toolbar的显示隐藏（默认显示），通过getToolbar获取Toolbar对象。Toolbar用法，请查询资料。
-		要设置使用Toolbar右上角的菜单，重写onCreateMyToolbarMenu()方法，实现方式同原生的onCreateOptionsMenu()。菜单点击事件获取在onMyToolbarMenuItemClicked()中，通过item的id进行判断。
 		要改变弹出菜单，可使用getToobar().setPopupTheme(styleId)来设置：
 		<style name="PopupMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
 			<item name="android:textColorPrimary">@color/grey</item>
 			<item name="android:textColorSecondary">@color/grey</item>
 			<item name="android:background">@color/white</item>
 		</style>
+		Toolbar菜单使用：
+			如果setToolbarAsActionbar设置返回为true，则使用需要重写onCreateMyToolbarMenu()方法，实现方式同原生的onCreateOptionsMenu()。
+			菜单点击事件获取在onMyToolbarMenuItemClicked()中，通过item的id进行判断。
+			
+			如果setToolbarAsActionbar设置返回为false，onCreateMyToolbarMenu()和onMyToolbarMenuItemClicked()将不再生效。
+			使用toolbar自带的addMenu()和setOnMenuItemClickListener进行菜单设置。
 		
 	
 	侧滑菜单ResideMenu：

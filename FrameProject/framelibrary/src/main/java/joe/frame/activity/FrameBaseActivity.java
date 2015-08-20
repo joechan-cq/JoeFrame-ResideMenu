@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import org.simple.eventbus.EventBus;
 
@@ -37,6 +38,9 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      * 替代Actionbar的Toolbar
      */
     private Toolbar mToolbar;
+
+    private TextView mTitleTv;
+
     private FragmentManager fragmentManager;
     /**
      * Toolbar之下的layout
@@ -53,6 +57,8 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      */
     private boolean isregisterEventBus = false;
 
+    private boolean isSupportActionbar = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +69,72 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
         mToolbar.setBackgroundResource(R.color.royalblue);
-        setSupportActionBar(mToolbar);
 
+        mTitleTv = (TextView) findViewById(R.id.toolbarTitle);
+
+        if (setToolbarAsActionbar()) {
+            isSupportActionbar = true;
+            setSupportActionBar(mToolbar);
+        } else {
+            isSupportActionbar = false;
+            setSupportActionBar(null);
+        }
+
+        setTitle("");
         fragmentManager = getSupportFragmentManager();
         onMyActivityCreated(savedInstanceState);
+    }
+
+    /**
+     * 设定是否将Toolbar作为Actionbar使用，将会
+     * 影响Toolbar的菜单的使用方法。
+     *
+     * @return true则使用{@link #onCreateMyToolbarMenu()}进行菜单创建
+     */
+    protected abstract boolean setToolbarAsActionbar();
+
+    public void setToolbarTitle(String title, boolean isCenter) {
+        if (isSupportActionbar) {
+            if (!isCenter) {
+                getSupportActionBar().setTitle(title);
+            } else {
+                mTitleTv.setText(title);
+            }
+        } else {
+            if (!isCenter) {
+                mToolbar.setTitle(title);
+            } else {
+                mTitleTv.setText(title);
+            }
+        }
+    }
+
+    public void setToolbarTitle(int resid, boolean isCenter) {
+        if (isSupportActionbar) {
+            if (!isCenter) {
+                getSupportActionBar().setTitle(resid);
+            } else {
+                mTitleTv.setText(resid);
+            }
+        } else {
+            if (!isCenter) {
+                mToolbar.setTitle(resid);
+            } else {
+                mTitleTv.setText(resid);
+            }
+        }
+    }
+
+    public void setCenterTitleColor(int color) {
+        if (mTitleTv != null) {
+            mTitleTv.setTextColor(color);
+        }
+    }
+
+    public void setCenterTitleSize(float size) {
+        if (mTitleTv != null) {
+            mTitleTv.setTextSize(size);
+        }
     }
 
     /**
@@ -111,6 +179,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 创建Toolbar菜单，使用方法同{@link #onCreateOptionsMenu}
      * 菜单点击事件监听，实现{@link #onMyToolbarMenuItemClicked(MenuItem)}
+     * {@link #setToolbarAsActionbar()}为true时生效
      *
      * @param menu
      * @param inflater
@@ -123,7 +192,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     }
 
     /**
-     * Toolbar菜单被点击事件监听
+     * Toolbar菜单被点击事件监听,{@link #setToolbarAsActionbar()}为true时生效
      *
      * @param item 菜单项
      * @return false点击事件继续发放，true消费该事件

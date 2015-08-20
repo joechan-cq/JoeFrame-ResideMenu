@@ -44,11 +44,14 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         img.setImageResource(R.mipmap.ic_launcher);
         residemenu.addMenuHeader(img, DIRECTION_LEFT, null);
 
-        //设置toolbar
         getToolbar().setLogo(R.mipmap.ic_launcher);//LOGO,无点击事件
-        getToolbar().setTitle("My App");
+        //设置toolbar标题(兼容性)
+        setToolbarTitle("test title", false);
+
+        //设置toolbar
         getToolbar().setSubtitle("My sub title");
-        getToolbar().setBackgroundColor(getResources().getColor(R.color.material_blue_grey_95));
+        getToolbar().setBackgroundColor(getResources().getColor(R.color.royalblue));
+        //设置弹出菜单的theme
         getToolbar().setPopupTheme(R.style.MenuTheme);
         //左上角按钮，可以绑定点击事件。
         getToolbar().setNavigationIcon(R.mipmap.ic_action_slide_close);
@@ -62,6 +65,16 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         //进行HTTP请求
         AboutTask.getInstance().getAboutForString();
         AboutTask.getInstance().getAboutForJson(this);
+    }
+
+    /**
+     * 将Toolbar作为Actionbar处理
+     *
+     * @return
+     */
+    @Override
+    protected boolean setToolbarAsActionbar() {
+        return true;
     }
 
     /**
