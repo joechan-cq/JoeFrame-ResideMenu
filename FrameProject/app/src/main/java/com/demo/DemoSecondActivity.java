@@ -25,7 +25,6 @@ public class DemoSecondActivity extends FrameSecondaryActivity {
         setMyContentView(R.layout.demo_secondactivity);
         setToolbarTitle("Myproject", true);
         getToolbar().setSubtitle("sub title");
-        getToolbar().setNavigationIcon(R.mipmap.ic_launcher);
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
