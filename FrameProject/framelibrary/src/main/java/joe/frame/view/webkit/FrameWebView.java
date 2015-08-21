@@ -12,8 +12,6 @@ import android.webkit.WebView;
  */
 public class FrameWebView extends WebView {
 
-    private boolean is_gone;
-
     public FrameWebView(Context context) {
         this(context, WebViewType.ORIGINAL_TYPE);
     }
@@ -93,37 +91,4 @@ public class FrameWebView extends WebView {
             }
         }
     }
-
-    //webview转入后台时，暂停webview线程，用来节省CPU和内存
-    @Override
-    protected void onWindowVisibilityChanged(int visibility) {
-        super.onWindowVisibilityChanged(visibility);
-        if (visibility == View.GONE) {
-            try {
-                WebView.class.getMethod("onPause").invoke(this);// stop flash
-            } catch (Exception e) {
-            }
-            this.pauseTimers();
-            this.is_gone = true;
-        } else if (visibility == View.VISIBLE) {
-            try {
-                WebView.class.getMethod("onResume").invoke(this);// resume flash
-            } catch (Exception e) {
-            }
-            this.resumeTimers();
-            this.is_gone = false;
-        }
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (this.is_gone) {
-            try {
-                this.destroy();
-            } catch (Exception e) {
-            }
-        }
-    }
-
 }
