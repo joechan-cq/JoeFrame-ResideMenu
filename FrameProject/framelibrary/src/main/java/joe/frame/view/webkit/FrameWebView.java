@@ -34,6 +34,8 @@ public class FrameWebView extends WebView {
     }
 
     private void initAttribute(WebViewType... types) {
+        setFocusable(true);
+        setFocusableInTouchMode(true);
         WebSettings settings = getSettings();
         if (types.length == 0) {
             return;
