@@ -32,6 +32,7 @@ public abstract class AppUpdateTask {
     public void checkVersion(Context context, boolean isShowUI, String configUrl, String saveDir, HttpMethod method) {
         this.mContext = context;
         this.filePath = saveDir;
+        rsp.setTag(APPUPDATE_TAG);
         LogUtils.d("filepath:" + filePath);
         if (isShowUI) {
             waitDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
@@ -46,7 +47,7 @@ public abstract class AppUpdateTask {
                         AppUpdateInfo info;
                         if ((info = parseUpdateInfo(rspResult)).isNeedToUpdate()) {
                             if (waitDialog != null && waitDialog.isShowing()) {
-                                waitDialog.cancel();
+                                waitDialog.dismiss();
                             }
                             showConfirmDialog(info);
                         } else {
@@ -89,9 +90,16 @@ public abstract class AppUpdateTask {
     }
 
     private void startDownLoadAPK(AppUpdateInfo info) {
-        confirmDialog.setCancelable(false);
+        confirmDialog.setCancelable(true);
+        confirmDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                AsyncHttpUtils.cancelReqeustByTag(APPUPDATE_TAG, true);
+                sweetAlertDialog.dismiss();
+            }
+        });
         confirmDialog.setCanceledOnTouchOutside(false);
-        confirmDialog.showCancelButton(false);
+        confirmDialog.showCancelButton(true);
         confirmDialog.setTitleText("正在下载").setContentText("0%").changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
         String fileName = info.getAppName() + info.getVersionName();
         if (FileUtils.makeDirs(filePath)) {
@@ -100,9 +108,10 @@ public abstract class AppUpdateTask {
         this.filePath = this.filePath + fileName + info.getSuffixName();
         String downloadUrl = info.getDownloadUrl();
         LogUtils.d("APK下载地址：" + downloadUrl);
-        AsyncHttpUtils.doHttpRequestForByte(HttpMethod.GET, downloadUrl, rsp);
+        AsyncHttpUtils.doHttpRequestForByte(HttpMethod.GET, mContext, downloadUrl, rsp);
     }
 
+    private static final String APPUPDATE_TAG = "APPUPDATE_TAG";
     private static String[] allowTypes = new String[]{"application/vnd.android.package-archive"};
     private FrameHttpRspBytes rsp = new FrameHttpRspBytes(allowTypes) {
         @Override

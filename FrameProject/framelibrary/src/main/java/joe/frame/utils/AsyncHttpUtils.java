@@ -197,4 +197,35 @@ public class AsyncHttpUtils {
     public static void SetTimeOut(int time) {
         client.setTimeout(time);
     }
+
+
+    /**
+     * 取消网络请求
+     *
+     * @param context
+     * @param mayInterruptIfRunning
+     */
+    public static void cancelRequest(Context context, boolean mayInterruptIfRunning) {
+        client.cancelRequests(context, mayInterruptIfRunning);
+    }
+
+    /**
+     * 取消所有网络请求（只有当初传入context的请求才能被取消）
+     *
+     * @param mayInterruptIfRunning
+     */
+    public static void cancelAllRequest(boolean mayInterruptIfRunning) {
+        client.cancelAllRequests(mayInterruptIfRunning);
+    }
+
+    /**
+     * 根据tag取消对应网络请求
+     *
+     * @param tag
+     * @param mayInterruptIfRunning
+     */
+    public static void cancelReqeustByTag(Object tag, boolean mayInterruptIfRunning) {
+        client.cancelRequestsByTAG(tag, mayInterruptIfRunning);
+    }
+
 }
