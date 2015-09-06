@@ -9,6 +9,13 @@ import org.apache.http.Header;
  * Created by chenqiao on 2015/8/12.
  */
 public abstract class FrameHttpRspString extends TextHttpResponseHandler {
+    public FrameHttpRspString() {
+        super();
+    }
+
+    public FrameHttpRspString(String encoding) {
+        super(encoding);
+    }
 
     public abstract void onSuccess(int statusCode, String codeMsg, String rspResult);
 

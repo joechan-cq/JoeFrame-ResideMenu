@@ -1,5 +1,7 @@
 package joe.frame.utils.http;
 
+import android.os.Looper;
+
 import com.loopj.android.http.BinaryHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -9,6 +11,18 @@ import org.apache.http.Header;
  * Created by chenqiao on 2015/8/12.
  */
 public abstract class FrameHttpRspBytes extends BinaryHttpResponseHandler {
+
+    public FrameHttpRspBytes() {
+        super();
+    }
+
+    public FrameHttpRspBytes(String[] allowedContentTypes) {
+        super(allowedContentTypes);
+    }
+
+    public FrameHttpRspBytes(String[] allowedContentTypes, Looper looper) {
+        super(allowedContentTypes, looper);
+    }
 
     public abstract void onSuccess(int statusCode, String codeMsg, byte[] rspBytes);
 

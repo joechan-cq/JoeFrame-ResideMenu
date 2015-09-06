@@ -11,6 +11,21 @@ import org.json.JSONObject;
  * Created by chenqiao on 2015/8/12.
  */
 public abstract class FrameHttpRspJson extends JsonHttpResponseHandler {
+    public FrameHttpRspJson() {
+        super();
+    }
+
+    public FrameHttpRspJson(String encoding) {
+        super(encoding);
+    }
+
+    public FrameHttpRspJson(boolean useRFC5179CompatibilityMode) {
+        super(useRFC5179CompatibilityMode);
+    }
+
+    public FrameHttpRspJson(String encoding, boolean useRFC5179CompatibilityMode) {
+        super(encoding, useRFC5179CompatibilityMode);
+    }
 
     public abstract void onSuccess(int statusCode, String codeMsg, JSONObject rspJSONObject);
 

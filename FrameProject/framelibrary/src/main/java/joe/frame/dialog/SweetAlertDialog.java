@@ -312,6 +312,20 @@ public class SweetAlertDialog extends Dialog implements View.OnClickListener {
         return this;
     }
 
+    public SweetAlertDialog hideConfirmButton() {
+        if (mConfirmButton != null) {
+            mCancelButton.setVisibility(View.GONE);
+        }
+        return this;
+    }
+
+    public SweetAlertDialog showConfirmButton() {
+        if (mConfirmButton != null) {
+            mCancelButton.setVisibility(View.VISIBLE);
+        }
+        return this;
+    }
+
     public String getConfirmText() {
         return mConfirmText;
     }
