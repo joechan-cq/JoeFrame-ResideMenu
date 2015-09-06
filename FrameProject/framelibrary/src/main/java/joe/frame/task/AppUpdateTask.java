@@ -24,8 +24,6 @@ public abstract class AppUpdateTask {
 
     private Context mContext;
 
-    private boolean isShowUI;   //是否显示等待框
-
     private String filePath; //保存路径
 
     private SweetAlertDialog waitDialog;
@@ -33,7 +31,6 @@ public abstract class AppUpdateTask {
 
     public void checkVersion(Context context, boolean isShowUI, String configUrl, String saveDir, HttpMethod method) {
         this.mContext = context;
-        this.isShowUI = isShowUI;
         this.filePath = saveDir;
         LogUtils.d("filepath:" + filePath);
         if (isShowUI) {
