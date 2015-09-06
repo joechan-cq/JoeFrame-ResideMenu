@@ -32,67 +32,65 @@ Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成�
 			btn=(Button)findViewById(R.id.xxx);
 	
 ###Toolbar：
-		设置标题，直接在Activity中使用setToolbarTitle（title,isCenter）来设置，<br>根据inCenter的值，将会显示在不同位置。
-		设置标题颜色和字体大小，1、getToolbar.setTitleColor
-		使用Toolbar代替Actionbar。通过hideToolbar和showToolbar控制Toolbar的显示<br>隐藏（默认显示），通过getToolbar获取Toolbar对象。Toolbar用法，请查询资料。<br>
-		要改变弹出菜单，可使用getToobar().setPopupTheme(styleId)来设置：
-		```
-		<style name="PopupMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
-			<item name="android:textColorPrimary">@color/grey</item>
-			<item name="android:textColorSecondary">@color/grey</item>
-			<item name="android:background">@color/white</item>
-		</style>
-		```
-		Toolbar菜单使用：
-			如果setToolbarAsActionbar设置返回为true，则使用需要重写onCreateMyToolbarMenu()方法<br>，实现方式同原生的onCreateOptionsMenu()。
-			菜单点击事件获取在onMyToolbarMenuItemClicked()中，通过item的id进行判断。
-			
-			如果setToolbarAsActionbar设置返回为false，onCreateMyToolbarMenu()和<br>onMyToolbarMenuItemClicked()将不再生效。
-			使用toolbar自带的addMenu()和setOnMenuItemClickListener进行菜单设置。
+设置标题，直接在Activity中使用setToolbarTitle（title,isCenter）来设置，<br>根据inCenter的值，将会显示在不同位置。
+设置标题颜色和字体大小，getToolbar.setTitleColor。<br>
+使用Toolbar代替Actionbar。通过hideToolbar和showToolbar控制Toolbar的显示<br>隐藏（默认显示），通过getToolbar获取Toolbar对象。Toolbar用法，请查询资料。<br>
+要改变弹出菜单，可使用getToobar().setPopupTheme(styleId)来设置：<br>
+```
+<style name="PopupMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
+	<item name="android:textColorPrimary">@color/grey</item>
+	<item name="android:textColorSecondary">@color/grey</item>
+	<item name="android:background">@color/white</item>
+</style>
+```
+####Toolbar菜单使用：<br>
+如果setToolbarAsActionbar设置返回为true，则使用需要重写onCreateMyToolbarMenu()方法<br>，实现方式同原生的onCreateOptionsMenu()。<br>
+菜单点击事件获取在onMyToolbarMenuItemClicked()中，通过item的id进行判断。<br>
+如果setToolbarAsActionbar设置返回为false，onCreateMyToolbarMenu()和<br>onMyToolbarMenuItemClicked()将不再生效。<br>
+使用toolbar自带的addMenu()和setOnMenuItemClickListener进行菜单设置。<br>
 		
-	
 ###侧滑菜单ResideMenu：
-		使用initResideMenu()进行初始化设置并返回ResideMenu对象。也可使用getResideMenu()获<br>得ResideMenu对象（如果之前未调用initResideMenu，那么将会进行默认初始化）。
-		侧滑菜单分为两部分：菜单头和菜单项。添加菜单头可以添加任意View，<br>使用residemenu.addMenuHeader(View)方法添加；菜单项为ResideMenuItem对象，<br>直接使用addMenuItemToMenu()或addMenuItemsToMenu()添加。
-		使用侧滑菜单后，默认界面的所有左右滑动会触发菜单开关，<br>其他组件不能接受滑动事件。如果有滑动列表或其他需要接收滑动事件，<br>则使用addIgnoredView()，将其添加。添加后，在该View上的滑动事件不会打开菜单。<br>
+使用initResideMenu()进行初始化设置并返回ResideMenu对象。<br>也可使用getResideMenu()获得ResideMenu对象<br>（如果之前未调用initResideMenu，那么将会进行默认初始化）。<br>
+侧滑菜单分为两部分：菜单头和菜单项。添加菜单头可以添加任意View，<br>使用residemenu.addMenuHeader(View)方法添加；菜单项为ResideMenuItem对象，<br>直接使用addMenuItemToMenu()或addMenuItemsToMenu()添加。<br>
+使用侧滑菜单后，默认界面的所有左右滑动会触发菜单开关，<br>其他组件不能接受滑动事件。如果有滑动列表或其他需要接收滑动事件，<br>则使用addIgnoredView()，将其添加。添加后，在该View上的滑动事件不会打开菜单。<br>
 		
 ##Fragment: FrameBaseFragment
-	使用时继承FragmentBaseFragment。入口方法为onMyFragmentCreate()。
-	使用setMyContentView()设置显示内容。replaceFragment()将会replace新的Fragment取代自己。
-	请在根布局中设置背景色，不然就是透明的。
-	使用findViewById或注解@ViewInject可以获取到内容中的组件。
-	
+使用时继承FragmentBaseFragment。入口方法为onMyFragmentCreate()。<br>
+使用setMyContentView()设置显示内容。replaceFragment()将会replace新的Fragment取代自己。<br>
+请在根布局中设置背景色，不然就是透明的。<br>
+使用findViewById或注解@ViewInject可以获取到内容中的组件。<br>
+<br>
+
 ###Toolbar：
-		要使用Toolbar，可使用context.getToolbar获取到对象。
-		需要在Fragment中改写Toolbar的菜单，要设置setHasOptionMenu(true)。
-		Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<br>根据需要进行menu.clear()，不然会和activity的菜单进行叠加，一起显示。
+要使用Toolbar，可使用context.getToolbar获取到对象。<br>
+需要在Fragment中改写Toolbar的菜单，要设置setHasOptionMenu(true)。<br>
+Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<br>根据需要进行menu.clear()，不然会和activity的菜单进行叠加，一起显示。<br>
 		
 ##AndroidEventBus：
-	在Activity或Fragment中直接使用registerEventBus或regiseterEventBusForSticky注册即可,<br>注册后会自动在onDestroy中注销。
-
+在Activity或Fragment中直接使用registerEventBus或regiseterEventBusForSticky注册即可,<br>注册后会自动在onDestroy中注销。
 
 ##常用工具类：
 ###HttpUtils： 使用原生API进行http异步请求。
 	
 ###AsyncHttpUtils:	完全再封装android-async-http库
-		使用doHttpRequestForXXXX的方法进行不同返回值的请求，具体查看该类源代码。
-		参数类FrameRequestParams继承自asynchttp库的RequestParmas类，使用put(key,value)添<br>加参数。也可添加对象类型参数。
-		使用FrameHttpRspBytes，FrameHttpRspJson，FrameHttpRspString进行http请求回调。
-		回调方法onSuccess和onFailed中会有http状态码及其所表示的含义。
+使用doHttpRequestForXXXX的方法进行不同返回值的请求，具体查看该类源代码。<br>
+参数类FrameRequestParams继承自asynchttp库的RequestParmas类，使用put(key,value)添<br>加参数。也可添加对象类型参数。<br>
+使用FrameHttpRspBytes，FrameHttpRspJson，FrameHttpRspString进行http请求回调。<br>
+回调方法onSuccess和onFailed中会有http状态码及其所表示的含义。<br>
 		
 ###LogUtils：	日志记录类
-		使用方法：LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
-		使用时，更改其中isDebugModel为true，TAG为所需标识。如果需要保存到SD卡，<br>更改LogUtils下的isSaveDebugInfo和isSaveCrashInfo，以及更改CACHE_DIR_NAME。同时添加对应权限：
-		```
-		<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-		<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-		```
+使用方法：LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
+使用时，更改其中isDebugModel为true，TAG为所需标识。如果需要保存到SD卡，<br>更改LogUtils下的isSaveDebugInfo和isSaveCrashInfo，以及更改CACHE_DIR_NAME。同时添加对应权限：
+```
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+```
 ###ToastUtils:	吐司类
-		对Toast类进行简单封装。
+对Toast类进行简单封装。
 
 ##Task类
 ###AppUpdateTask：
-		使用时进行实例化，重写parseUpdateInfo方法进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。<br>该类使用AsyncHttpUtils进行下载，暂不支持断点下载，会有下载进度提示，完成后可点击进行安装。
+使用时进行实例化，重写parseUpdateInfo方法进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。<br>该类使用AsyncHttpUtils进行下载，暂不支持断点下载，会有下载进度提示，完成后可点击进行安装。
 
 ###SocketAsyncTask
-		使用比较简单，内含心跳机制，有三种状态回调：连接成功，连接失败，连接断开。<br>接收和发送数据均已进行封装，可进行byte[]和String类型的发送和接收。<br>·注意点：内部使用了AsyncTask，因此使用时，和AsyncTask一样，<br>不能重复执行connect操作，每次均需要重新实例化。·
+使用比较简单，内含心跳机制，有三种状态回调：连接成功，连接失败，连接断开。<br>接收和发送数据均已进行封装，可进行byte[]和String类型的发送和接收。<br>·注意点：内部使用了AsyncTask，因此使用时，和AsyncTask一样，<br>不能重复执行connect操作，每次均需要重新实例化。·
