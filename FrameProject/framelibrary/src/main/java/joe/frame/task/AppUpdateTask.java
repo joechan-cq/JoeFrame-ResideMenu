@@ -38,7 +38,7 @@ public abstract class AppUpdateTask {
         LogUtils.d("filepath:" + filePath);
         if (isShowUI) {
             waitDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-            waitDialog.getProgressHelper().setBarColor(Color.parseColor("#0000ff"));
+            waitDialog.getProgressHelper().setBarColor(Color.parseColor("#00ccff"));
             waitDialog.setTitleText("请稍后...");
             waitDialog.setCancelable(true);
             waitDialog.show();
