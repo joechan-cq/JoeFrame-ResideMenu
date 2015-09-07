@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import joe.frame.annotations.ViewInject;
 import joe.frame.fragment.FrameBaseFragment;
 import joe.frame.utils.KeyBoardUtils;
+import joe.frame.utils.LogUtils;
 import joe.frame.view.residemenu.ResideMenu;
 import joe.frame.view.residemenu.ResideMenuItem;
 import joe.framelibrary.R;
@@ -206,6 +207,15 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      */
     public int getRootFrameLayoutId() {
         return R.id.rootlayout_baseactivity;
+    }
+
+    /**
+     * 获取Toolbar下的根布局
+     *
+     * @return 根布局
+     */
+    public FrameLayout getRootFrameLayout() {
+        return mContentLayout;
     }
 
     /**
@@ -407,6 +417,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         if (mResideMenu != null) {
             return mResideMenu.dispatchTouchEvent(ev);
         } else {
+            LogUtils.d("dispatchTouch in frame");
             return super.dispatchTouchEvent(ev);
         }
     }

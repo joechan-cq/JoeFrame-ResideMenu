@@ -159,7 +159,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
     private void sendCrashReportsToServer(Context ctx) {
         String[] crFiles = getCrashReportFiles(ctx);
         if (crFiles != null && crFiles.length > 0) {
-            TreeSet<String> sortedFiles = new TreeSet<String>();
+            TreeSet<String> sortedFiles = new TreeSet<>();
             sortedFiles.addAll(Arrays.asList(crFiles));
 
             for (String fileName : sortedFiles) {

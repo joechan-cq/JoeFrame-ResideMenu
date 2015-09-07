@@ -33,7 +33,6 @@ public class DemoFragment extends FrameBaseFragment {
     @Override
     protected void onMyFragmentCreate(Bundle savedInstanceState) {
         setMyContentView(R.layout.demo_weblayout);
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,8 +41,7 @@ public class DemoFragment extends FrameBaseFragment {
         });
         //要使Fragment重写Toolbar的菜单栏，需设置true
         setHasOptionsMenu(true);
-
-        List<String> data = new ArrayList<String>();
+        List<String> data = new ArrayList<>();
         data.add("hello world");
         data.add("it's a test");
         data.add("it's a demo");

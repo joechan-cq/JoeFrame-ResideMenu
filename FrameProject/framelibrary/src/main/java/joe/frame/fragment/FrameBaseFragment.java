@@ -18,10 +18,10 @@ import org.simple.eventbus.EventBus;
 
 import java.lang.reflect.Field;
 
+import joe.frame.activity.FrameBaseActivity;
 import joe.frame.annotations.ViewInject;
 import joe.frame.utils.KeyBoardUtils;
 import joe.framelibrary.R;
-import joe.frame.activity.FrameBaseActivity;
 
 /**
  * Description  框架基础Fragment
