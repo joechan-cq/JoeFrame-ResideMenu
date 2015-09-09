@@ -190,7 +190,7 @@ public class SwitchButton extends View {
         mHeight = h;
         sLeft = sTop = 0;
         sRight = mWidth;
-        sBottom = mHeight * 0.8f;//预留0.2来画阴影
+        sBottom = mHeight;//预留0.2来画阴影
         sWidth = sRight - sLeft;
         sHeight = sBottom - sTop;
         sCenterX = (sLeft + sRight) / 2;
@@ -208,7 +208,7 @@ public class SwitchButton extends View {
         bWidth = bHeight = bRight - bLeft;
 
         float halfHeightofS = sHeight / 2;
-        bRadius = halfHeightofS * 0.9f;
+        bRadius = halfHeightofS;
         bOffset = bRadius * 0.3f;//变宽的度量,按钮中心点偏移1/3半径
         bStrokeWidth = (halfHeightofS - bRadius) / 2;//按钮边框线宽度
         sScale = 1 - bStrokeWidth / sHeight;//缩放比例
