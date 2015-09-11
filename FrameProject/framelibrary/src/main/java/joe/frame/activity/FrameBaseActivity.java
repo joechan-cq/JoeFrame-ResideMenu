@@ -303,7 +303,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 侧滑菜单相关
      */
-//侧滑时页面缩小系数
+    //侧滑时页面缩小系数
     private static float DEFAULT_SCALE = 0.6f;
     //默认侧滑方向
     private int direction = ResideMenu.DIRECTION_LEFT;
