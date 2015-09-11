@@ -93,6 +93,12 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      */
     protected abstract boolean setToolbarAsActionbar();
 
+    /**
+     * 设置Toolbar标题
+     *
+     * @param title    标题
+     * @param isCenter 是否居中
+     */
     public void setToolbarTitle(String title, boolean isCenter) {
         if (isSupportActionbar) {
             if (!isCenter) {
@@ -109,6 +115,12 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 设置Toolbar标题
+     *
+     * @param resid    标题资源
+     * @param isCenter 是否居中
+     */
     public void setToolbarTitle(int resid, boolean isCenter) {
         if (isSupportActionbar) {
             if (!isCenter) {
@@ -125,12 +137,22 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 设置居中标题的颜色
+     *
+     * @param color 颜色
+     */
     public void setCenterTitleColor(int color) {
         if (mTitleTv != null) {
             mTitleTv.setTextColor(color);
         }
     }
 
+    /**
+     * 设置居中标题的字体大小
+     *
+     * @param size 大小
+     */
     public void setCenterTitleSize(float size) {
         if (mTitleTv != null) {
             mTitleTv.setTextSize(size);
