@@ -5,9 +5,11 @@
 	3.android-async-http-1.4.8.jar（异步网络请求）
 	4.androidEventBus（事件订阅处理）
 	5.一些工具类
-	
-该框架已整合成Library形式，添加项目依赖即可使用。<br>
-Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成。
+
+##注意
+####因为使用Toolbar作为Actionbar，所以项目Theme需要为AppCompat.NoActionbar，或直接使用框架内的AppTheme。
+####该框架已整合成Library形式，添加项目依赖即可使用。
+####Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成。
 	
 #更新：
 	1.添加流式线性布局和竖型Viewpager。
@@ -19,7 +21,8 @@ Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成�
 	7.再封装asynchttp库。
 	8.添加一些自定义View和布局，略微扩展SweetAlertDialog。
 	9.添加版本更新Task类和Socket连接Task类。
-
+	10.添加崩溃捕捉crashHandler类。
+	11.完善ServiceUtils类，可以简单几步实现服务监听防杀。
 	
 ##Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onMyActivityCreated()。
