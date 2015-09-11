@@ -1,4 +1,4 @@
-package com.demo;
+package com.demo.activity;
 
 import android.os.Bundle;
 import android.os.Environment;

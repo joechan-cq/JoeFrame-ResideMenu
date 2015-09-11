@@ -1,5 +1,6 @@
-package com.demo;
+package com.demo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -7,10 +8,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.demo.fragment.DemoFragment;
 import com.demo.frameproject.R;
+import com.demo.service.DemoService;
+import com.demo.task.AboutTask;
 
 import joe.frame.activity.FrameBaseActivity;
 import joe.frame.dialog.SweetAlertDialog;
+import joe.frame.service.MonitorService;
+import joe.frame.utils.LogUtils;
+import joe.frame.utils.ServiceUtils;
 import joe.frame.utils.ToastUtils;
 import joe.frame.view.residemenu.ResideMenu;
 import joe.frame.view.residemenu.ResideMenuItem;
@@ -27,7 +34,6 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         //设置显示内容,可使用setMyContentView，也可使用replaceFragment
         //setMyContentView(R.demo_layout.demo_layout);
         replaceFragment(new DemoFragment(), null);
-
 
         //初始化侧滑菜单
         residemenu = initResideMenu(DIRECTION_LEFT, R.mipmap.default_menu_background);
@@ -65,6 +71,18 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         //进行HTTP请求
         AboutTask.getInstance().getAboutForString();
         AboutTask.getInstance().getAboutForJson(this);
+
+        //启动服务
+        Intent intent = new Intent(this, DemoService.class);
+        startService(intent);
+
+        ServiceUtils.getInstance(getApplicationContext()).addNeedMonitorredService("com.demo.service.DemoService", true);
+        ServiceUtils.getInstance(getApplicationContext()).startMonitorService(new MonitorService.MonitorListener() {
+            @Override
+            public void serviceIsnotRunning(String serviceClassName) {
+                LogUtils.d("joe----monitor say " + serviceClassName + " is not running");
+            }
+        });
     }
 
     /**

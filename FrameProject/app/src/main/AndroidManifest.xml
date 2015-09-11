@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.demo.DemoActivity"
+            android:name="com.demo.activity.DemoActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,7 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.demo.DemoSecondActivity"/>
+        <activity android:name="com.demo.activity.DemoSecondActivity"/>
+
+        <service android:name="com.demo.service.DemoService"/>
+        <service android:name="joe.frame.service.MonitorService"/>
     </application>
 
 </manifest>

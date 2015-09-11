@@ -1,4 +1,4 @@
-package com.demo;
+package com.demo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.demo.activity.DemoSecondActivity;
 import com.demo.frameproject.R;
 
 import org.simple.eventbus.Subscriber;
