@@ -88,6 +88,12 @@ Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<b
 ###ToastUtils:	吐司类
 对Toast类进行简单封装。
 
+###ServiceUtils：  服务工具类
+作为工具类提供isServiceRunning()方法查询服务是否在运行。<br>
+此类还可以用来对服务进行监听，服务停止后将会进行回调，并根据配置可再启动服务。<br>
+	使用getInstance方法获取单例，建议参数传入ApplicationContext；<br>
+	通过addNeedMonitorredService()方法传入需要监听状态的服务名；在通过startMonitorService(String,boolean)方法（需要服务停止后能够再启动，第二个参数传true）可启动框架中的MonitorService对其他服务进行监听。
+	
 ##Task类
 ###AppUpdateTask：
 使用时进行实例化，重写parseUpdateInfo方法进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。<br>该类使用AsyncHttpUtils进行下载，暂不支持断点下载，会有下载进度提示，完成后可点击进行安装。
