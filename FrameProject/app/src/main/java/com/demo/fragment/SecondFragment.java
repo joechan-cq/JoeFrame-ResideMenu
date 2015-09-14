@@ -15,7 +15,9 @@ import com.demo.frameproject.R;
 import org.simple.eventbus.Subscriber;
 
 import joe.frame.annotations.ViewInject;
+import joe.frame.dialog.DirChooserDialog;
 import joe.frame.fragment.FrameBaseFragment;
+import joe.frame.utils.ToastUtils;
 
 /**
  * Description
@@ -35,6 +37,19 @@ public class SecondFragment extends FrameBaseFragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DemoSecondActivity.class);
                 startActivity(intent);
+            }
+        });
+        findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DirChooserDialog dialog = new DirChooserDialog(getActivity(), 1, null, "/mnt/");
+                dialog.setOkClickListener(new DirChooserDialog.OkClickListener() {
+                    @Override
+                    public void pathChoose(String path) {
+                        ToastUtils.show(getActivity(), path);
+                    }
+                });
+                dialog.show();
             }
         });
     }

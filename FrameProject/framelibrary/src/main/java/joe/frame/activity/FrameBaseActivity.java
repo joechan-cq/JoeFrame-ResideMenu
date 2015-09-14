@@ -188,6 +188,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         if (isregisterEventBus) {
             EventBus.getDefault().unregister(this);
         }
+        ActivityTaskStack.remove(this);
         super.onDestroy();
     }
 

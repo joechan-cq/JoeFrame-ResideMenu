@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/gray">
 
     <TextView
         android:id="@+id/mytitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="this is second fragment" />
+        android:text="this is second fragment"/>
 
     <Button
         android:id="@+id/button"
@@ -19,7 +19,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="58dp"
-        android:text="open activity" />
+        android:text="open activity"/>
 
     <joe.frame.view.RoundImageView
         android:id="@+id/view"
@@ -29,5 +29,14 @@
         android:layout_centerHorizontal="true"
         android:src="@mipmap/default_menu_background"
         app:borderRadius="30dp"
-        app:type="round" />
+        app:type="round"/>
+
+    <Button
+        android:id="@+id/button3"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button"
+        android:layout_centerHorizontal="true"
+        android:text="choose dir"/>
 </RelativeLayout>
