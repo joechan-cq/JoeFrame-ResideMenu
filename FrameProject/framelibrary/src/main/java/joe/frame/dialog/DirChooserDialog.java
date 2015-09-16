@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -69,12 +70,8 @@ public class DirChooserDialog extends Dialog implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.chooserdialog);
-        if (type == 1) {
-            setTitle("选择目录");
-        } else {
-            setTitle("选择保存文件地址");
-        }
         if (TextUtils.isEmpty(path)) {
             path = getRootDir();
         }
