@@ -252,7 +252,7 @@ public class CountdownView extends View {
         startCountDown(allTime, restTime);
     }
 
-    public void setCountDownFinished(onCountDownListener listener) {
+    public void setOnFinishedListener(onCountDownListener listener) {
         this.listener = listener;
     }
 
