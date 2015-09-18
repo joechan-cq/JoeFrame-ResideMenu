@@ -35,7 +35,7 @@ public abstract class AppUpdateTask {
         this.mContext = context;
         this.filePath = saveDir;
         rsp.setTag(APPUPDATE_TAG);
-        LogUtils.d("filepath:" + filePath);
+        LogUtils.d("AppUpdateTask:filepath:" + filePath);
         if (isShowUI) {
             waitDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
             waitDialog.getProgressHelper().setBarColor(Color.parseColor("#00ccff"));
@@ -114,11 +114,11 @@ public abstract class AppUpdateTask {
         confirmDialog.setTitleText("正在下载").setContentText("0%").changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
         String fileName = info.getAppName() + info.getVersionName();
         if (FileUtils.makeDirs(filePath)) {
-            LogUtils.d("mk dirs");
+            LogUtils.d("AppUpdateTask:mk dirs");
         }
         this.filePath = this.filePath + fileName + info.getSuffixName();
         String downloadUrl = info.getDownloadUrl();
-        LogUtils.d("APK下载地址：" + downloadUrl);
+        LogUtils.d("AppUpdateTask:APK下载地址：" + downloadUrl);
         AsyncHttpUtils.doHttpRequestForByte(HttpMethod.GET, mContext, downloadUrl, rsp);
     }
 
@@ -145,7 +145,7 @@ public abstract class AppUpdateTask {
 
         @Override
         public void onFailed(int statusCode, String codeMsg, byte[] rspBytes, Throwable throwable) {
-            LogUtils.d("code:" + statusCode + "  mean:" + codeMsg);
+            LogUtils.d("AppUpdateTask:code:" + statusCode + "  mean:" + codeMsg);
             confirmDialog.setCancelable(true);
             confirmDialog.setCanceledOnTouchOutside(true);
             confirmDialog.hideConfirmButton().setTitleText("下载失败，请检查网络").showCancelButton(true).changeAlertType(SweetAlertDialog.ERROR_TYPE);
@@ -156,7 +156,7 @@ public abstract class AppUpdateTask {
             super.onProgress(bytesWritten, totalSize);
             int count = (int) ((bytesWritten * 1.0 / totalSize) * 100);
             confirmDialog.setContentText(count + "%");
-            LogUtils.d("已经下载：" + count + "%");
+            LogUtils.d("AppUpdateTask:已经下载：" + count + "%");
         }
     };
 
