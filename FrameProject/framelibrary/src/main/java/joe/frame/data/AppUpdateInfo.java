@@ -8,6 +8,8 @@ public class AppUpdateInfo {
 
     private boolean isNeedToUpdate;
 
+    private boolean isMust;
+
     private String versionName;
 
     private int versionCode;
@@ -20,6 +22,14 @@ public class AppUpdateInfo {
 
     private String suffixName;
 
+
+    public boolean isMust() {
+        return isMust;
+    }
+
+    public void setIsMust(boolean isMust) {
+        this.isMust = isMust;
+    }
 
     public String getSuffixName() {
         return suffixName;
@@ -77,8 +87,9 @@ public class AppUpdateInfo {
         this.isNeedToUpdate = isNeedToUpdate;
     }
 
-    public AppUpdateInfo(boolean isNeedToUpdate, String suffixName, String updateInfo, String appName, String downloadUrl, int versionCode, String versionName) {
+    public AppUpdateInfo(boolean isNeedToUpdate, boolean isMust, String suffixName, String updateInfo, String appName, String downloadUrl, int versionCode, String versionName) {
         this.isNeedToUpdate = isNeedToUpdate;
+        this.isMust = isMust;
         this.suffixName = suffixName;
         this.updateInfo = updateInfo;
         this.appName = appName;

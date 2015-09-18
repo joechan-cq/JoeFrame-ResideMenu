@@ -64,6 +64,7 @@ public class DemoSecondActivity extends FrameSecondaryActivity implements View.O
                         myinfo.setSuffixName(".apk");
                         myinfo.setUpdateInfo("it's a test");
                         myinfo.setIsNeedToUpdate(true);
+                        myinfo.setIsMust(false);
                         return myinfo;
                     }
                 };

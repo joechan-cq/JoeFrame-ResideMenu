@@ -29,6 +29,8 @@ public abstract class AppUpdateTask {
     private SweetAlertDialog waitDialog;
     private SweetAlertDialog confirmDialog;
 
+    private boolean isMust = false;
+
     public void checkVersion(Context context, boolean isShowUI, String configUrl, String saveDir, HttpMethod method) {
         this.mContext = context;
         this.filePath = saveDir;
@@ -74,18 +76,27 @@ public abstract class AppUpdateTask {
         confirmDialog = new SweetAlertDialog(mContext, SweetAlertDialog.NORMAL_TYPE);
         confirmDialog.setTitleText(info.getAppName() + ":" + info.getVersionName());
         confirmDialog.setContentText(info.getUpdateInfo());
-        confirmDialog.setConfirmText("确认升级").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                startDownLoadAPK(info);
-            }
-        });
-        confirmDialog.setCancelText("取消").setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
-            @Override
-            public void onClick(SweetAlertDialog sweetAlertDialog) {
-                sweetAlertDialog.cancel();
-            }
-        });
+        if (!info.isMust()) {
+            confirmDialog.setConfirmText("确认升级").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    startDownLoadAPK(info);
+                }
+            });
+            confirmDialog.setCancelText("取消").setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                @Override
+                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                    sweetAlertDialog.cancel();
+                }
+            });
+        } else {
+            confirmDialog.hideConfirmButton();
+            confirmDialog.setCancelable(false);
+            confirmDialog.setCanceledOnTouchOutside(false);
+            confirmDialog.showCancelButton(false);
+            this.isMust = info.isMust();
+            startDownLoadAPK(info);
+        }
         confirmDialog.show();
     }
 
@@ -120,17 +131,23 @@ public abstract class AppUpdateTask {
             confirmDialog.setContentText("下载马上完成，请稍后");
             FileUtils.writeFile(filePath, bais, false);
             confirmDialog.setContentText("下载已经完成").showCancelButton(true).changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
-            confirmDialog.setConfirmText("启动安装").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                @Override
-                public void onClick(SweetAlertDialog sweetAlertDialog) {
-                    PackageUtils.install(mContext, filePath);
-                }
-            });
+            if (!isMust) {
+                confirmDialog.setConfirmText("启动安装").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        PackageUtils.install(mContext, filePath);
+                    }
+                });
+            } else {
+                PackageUtils.install(mContext, filePath);
+            }
         }
 
         @Override
         public void onFailed(int statusCode, String codeMsg, byte[] rspBytes, Throwable throwable) {
             LogUtils.d("code:" + statusCode + "  mean:" + codeMsg);
+            confirmDialog.setCancelable(true);
+            confirmDialog.setCanceledOnTouchOutside(true);
             confirmDialog.hideConfirmButton().setTitleText("下载失败，请检查网络").showCancelButton(true).changeAlertType(SweetAlertDialog.ERROR_TYPE);
         }
 
