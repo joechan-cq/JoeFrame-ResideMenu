@@ -18,7 +18,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_gravity="bottom"
-        android:text="set"/>
+        android:text="点击我设置上页面的内容为123"/>
 
     <Button
         android:id="@+id/update"
@@ -27,5 +27,5 @@
         android:layout_below="@+id/button2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="43dp"
-        android:text="check"/>
+        android:text="检查更新"/>
 </RelativeLayout>

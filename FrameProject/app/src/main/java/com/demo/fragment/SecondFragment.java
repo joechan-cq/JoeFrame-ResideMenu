@@ -52,6 +52,14 @@ public class SecondFragment extends FrameBaseFragment {
                 dialog.show();
             }
         });
+        findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String test = "";
+                test = null;
+                test.length();
+            }
+        });
     }
 
     @Override

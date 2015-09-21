@@ -9,6 +9,9 @@
         android:id="@+id/mytitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:text="this is second fragment"/>
 
     <Button
@@ -19,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_vertical"
         android:layout_marginBottom="58dp"
-        android:text="open activity"/>
+        android:text="跳转Activity"/>
 
     <joe.frame.view.RoundImageView
         android:id="@+id/view"
@@ -38,5 +41,13 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/button"
         android:layout_centerHorizontal="true"
-        android:text="choose dir"/>
+        android:text="打开目录配置对话框"/>
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/view"
+        android:layout_centerHorizontal="true"
+        android:text="点击我会崩溃"/>
 </RelativeLayout>

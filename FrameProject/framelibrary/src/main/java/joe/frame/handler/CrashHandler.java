@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
@@ -213,10 +214,21 @@ public class CrashHandler implements UncaughtExceptionHandler {
         String fileName = "";
         try {
             long timestamp = System.currentTimeMillis();
+            FileOutputStream trace;
             fileName = "crash-" + timestamp + CRASH_REPORTER_EXTENSION;
-            FileOutputStream trace = mContext.openFileOutput(fileName,
-                    Context.MODE_PRIVATE);
-            mDeviceCrashInfo.store(trace, "");
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                        + File.separator + "CrashLogs";
+                File dir = new File(filePath);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File file = new File(filePath, fileName);
+                trace = new FileOutputStream(file);
+            } else {
+                trace = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
+            }
+            mDeviceCrashInfo.storeToXML(trace, "crashLog");
             trace.flush();
             trace.close();
             return fileName;
@@ -240,21 +252,20 @@ public class CrashHandler implements UncaughtExceptionHandler {
             if (pi != null) {
                 mDeviceCrashInfo.put(VERSION_NAME,
                         pi.versionName == null ? "not set" : pi.versionName);
-                mDeviceCrashInfo.put(VERSION_CODE, pi.versionCode);
+                mDeviceCrashInfo.put(VERSION_CODE, String.valueOf(pi.versionCode));
             }
         } catch (NameNotFoundException e) {
             Log.e(TAG, "Error while collect package info", e);
         }
         // 使用反射来收集设备信息.在Build类中包含各种设备信息,
         // 例如: 系统版本号,设备生产商 等帮助调试程序的有用信息
-        // 具体信息请参考后面的截图
         Field[] fields = Build.class.getDeclaredFields();
         for (Field field : fields) {
             try {
                 field.setAccessible(true);
-                mDeviceCrashInfo.put(field.getName(), field.get(null));
+                mDeviceCrashInfo.put(field.getName(), field.get(null).toString());
                 if (DEBUG) {
-                    Log.d(TAG, field.getName() + " : " + field.get(null));
+                    Log.d(TAG, field.getName() + " : " + field.get(null).toString());
                 }
             } catch (Exception e) {
                 Log.e(TAG, "Error while collect crash info", e);
