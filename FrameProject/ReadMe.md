@@ -21,7 +21,7 @@
 	7.再封装asynchttp库。
 	8.添加一些自定义View和布局，略微扩展SweetAlertDialog。
 	9.添加版本更新Task类和Socket连接Task类。
-	10.添加崩溃捕捉crashHandler类。
+	10.添加崩溃捕捉crashHandler类,集成BaseApplication即可使用。
 	11.完善ServiceUtils类，可以简单几步实现服务监听防杀。
 	12.升级任务添加强制升级操作。
 	
@@ -104,3 +104,8 @@ Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<b
 
 ###SocketAsyncTask
 使用比较简单，内含心跳机制，有三种状态回调：连接成功，连接失败，连接断开。<br>接收和发送数据均已进行封装，可进行byte[]和String类型的发送和接收。<br>·注意点：内部使用了AsyncTask，因此使用时，和AsyncTask一样，<br>不能重复执行connect操作，每次均需要重新实例化。·
+
+##CrashHandler
+CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Application集成框架中的BaseApplication即可。<br>
+崩溃产生的日志，在内部存储中CrashLogs文件夹内，以XML形式记录，包括手机信息，系统信息，崩溃信息等。<br>
+崩溃产生时，使用Toast进行提示，3S后自动关闭程序，不再弹出“程序停止运行”的对话框。
