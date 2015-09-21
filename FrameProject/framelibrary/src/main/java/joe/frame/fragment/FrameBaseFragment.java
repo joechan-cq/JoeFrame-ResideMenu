@@ -57,7 +57,7 @@ public abstract class FrameBaseFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         context = (FrameBaseActivity) getActivity();
         fragmentManager = getFragmentManager();
-        onMyFragmentCreate(savedInstanceState);
+        onBaseFragmentCreate(savedInstanceState);
     }
 
     /**
@@ -66,7 +66,7 @@ public abstract class FrameBaseFragment extends Fragment {
      * @param savedInstanceState
      * @author chenqiao
      */
-    protected abstract void onMyFragmentCreate(Bundle savedInstanceState);
+    protected abstract void onBaseFragmentCreate(Bundle savedInstanceState);
 
     /**
      * 注册EventBus

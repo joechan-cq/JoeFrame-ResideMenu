@@ -27,7 +27,7 @@ public class DemoSecondActivity extends FrameSecondaryActivity implements View.O
     private Button btn2;
 
     @Override
-    protected void onMySecondaryActivityCreated(Bundle saveInstanceState) {
+    protected void onSecondaryActivityCreated(Bundle saveInstanceState) {
         setMyContentView(R.layout.demo_secondactivity);
         setToolbarTitle("Myproject", true);
         getToolbar().setSubtitle("sub title");

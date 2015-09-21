@@ -30,7 +30,7 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
     ResideMenuItem firstitem, seconditem;
 
     @Override
-    protected void onMyActivityCreated(Bundle savedInstanceState) {
+    protected void onBaseActivityCreated(Bundle savedInstanceState) {
         //设置显示内容,可使用setMyContentView，也可使用replaceFragment
         //setMyContentView(R.demo_layout.demo_layout);
         replaceFragment(new DemoFragment(), null);

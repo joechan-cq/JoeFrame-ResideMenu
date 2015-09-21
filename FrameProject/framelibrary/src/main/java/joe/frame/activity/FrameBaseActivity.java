@@ -82,7 +82,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
 
         setTitle("");
         fragmentManager = getSupportFragmentManager();
-        onMyActivityCreated(savedInstanceState);
+        onBaseActivityCreated(savedInstanceState);
     }
 
     /**
@@ -164,7 +164,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param savedInstanceState
      */
-    protected abstract void onMyActivityCreated(Bundle savedInstanceState);
+    protected abstract void onBaseActivityCreated(Bundle savedInstanceState);
 
 
     /**

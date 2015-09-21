@@ -29,7 +29,7 @@ public class SecondFragment extends FrameBaseFragment {
     private Button startBtn;
 
     @Override
-    protected void onMyFragmentCreate(Bundle savedInstanceState) {
+    protected void onBaseFragmentCreate(Bundle savedInstanceState) {
         registerEventBus();
         setMyContentView(R.layout.demo_second);
         startBtn.setOnClickListener(new View.OnClickListener() {

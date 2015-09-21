@@ -14,7 +14,7 @@ import joe.framelibrary.R;
  */
 public abstract class FrameSecondaryActivity extends FrameBaseActivity {
     @Override
-    protected void onMyActivityCreated(Bundle savedInstanceState) {
+    protected void onBaseActivityCreated(Bundle savedInstanceState) {
         getToolbar().setNavigationIcon(R.mipmap.ic_action_back);
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -22,10 +22,10 @@ public abstract class FrameSecondaryActivity extends FrameBaseActivity {
                 onToolbarBackClicked();
             }
         });
-        onMySecondaryActivityCreated(savedInstanceState);
+        onSecondaryActivityCreated(savedInstanceState);
     }
 
-    protected abstract void onMySecondaryActivityCreated(Bundle saveInstanceState);
+    protected abstract void onSecondaryActivityCreated(Bundle saveInstanceState);
 
     /**
      * Toobar返回键点击事件
