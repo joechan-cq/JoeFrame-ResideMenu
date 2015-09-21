@@ -7,7 +7,7 @@
 	5.一些工具类
 
 ##注意
-####因为使用Toolbar作为Actionbar，所以项目Theme需要为AppCompat.NoActionbar，或直接使用框架内的AppTheme。
+####如果使用Toolbar作为Actionbar，则项目Theme需要为AppCompat.NoActionbar，或直接使用框架内的AppTheme。
 ####该框架已整合成Library形式，添加项目依赖即可使用。
 ####Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成。
 	
@@ -23,9 +23,10 @@
 	9.添加版本更新Task类和Socket连接Task类。
 	10.添加崩溃捕捉crashHandler类。
 	11.完善ServiceUtils类，可以简单几步实现服务监听防杀。
+	12.升级任务添加强制升级操作。
 	
 ##Activity：FrameBaseActivity
-	使用时继承FrameBaseActivity。入口方法为onMyActivityCreated()。
+	使用时继承FrameBaseActivity。入口方法为onBaseActivityCreated()。
 	使用replaceFragment()或者setMyContentView()来设置显示内容。
 	请在根布局中设置背景色，不然就是透明的。
 	可使用注解形式替代findViewById：
@@ -58,7 +59,7 @@
 使用侧滑菜单后，默认界面的所有左右滑动会触发菜单开关，<br>其他组件不能接受滑动事件。如果有滑动列表或其他需要接收滑动事件，<br>则使用addIgnoredView()，将其添加。添加后，在该View上的滑动事件不会打开菜单。<br>
 		
 ##Fragment: FrameBaseFragment
-使用时继承FragmentBaseFragment。入口方法为onMyFragmentCreate()。<br>
+使用时继承FragmentBaseFragment。入口方法为onBaseFragmentCreate()。<br>
 使用setMyContentView()设置显示内容。replaceFragment()将会replace新的Fragment取代自己。<br>
 请在根布局中设置背景色，不然就是透明的。<br>
 使用findViewById或注解@ViewInject可以获取到内容中的组件。<br>
