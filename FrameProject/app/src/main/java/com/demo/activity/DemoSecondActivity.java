@@ -11,7 +11,7 @@ import org.simple.eventbus.EventBus;
 
 import joe.frame.activity.FrameSecondaryActivity;
 import joe.frame.annotations.ViewInject;
-import joe.frame.data.AppUpdateInfo;
+import joe.frame.model.AppUpdateInfo;
 import joe.frame.task.AppUpdateTask;
 import joe.frame.utils.LogUtils;
 import joe.frame.utils.SDCardUtils;

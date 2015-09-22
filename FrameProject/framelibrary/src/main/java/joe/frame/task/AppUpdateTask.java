@@ -5,7 +5,7 @@ import android.graphics.Color;
 
 import java.io.ByteArrayInputStream;
 
-import joe.frame.data.AppUpdateInfo;
+import joe.frame.model.AppUpdateInfo;
 import joe.frame.dialog.SweetAlertDialog;
 import joe.frame.utils.AsyncHttpUtils;
 import joe.frame.utils.FileUtils;

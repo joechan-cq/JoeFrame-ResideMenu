@@ -1,4 +1,4 @@
-package joe.frame.data;
+package joe.frame.model;
 
 /**
  * Description  应用升级信息
