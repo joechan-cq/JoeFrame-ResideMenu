@@ -18,7 +18,10 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Field;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.TreeSet;
 
@@ -182,13 +185,21 @@ public class CrashHandler implements UncaughtExceptionHandler {
      * @return
      */
     private String[] getCrashReportFiles(Context ctx) {
-        File filesDir = ctx.getFilesDir();
         FilenameFilter filter = new FilenameFilter() {
             public boolean accept(File dir, String name) {
                 return name.endsWith(CRASH_REPORTER_EXTENSION);
             }
         };
-        return filesDir.list(filter);
+
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
+                    + File.separator + "CrashLogs";
+            File dir = new File(filePath);
+            return dir.list(filter);
+        } else {
+            File filesDir = ctx.getFilesDir();
+            return filesDir.list(filter);
+        }
     }
 
     /**
@@ -215,7 +226,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
         try {
             long timestamp = System.currentTimeMillis();
             FileOutputStream trace;
-            fileName = "crash-" + timestamp + CRASH_REPORTER_EXTENSION;
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            String time = format.format(new Date(timestamp));
+            fileName = "crash-" + time + CRASH_REPORTER_EXTENSION;
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
                         + File.separator + "CrashLogs";
