@@ -7,6 +7,7 @@
 	5.一些工具类
 
 ##注意
+###该框架要求API>=11，<23。
 ####如果使用Toolbar作为Actionbar，则项目Theme需要为AppCompat.NoActionbar，或直接使用框架内的AppTheme。
 ####该框架已整合成Library形式，添加项目依赖即可使用。
 ####Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成。
@@ -98,6 +99,12 @@ Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<b
 	使用getInstance方法获取单例，建议参数传入ApplicationContext；<br>
 	通过addNeedMonitorredService()方法传入需要监听状态的服务名；在通过startMonitorService(String,boolean)方法（需要服务停止后能够再启动，第二个参数传true）可启动框架中的MonitorService对其他服务进行监听。
 	
+###LocationUtils：	定位工具类
+静态方法isLocateEnable()用于判定是否可以使用定位功能。<br>
+静态方法isGPSopen()判断GPS是否打开。<br>
+静态方法openGPSset()打开系统的GPS设置界面，需要在跳转的Activity中进行结果接收。<br>
+简单定位的实现，需要获取该LocationUtils的单例，调用locate()方法进行获取。<br>
+
 ##Task类
 ###AppUpdateTask：
 使用时进行实例化，重写parseUpdateInfo方法进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。<br>该类使用AsyncHttpUtils进行下载，暂不支持断点下载，会有下载进度提示，完成后可点击进行安装。
@@ -107,5 +114,5 @@ Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<b
 
 ##CrashHandler
 CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Application集成框架中的BaseApplication即可。<br>
-崩溃产生的日志，在内部存储中CrashLogs文件夹内，以XML形式记录，包括手机信息，系统信息，崩溃信息等。<br>
+崩溃产生的日志，在内部存储中Android/data/<package-name>/files/Crash文件夹内，以XML形式记录，包括手机信息，系统信息，崩溃信息等。<br>
 崩溃产生时，使用Toast进行提示，3S后自动关闭程序，不再弹出“程序停止运行”的对话框。
