@@ -192,8 +192,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         };
 
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                    + File.separator + "CrashLogs";
+            String filePath = mContext.getExternalFilesDir("Crash").getAbsolutePath();
             File dir = new File(filePath);
             return dir.list(filter);
         } else {
@@ -229,18 +228,9 @@ public class CrashHandler implements UncaughtExceptionHandler {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             String time = format.format(new Date(timestamp));
             fileName = "crash-" + time + CRASH_REPORTER_EXTENSION;
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                String filePath = Environment.getExternalStorageDirectory().getAbsolutePath()
-                        + File.separator + "CrashLogs";
-                File dir = new File(filePath);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                File file = new File(filePath, fileName);
-                trace = new FileOutputStream(file);
-            } else {
-                trace = mContext.openFileOutput(fileName, Context.MODE_PRIVATE);
-            }
+            String filePath = mContext.getExternalFilesDir("Crash").getAbsolutePath();
+            File file = new File(filePath, fileName);
+            trace = new FileOutputStream(file);
             mDeviceCrashInfo.storeToXML(trace, "crashLog");
             trace.flush();
             trace.close();
