@@ -144,7 +144,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         // 保存错误报告文件
         String crashFileName = saveCrashInfoToFile(ex);
         // 发送错误报告到服务器
-        sendCrashReportsToServer(mContext);
+        //sendPreviousReportsToServer();
         return true;
     }
 
@@ -225,7 +225,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         try {
             long timestamp = System.currentTimeMillis();
             FileOutputStream trace;
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HHmmss", Locale.getDefault());
             String time = format.format(new Date(timestamp));
             fileName = "crash-" + time + CRASH_REPORTER_EXTENSION;
             String filePath = mContext.getExternalFilesDir("Crash").getAbsolutePath();
