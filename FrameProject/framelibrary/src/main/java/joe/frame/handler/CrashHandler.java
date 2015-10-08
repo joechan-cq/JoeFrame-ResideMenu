@@ -167,7 +167,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             sortedFiles.addAll(Arrays.asList(crFiles));
 
             for (String fileName : sortedFiles) {
-                File cr = new File(ctx.getFilesDir(), fileName);
+                File cr = new File(ctx.getExternalFilesDir("Crash").getAbsolutePath(), fileName);
                 postReport(cr);
                 cr.delete();// 删除已发送的报告
             }
