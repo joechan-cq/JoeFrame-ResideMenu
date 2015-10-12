@@ -7,7 +7,7 @@
 	5.一些工具类
 
 ##注意
-###该框架要求API>=11，<23。
+###该框架要求API>=11。
 ####如果使用Toolbar作为Actionbar，则项目Theme需要为AppCompat.NoActionbar，或直接使用框架内的AppTheme。
 ####该框架已整合成Library形式，添加项目依赖即可使用。
 ####Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成。
@@ -25,6 +25,7 @@
 	10.添加崩溃捕捉crashHandler类,集成BaseApplication即可使用。
 	11.完善ServiceUtils类，可以简单几步实现服务监听防杀。
 	12.升级任务添加强制升级操作。
+	13.更改asynchttp为1.4.9版，兼容API23及以上版本。
 	
 ##Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onBaseActivityCreated()。
