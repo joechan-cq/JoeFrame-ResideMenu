@@ -4,7 +4,7 @@ import android.os.Looper;
 
 import com.loopj.android.http.BinaryHttpResponseHandler;
 
-import org.apache.http.Header;
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Description  http请求byte[]回调
@@ -24,10 +24,6 @@ public abstract class FrameHttpRspBytes extends BinaryHttpResponseHandler {
         super(allowedContentTypes, looper);
     }
 
-    public abstract void onSuccess(int statusCode, String codeMsg, byte[] rspBytes);
-
-    public abstract void onFailed(int statusCode, String codeMsg, byte[] rspBytes, Throwable throwable);
-
     @Override
     public void onSuccess(int i, Header[] headers, byte[] bytes) {
         this.onSuccess(i, HttpStatusCodeMean.getMean(i), bytes);
@@ -37,4 +33,8 @@ public abstract class FrameHttpRspBytes extends BinaryHttpResponseHandler {
     public void onFailure(int i, Header[] headers, byte[] bytes, Throwable throwable) {
         this.onFailed(i, HttpStatusCodeMean.getMean(i), bytes, throwable);
     }
+
+    public abstract void onSuccess(int statusCode, String codeMsg, byte[] rspBytes);
+
+    public abstract void onFailed(int statusCode, String codeMsg, byte[] rspBytes, Throwable throwable);
 }

@@ -2,9 +2,10 @@ package joe.frame.utils.http;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 
-import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Description  http请求Json数据回调
@@ -27,12 +28,6 @@ public abstract class FrameHttpRspJson extends JsonHttpResponseHandler {
         super(encoding, useRFC5179CompatibilityMode);
     }
 
-    public abstract void onSuccess(int statusCode, String codeMsg, JSONObject rspJSONObject);
-
-    public abstract void onSuccess(int statusCode, String codeMsg, JSONArray rspJSONArray);
-
-    public abstract void onFailed(int statusCode, String codeMsg, Object rspResult, Throwable throwable);
-
     @Override
     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
         this.onSuccess(statusCode, HttpStatusCodeMean.getMean(statusCode), response);
@@ -43,10 +38,9 @@ public abstract class FrameHttpRspJson extends JsonHttpResponseHandler {
         this.onSuccess(statusCode, HttpStatusCodeMean.getMean(statusCode), response);
     }
 
-    @Override
-    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-        this.onFailed(statusCode, HttpStatusCodeMean.getMean(statusCode), responseString, throwable);
-    }
+    public abstract void onSuccess(int statusCode, String codeMsg, JSONObject rspJSONObject);
+
+    public abstract void onSuccess(int statusCode, String codeMsg, JSONArray rspJSONArray);
 
     @Override
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -57,4 +51,6 @@ public abstract class FrameHttpRspJson extends JsonHttpResponseHandler {
     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
         this.onFailed(statusCode, HttpStatusCodeMean.getMean(statusCode), errorResponse, throwable);
     }
+
+    public abstract void onFailed(int statusCode, String codeMsg, Object rspResult, Throwable throwable);
 }
