@@ -2,9 +2,9 @@
 	该框架集成使用了如下第三方库：
 	1.SweetDialog（对话框）、Progresswheel（圆形进度条）、nineoldandroids.jar（动画兼容包）
 	2.ResideMenu（侧滑菜单）
-	3.android-async-http-1.4.8.jar（异步网络请求）
+	3.android-async-http-1.4.9.jar（异步网络请求）
 	4.androidEventBus（事件订阅处理）
-	5.一些工具类
+	5.@Trinea大神些的工具类
 
 ##注意
 ###该框架要求API>=11。
