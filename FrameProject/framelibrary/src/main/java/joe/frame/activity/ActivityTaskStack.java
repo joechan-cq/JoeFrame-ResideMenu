@@ -18,12 +18,13 @@ public class ActivityTaskStack {
         mActivityList.remove(activity);
     }
 
-    public static void clean() {
+    public static void exit() {
         for (FrameBaseActivity activity : mActivityList) {
             if (activity != null) {
                 activity.finish();
             }
         }
         mActivityList.clear();
+        System.exit(0);
     }
 }

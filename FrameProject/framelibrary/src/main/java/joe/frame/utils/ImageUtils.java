@@ -80,6 +80,16 @@ public class ImageUtils {
     }
 
     /**
+     * get Bitmap from the file
+     *
+     * @param fileName
+     * @return
+     */
+    public static Bitmap getBitmapFromFile(String fileName) {
+        return BitmapFactory.decodeFile(fileName);
+    }
+
+    /**
      * convert Drawable to byte array
      *
      * @param d
