@@ -50,10 +50,8 @@
 </style>
 ```
 ####Toolbar菜单使用：<br>
-如果setToolbarAsActionbar设置返回为true，则使用需要重写onCreateMyToolbarMenu()方法<br>，实现方式同原生的onCreateOptionsMenu()。<br>
-菜单点击事件获取在onMyToolbarMenuItemClicked()中，通过item的id进行判断。<br>
-如果setToolbarAsActionbar设置返回为false，onCreateMyToolbarMenu()和<br>onMyToolbarMenuItemClicked()将不再生效。<br>
-使用toolbar自带的addMenu()和setOnMenuItemClickListener进行菜单设置。<br>
+如果setToolbarAsActionbar设置返回为true，则使用需要重写原生的onCreateOptionsMenu()和onOptionsItemSelected()进行菜单设置。
+如果setToolbarAsActionbar设置返回为false，使用toolbar自带的addMenu()和setOnMenuItemClickListener进行菜单设置。<br>
 		
 ###侧滑菜单ResideMenu：
 使用initResideMenu()进行初始化设置并返回ResideMenu对象。<br>也可使用getResideMenu()获得ResideMenu对象<br>（如果之前未调用initResideMenu，那么将会进行默认初始化）。<br>
@@ -69,8 +67,8 @@
 
 ###Toolbar：
 要使用Toolbar，可使用context.getToolbar获取到对象。<br>
-需要在Fragment中改写Toolbar的菜单，要设置setHasOptionMenu(true)。<br>
-Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<br>根据需要进行menu.clear()，不然会和activity的菜单进行叠加，一起显示。<br>
+需要在Fragment中改写Toolbar的菜单，要设置setHasOptionMenu(true)，然后和Activity一样建立菜单。<br>
+提示：在onCreateOptionsMenu中根据需要进行menu.clear()，不然会和activity的菜单进行叠加，一起显示。
 		
 ##AndroidEventBus：
 在Activity或Fragment中直接使用registerEventBus或regiseterEventBusForSticky注册即可,<br>注册后会自动在onDestroy中注销。
@@ -98,13 +96,26 @@ Toolbar的菜单，重写onCreateMyToolbarMenu和onMyToolbarMenuItemClicked。<b
 作为工具类提供isServiceRunning()方法查询服务是否在运行。<br>
 此类还可以用来对服务进行监听，服务停止后将会进行回调，并根据配置可再启动服务。<br>
 	使用getInstance方法获取单例，建议参数传入ApplicationContext；<br>
-	通过addNeedMonitorredService()方法传入需要监听状态的服务名；在通过startMonitorService(String,boolean)方法（需要服务停止后能够再启动，第二个参数传true）可启动框架中的MonitorService对其他服务进行监听。
+	通过addNeedMonitorredService()方法传入需要监听状态的服务名；在通过startMonitorService(String,boolean)方法（需要服务停止后能够再启动，第二个参数传true）可启动框架中的MonitorService对其他服务进行监听。<br>
+	无需再进行监听， 使用removeMonitorredService，将服务移除。<br>
 	
 ###LocationUtils：	定位工具类
 静态方法isLocateEnable()用于判定是否可以使用定位功能。<br>
 静态方法isGPSopen()判断GPS是否打开。<br>
 静态方法openGPSset()打开系统的GPS设置界面，需要在跳转的Activity中进行结果接收。<br>
 简单定位的实现，需要获取该LocationUtils的单例，调用locate()方法进行获取。<br>
+
+###ThreadPoolUtils:	线程池封装类
+通过参数Type进行不同类型的实例化：
+```
+ public enum Type {
+        SingleThread,
+        FixedThread,
+        CachedThread,
+        ScheduledSingleThread
+    }
+```
+使用execute执行任务，shutdown和shutdownNow停止和关闭线程。
 
 ##Task类
 ###AppUpdateTask：
