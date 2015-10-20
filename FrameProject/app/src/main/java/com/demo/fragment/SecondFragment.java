@@ -55,9 +55,8 @@ public class SecondFragment extends FrameBaseFragment {
         findViewById(R.id.button4).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String test = "";
-                test = null;
-                test.length();
+                int[] a = {1, 2, 3, 4};
+                int b = a[8];
             }
         });
     }

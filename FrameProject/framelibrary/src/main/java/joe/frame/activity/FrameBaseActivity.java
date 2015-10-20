@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -55,7 +52,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 是否注册了EventBus，true时会在onDestroy()中自动注销
      */
-    private boolean isregisterEventBus = false;
+    private boolean isRegisterEventBus = false;
 
     private boolean isSupportActionbar = false;
 
@@ -172,12 +169,12 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      */
     protected void registerEventBus() {
         EventBus.getDefault().register(this);
-        isregisterEventBus = true;
+        isRegisterEventBus = true;
     }
 
     protected void registerEventBusForSticky() {
         EventBus.getDefault().registerSticky(this);
-        isregisterEventBus = true;
+        isRegisterEventBus = true;
     }
 
     /**
@@ -185,7 +182,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      */
     @Override
     protected void onDestroy() {
-        if (isregisterEventBus) {
+        if (isRegisterEventBus) {
             EventBus.getDefault().unregister(this);
         }
         ActivityTaskStack.remove(this);
