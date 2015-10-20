@@ -3,7 +3,6 @@ package com.demo.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -99,21 +98,15 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
      * 右上角的菜单设置，使用方法和onCreateOptionMenu一样
      *
      * @param menu
-     * @param inflater
      */
     @Override
-    protected void onCreateMyToolbarMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_main, menu);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
-    /**
-     * 右上角菜单点击事件
-     *
-     * @param item
-     * @return
-     */
     @Override
-    protected boolean onMyToolbarMenuItemClicked(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             //id为menu的xml中定义
             case R.id.action_settings:

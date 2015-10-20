@@ -192,36 +192,6 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        onCreateMyToolbarMenu(menu, inflater);
-        return true;
-    }
-
-    /**
-     * 创建Toolbar菜单，使用方法同{@link #onCreateOptionsMenu}
-     * 菜单点击事件监听，实现{@link #onMyToolbarMenuItemClicked(MenuItem)}
-     * {@link #setToolbarAsActionbar()}为true时生效
-     *
-     * @param menu
-     * @param inflater
-     */
-    protected abstract void onCreateMyToolbarMenu(Menu menu, MenuInflater inflater);
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return onMyToolbarMenuItemClicked(item);
-    }
-
-    /**
-     * Toolbar菜单被点击事件监听,{@link #setToolbarAsActionbar()}为true时生效
-     *
-     * @param item 菜单项
-     * @return false点击事件继续发放，true消费该事件
-     */
-    protected abstract boolean onMyToolbarMenuItemClicked(MenuItem item);
-
     /**
      * 获取内容布局id
      *

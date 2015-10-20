@@ -1,9 +1,6 @@
 package joe.frame.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import joe.framelibrary.R;
@@ -31,14 +28,4 @@ public abstract class FrameSecondaryActivity extends FrameBaseActivity {
      * Toobar返回键点击事件
      */
     protected abstract void onToolbarBackClicked();
-
-    @Override
-    protected void onCreateMyToolbarMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
-    }
-
-    @Override
-    protected boolean onMyToolbarMenuItemClicked(MenuItem item) {
-        return false;
-    }
 }

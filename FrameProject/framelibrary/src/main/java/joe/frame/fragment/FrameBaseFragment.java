@@ -6,9 +6,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +30,7 @@ public abstract class FrameBaseFragment extends Fragment {
     private FrameLayout frameLayout;
     private View contentView;
     private FragmentManager fragmentManager;
-    private boolean isregisterEventBus = false;
+    private boolean isRegisterEventBus = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -73,12 +70,12 @@ public abstract class FrameBaseFragment extends Fragment {
      */
     protected void registerEventBus() {
         EventBus.getDefault().register(this);
-        isregisterEventBus = true;
+        isRegisterEventBus = true;
     }
 
     protected void registerEventBusForSticky() {
         EventBus.getDefault().registerSticky(this);
-        isregisterEventBus = true;
+        isRegisterEventBus = true;
     }
 
     /**
@@ -86,7 +83,7 @@ public abstract class FrameBaseFragment extends Fragment {
      */
     @Override
     public void onDestroy() {
-        if (isregisterEventBus) {
+        if (isRegisterEventBus) {
             EventBus.getDefault().unregister(this);
         }
         super.onDestroy();
@@ -185,31 +182,4 @@ public abstract class FrameBaseFragment extends Fragment {
             fragmentManager.popBackStack();
         }
     }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        onCreateMyToolbarMenu(menu, inflater);
-    }
-
-    /**
-     * 创建Toolbar菜单，使用方法同{@link #onCreateOptionsMenu}
-     * 菜单点击事件监听，实现{@link #onMyToolbarMenuItemClicked(MenuItem)}
-     *
-     * @param menu
-     * @param inflater
-     */
-    protected abstract void onCreateMyToolbarMenu(Menu menu, MenuInflater inflater);
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return onMyToolbarMenuItemClicked(item);
-    }
-
-    /**
-     * Toolbar菜单被点击事件监听
-     *
-     * @param item
-     * @return
-     */
-    protected abstract boolean onMyToolbarMenuItemClicked(MenuItem item);
 }

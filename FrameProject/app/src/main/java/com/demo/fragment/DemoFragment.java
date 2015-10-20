@@ -57,16 +57,14 @@ public class DemoFragment extends FrameBaseFragment {
         listView.setAdapter(myAdapter);
     }
 
-    //重写Toolbar的菜单
     @Override
-    protected void onCreateMyToolbarMenu(Menu menu, MenuInflater inflater) {
-        //如果不进行clear，将会保留Activity的菜单（根据实际情况选择是否clear）
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
         inflater.inflate(R.menu.menu_fragment, menu);
     }
 
     @Override
-    protected boolean onMyToolbarMenuItemClicked(MenuItem item) {
-        return false;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
     }
 }

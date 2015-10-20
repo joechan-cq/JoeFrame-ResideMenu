@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -32,6 +31,7 @@ public class SecondFragment extends FrameBaseFragment {
     protected void onBaseFragmentCreate(Bundle savedInstanceState) {
         registerEventBus();
         setMyContentView(R.layout.demo_second);
+        setHasOptionsMenu(true);
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,13 +63,9 @@ public class SecondFragment extends FrameBaseFragment {
     }
 
     @Override
-    protected void onCreateMyToolbarMenu(Menu menu, MenuInflater inflater) {
-
-    }
-
-    @Override
-    protected boolean onMyToolbarMenuItemClicked(MenuItem item) {
-        return false;
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**
