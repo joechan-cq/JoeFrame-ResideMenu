@@ -45,7 +45,7 @@ public class MonitorService extends Service {
                         }
                     }
                     try {
-                        Thread.sleep(utils.heartTime);
+                        Thread.sleep(ServiceUtils.heartTime);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

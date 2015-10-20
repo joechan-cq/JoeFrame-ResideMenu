@@ -39,7 +39,6 @@ public class HttpUtils {
 
             }
 
-            ;
         }.start();
     }
 
@@ -66,7 +65,6 @@ public class HttpUtils {
 
             }
 
-            ;
         }.start();
 
     }

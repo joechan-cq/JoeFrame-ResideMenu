@@ -65,10 +65,7 @@ public class LocationUtils {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             return true;
         }
-        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
-            return true;
-        }
-        return false;
+        return locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
     /**

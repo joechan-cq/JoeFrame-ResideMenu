@@ -626,12 +626,12 @@ public class ResideMenu extends FrameLayout {
         /**
          * This method will be called at the finished time of opening menu animations.
          */
-        public void openMenu();
+        void openMenu();
 
         /**
          * This method will be called at the finished time of closing menu animations.
          */
-        public void closeMenu();
+        void closeMenu();
     }
 
     private void showScrollViewMenu(ScrollView scrollViewMenu) {

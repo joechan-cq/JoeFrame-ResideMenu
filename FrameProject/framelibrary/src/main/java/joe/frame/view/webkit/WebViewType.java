@@ -16,5 +16,5 @@ public enum WebViewType {
     DATEBASE_TYPE,  //允许访问数据库
     FILEACCESS_TYPE,    //允许进行文件操作
     NOIMAGE_TYPE,   //不加载图片
-    DISPLAY_ADAPTIVE_TYPE;  //显示效果自适应
+    DISPLAY_ADAPTIVE_TYPE  //显示效果自适应
 }

@@ -50,9 +50,7 @@ public class ToolFor9Ge {
         State wifi = conMan.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         if (mobile == State.CONNECTED || mobile == State.CONNECTING)
             return true;
-        if (wifi == State.CONNECTED || wifi == State.CONNECTING)
-            return true;
-        return false;
+        return wifi == State.CONNECTED || wifi == State.CONNECTING;
     }
 
     // 从路径获取文件名
@@ -181,7 +179,7 @@ public class ToolFor9Ge {
 
     // 不改变控件位置，修改控件大小
     public static void changeWH(View v, int W, int H) {
-        LayoutParams params = (LayoutParams) v.getLayoutParams();
+        LayoutParams params = v.getLayoutParams();
         params.width = W;
         params.height = H;
         v.setLayoutParams(params);
@@ -189,7 +187,7 @@ public class ToolFor9Ge {
 
     // 修改控件的高
     public static void changeH(View v, int H) {
-        LayoutParams params = (LayoutParams) v.getLayoutParams();
+        LayoutParams params = v.getLayoutParams();
         params.height = H;
         v.setLayoutParams(params);
     }
