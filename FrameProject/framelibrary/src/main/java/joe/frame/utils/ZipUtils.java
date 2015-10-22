@@ -202,7 +202,13 @@ public class ZipUtils {
                 file = new File(outputDirectory + File.separator
                         + zipEntry.getName());
                 //创建该文件
-                file.createNewFile();
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    File dirfile = new File(file.getParent());
+                    dirfile.mkdirs();
+                    file.createNewFile();
+                }
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
                 while ((count = zipInputStream.read(buffer)) > 0) {
                     fileOutputStream.write(buffer, 0, count);
