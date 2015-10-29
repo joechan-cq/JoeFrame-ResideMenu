@@ -18,7 +18,7 @@ public class MD5Helper {
 
     static {
         try {
-            MessageDigest.getInstance("MD5");
+            md = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
