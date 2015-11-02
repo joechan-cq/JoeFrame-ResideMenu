@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -183,11 +184,22 @@ public class CountdownView extends View {
         if (bmdw != null) {
             bm = bmdw.getBitmap();
         }
+        bm = scaleImage(bm, getMeasuredWidth() / 3.0f / bm.getWidth(), getMeasuredHeight() / 3.0f / bm.getHeight());
         btnRect.left = (getMeasuredWidth() - bm.getWidth()) / 2;
         btnRect.top = getMeasuredHeight() - bm.getHeight() - 25;
         btnRect.right = btnRect.left + bm.getWidth();
         btnRect.bottom = btnRect.top + bm.getHeight();
         canvas.drawBitmap(bm, (getMeasuredWidth() - bm.getWidth()) / 2, getMeasuredHeight() - bm.getHeight() - 22, null);
+    }
+
+    private Bitmap scaleImage(Bitmap org, float scaleWidth, float scaleHeight) {
+        if (org == null) {
+            return null;
+        }
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        return Bitmap.createBitmap(org, 0, 0, org.getWidth(), org.getHeight(), matrix, true);
     }
 
     private SimpleDateFormat format = new SimpleDateFormat("mm:ss", Locale.getDefault());

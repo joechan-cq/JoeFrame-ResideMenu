@@ -17,6 +17,7 @@ import joe.frame.annotations.ViewInject;
 import joe.frame.dialog.DirChooserDialog;
 import joe.frame.fragment.FrameBaseFragment;
 import joe.frame.utils.ToastUtils;
+import joe.frame.view.CountdownView;
 
 /**
  * Description
@@ -26,6 +27,9 @@ public class SecondFragment extends FrameBaseFragment {
 
     @ViewInject(R.id.button)
     private Button startBtn;
+
+    @ViewInject(R.id.countdown)
+    private CountdownView countdownView;
 
     @Override
     protected void onBaseFragmentCreate(Bundle savedInstanceState) {
@@ -59,6 +63,8 @@ public class SecondFragment extends FrameBaseFragment {
                 int b = a[8];
             }
         });
+
+        countdownView.startCountDown(45 * 1000, 45 * 1000);
     }
 
     @Override
