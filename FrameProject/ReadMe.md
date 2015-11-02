@@ -26,6 +26,7 @@
 	11.完善ServiceUtils类，可以简单几步实现服务监听防杀。
 	12.升级任务添加强制升级操作。
 	13.更改asynchttp为1.4.9版，兼容API23及以上版本。
+	14.优化CountDownView。
 	
 ##Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onBaseActivityCreated()。
@@ -57,7 +58,7 @@
 使用initResideMenu()进行初始化设置并返回ResideMenu对象。<br>也可使用getResideMenu()获得ResideMenu对象<br>（如果之前未调用initResideMenu，那么将会进行默认初始化）。<br>
 侧滑菜单分为两部分：菜单头和菜单项。添加菜单头可以添加任意View，<br>使用residemenu.addMenuHeader(View)方法添加；菜单项为ResideMenuItem对象，<br>直接使用addMenuItemToMenu()或addMenuItemsToMenu()添加。<br>
 使用侧滑菜单后，默认界面的所有左右滑动会触发菜单开关，<br>其他组件不能接受滑动事件。如果有滑动列表或其他需要接收滑动事件，<br>则使用addIgnoredView()，将其添加。添加后，在该View上的滑动事件不会打开菜单。<br>
-		
+![](https://github.com/1030310877/JoeFrame-ResideMenu/blob/master/pic/residemenu.png)
 ##Fragment: FrameBaseFragment
 使用时继承FragmentBaseFragment。入口方法为onBaseFragmentCreate()。<br>
 使用setMyContentView()设置显示内容。replaceFragment()将会replace新的Fragment取代自己。<br>
@@ -128,3 +129,14 @@
 CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Application集成框架中的BaseApplication即可。<br>
 崩溃产生的日志，在内部存储中Android/data/<package-name>/files/Crash文件夹内，以XML形式记录，包括手机信息，系统信息，崩溃信息等。<br>
 崩溃产生时，使用Toast进行提示，3S后自动关闭程序，不再弹出“程序停止运行”的对话框。
+
+##Dialog类
+集成了SweetAlert—dialog，可直接使用。
+###DirChooserDialog
+目录选择或文件选择对话框，可以直接使用，在回调中接收选择结果。
+![](https://github.com/1030310877/JoeFrame-ResideMenu/blob/master/pic/dirchooserdialog.png)
+
+##自定义View
+###CountDownView——倒计时View
+###RoundImageView——圆（角）的ImageView
+![](https://github.com/1030310877/JoeFrame-ResideMenu/blob/master/pic/countdownroundiamge.png)
