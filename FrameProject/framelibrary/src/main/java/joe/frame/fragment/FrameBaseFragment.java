@@ -171,6 +171,10 @@ public abstract class FrameBaseFragment extends Fragment {
         return frameLayout.findViewById(resId);
     }
 
+    protected View findViewByTag(Object tag) {
+        return frameLayout.findViewWithTag(tag);
+    }
+
     /**
      * 结束当前fragment
      */

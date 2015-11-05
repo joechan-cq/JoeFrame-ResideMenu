@@ -225,6 +225,10 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         autoInjectViewField();
     }
 
+    protected View findViewByTag(Object tag) {
+        return mContentLayout.findViewWithTag(tag);
+    }
+
     /**
      * 解析注解，给带有@ViewInject注解的View赋值
      */
