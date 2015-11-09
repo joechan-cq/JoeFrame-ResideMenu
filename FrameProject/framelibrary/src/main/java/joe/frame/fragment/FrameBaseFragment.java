@@ -68,12 +68,12 @@ public abstract class FrameBaseFragment extends Fragment {
     /**
      * 注册EventBus
      */
-    protected void registerEventBus() {
+    protected final void registerEventBus() {
         EventBus.getDefault().register(this);
         isRegisterEventBus = true;
     }
 
-    protected void registerEventBusForSticky() {
+    protected final void registerEventBusForSticky() {
         EventBus.getDefault().registerSticky(this);
         isRegisterEventBus = true;
     }
@@ -89,7 +89,7 @@ public abstract class FrameBaseFragment extends Fragment {
         super.onDestroy();
     }
 
-    protected FrameLayout getRootLayout() {
+    protected final FrameLayout getRootLayout() {
         return frameLayout;
     }
 
@@ -98,7 +98,7 @@ public abstract class FrameBaseFragment extends Fragment {
      *
      * @return
      */
-    public View getContentView() {
+    public final View getContentView() {
         return contentView;
     }
 
@@ -107,13 +107,13 @@ public abstract class FrameBaseFragment extends Fragment {
      *
      * @param resID
      */
-    protected void setMyContentView(int resID) {
+    protected final void setMyContentView(int resID) {
         frameLayout.removeAllViews();
         contentView = LayoutInflater.from(context).inflate(resID, frameLayout);
         autoInjectViewField();
     }
 
-    protected void setMyContentView(View view) {
+    protected final void setMyContentView(View view) {
         contentView = view;
         frameLayout.removeAllViews();
         frameLayout.addView(view);
@@ -123,7 +123,7 @@ public abstract class FrameBaseFragment extends Fragment {
     /**
      * 解析注解，给带有@ViewInject注解的View赋值
      */
-    private void autoInjectViewField() {
+    private final void autoInjectViewField() {
         try {
             Class<?> clazz = this.getClass();
             Field[] fields = clazz.getDeclaredFields();//获得Fragment中声明的字段
@@ -167,18 +167,18 @@ public abstract class FrameBaseFragment extends Fragment {
      * @param resId
      * @return
      */
-    protected View findViewById(int resId) {
+    protected final View findViewById(int resId) {
         return frameLayout.findViewById(resId);
     }
 
-    protected View findViewByTag(Object tag) {
+    protected final View findViewByTag(Object tag) {
         return frameLayout.findViewWithTag(tag);
     }
 
     /**
      * 结束当前fragment
      */
-    protected void finish() {
+    protected final void finish() {
         /**
          * 如果当前fragment不是根fragment
          */

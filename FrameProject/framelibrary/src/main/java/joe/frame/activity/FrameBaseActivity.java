@@ -139,7 +139,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param color 颜色
      */
-    public void setCenterTitleColor(int color) {
+    public final void setCenterTitleColor(int color) {
         if (mTitleTv != null) {
             mTitleTv.setTextColor(color);
         }
@@ -150,7 +150,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param size 大小
      */
-    public void setCenterTitleSize(float size) {
+    public final void setCenterTitleSize(float size) {
         if (mTitleTv != null) {
             mTitleTv.setTextSize(size);
         }
@@ -167,12 +167,12 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 注册EventBus
      */
-    protected void registerEventBus() {
+    protected final void registerEventBus() {
         EventBus.getDefault().register(this);
         isRegisterEventBus = true;
     }
 
-    protected void registerEventBusForSticky() {
+    protected final void registerEventBusForSticky() {
         EventBus.getDefault().registerSticky(this);
         isRegisterEventBus = true;
     }
@@ -194,7 +194,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @return 根布局Id
      */
-    public int getRootFrameLayoutId() {
+    public final int getRootFrameLayoutId() {
         return R.id.rootlayout_baseactivity;
     }
 
@@ -203,7 +203,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @return 根布局
      */
-    public FrameLayout getRootFrameLayout() {
+    public final FrameLayout getRootFrameLayout() {
         return mContentLayout;
     }
 
@@ -212,27 +212,27 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param layoutResID 资源Id
      */
-    protected void setMyContentView(int layoutResID) {
+    protected final void setMyContentView(int layoutResID) {
         if (mContentLayout != null) {
             LayoutInflater.from(this).inflate(layoutResID, mContentLayout, true);
         }
         autoInjectViewField();
     }
 
-    protected void setMyContentView(View view) {
+    protected final void setMyContentView(View view) {
         mContentLayout.removeAllViews();
         mContentLayout.addView(view);
         autoInjectViewField();
     }
 
-    protected View findViewByTag(Object tag) {
+    protected final View findViewByTag(Object tag) {
         return mContentLayout.findViewWithTag(tag);
     }
 
     /**
      * 解析注解，给带有@ViewInject注解的View赋值
      */
-    private void autoInjectViewField() {
+    private final void autoInjectViewField() {
         try {
             Class<?> clazz = this.getClass();
             Field[] fields = clazz.getDeclaredFields();//获得Activity中声明的字段
@@ -273,7 +273,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * Toolbar相关
      */
-    public Toolbar getToolbar() {
+    public final Toolbar getToolbar() {
         if (mToolbar != null) {
             return mToolbar;
         } else {
@@ -281,13 +281,13 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         }
     }
 
-    public void hideToolbar() {
+    public final void hideToolbar() {
         if (mToolbar != null) {
             mToolbar.setVisibility(View.GONE);
         }
     }
 
-    public void showToolbar() {
+    public final void showToolbar() {
         if (mToolbar != null) {
             mToolbar.setVisibility(View.VISIBLE);
         }
@@ -309,7 +309,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @return mResideMenu
      */
-    protected ResideMenu initResideMenu(int backgroundResId) {
+    protected final ResideMenu initResideMenu(int backgroundResId) {
         mResideMenu = new ResideMenu(this);
         mResideMenu.attachToActivity(this);
         mResideMenu.setScaleValue(DEFAULT_SCALE);
@@ -322,7 +322,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @return 侧滑菜单实例
      */
-    public ResideMenu getResideMenu() {
+    public final ResideMenu getResideMenu() {
         if (mResideMenu != null) {
             return mResideMenu;
         } else {
@@ -336,7 +336,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      * @param swipeDirection 侧滑方向
      * @return mResideMenu
      */
-    protected ResideMenu initResideMenu(int swipeDirection, int backgroundResId) {
+    protected final ResideMenu initResideMenu(int swipeDirection, int backgroundResId) {
         this.direction = swipeDirection;
         mResideMenu = new ResideMenu(this);
         mResideMenu.attachToActivity(this);
@@ -357,7 +357,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param item
      */
-    protected void addMenuItemToMenu(ResideMenuItem item) {
+    protected final void addMenuItemToMenu(ResideMenuItem item) {
         if (mResideMenu != null) {
             mResideMenu.addMenuItem(item, this.direction);
         }
@@ -368,7 +368,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param items
      */
-    protected void addMenuItemsToMenu(ArrayList<ResideMenuItem> items) {
+    protected final void addMenuItemsToMenu(ArrayList<ResideMenuItem> items) {
         if (mResideMenu != null) {
             for (ResideMenuItem item : items) {
                 mResideMenu.addMenuItem(item, this.direction);
@@ -381,7 +381,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param view 需要自己处理滑动事件的View
      */
-    protected void addIgnoredView(View view) {
+    protected final void addIgnoredView(View view) {
         if (mResideMenu != null) {
             mResideMenu.addIgnoredView(view);
         }
@@ -392,7 +392,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
      *
      * @param fragment
      */
-    protected void addIgnoredFragment(FrameBaseFragment fragment) {
+    protected final void addIgnoredFragment(FrameBaseFragment fragment) {
         if (mResideMenu != null) {
             mResideMenu.addIgnoredView(fragment.getContentView());
         }
