@@ -104,6 +104,10 @@ public class WifiUtils {
     public String getMacAddress() {
         return (mWifiInfo == null) ? "NULL" : mWifiInfo.getMacAddress();
     }
+	
+	public String getSSID() {
+		return (mWifiInfo == null) ? "NULL" : mWifiInfo.getSSID();
+	}
 
     public String getBSSID() {
         return (mWifiInfo == null) ? "NULL" : mWifiInfo.getBSSID();
