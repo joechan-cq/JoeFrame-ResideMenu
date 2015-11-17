@@ -1,4 +1,4 @@
-package joe.frame.dialog;
+﻿package joe.frame.dialog;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -98,7 +98,7 @@ public class BaseDialogFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (width > minWidth && height > minHeight) {
+        if (width >= minWidth && height >= minHeight) {
             getDialog().getWindow().setLayout(width, height);
         }
     }
@@ -129,12 +129,8 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * 设置Dialog内容text
      *
-     * @param resId
+     * @param content
      */
-    public void setContent(int resId) {
-        setContent(getString(resId));
-    }
-
     public void setContent(String content) {
         this.content = content;
         if (isShown) {
@@ -157,13 +153,9 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * 设置Ok按钮
      *
-     * @param resId
+     * @param text
      * @param listener
      */
-    public void setOkBtn(int resId, View.OnClickListener listener) {
-        setOkBtn(getString(resId), listener);
-    }
-
     public void setOkBtn(String text, View.OnClickListener listener) {
         this.okText = text;
         this.okListener = listener;
@@ -187,13 +179,9 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * 设置cancel按钮
      *
-     * @param resId
+     * @param text
      * @param listener
      */
-    public void setCancelBtn(int resId, View.OnClickListener listener) {
-        setCancelBtn(getString(resId), listener);
-    }
-
     public void setCancelBtn(String text, View.OnClickListener listener) {
         this.cancelText = text;
         this.cancelListener = listener;
@@ -212,10 +200,6 @@ public class BaseDialogFragment extends DialogFragment {
         if (isShown) {
             update();
         }
-    }
-
-    public void setOtherBtn(int resId, View.OnClickListener listener) {
-        setOtherBtn(getString(resId), listener);
     }
 
     public void setOtherBtn(String text, View.OnClickListener listener) {
