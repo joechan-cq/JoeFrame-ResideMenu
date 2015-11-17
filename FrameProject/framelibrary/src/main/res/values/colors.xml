@@ -314,4 +314,9 @@
     <color name="material_blue_grey_95">#ff21272b</color>
     <color name="material_deep_teal_20">#ff80cbc4</color>
     <color name="material_deep_teal_50">#ff009688</color>
+
+    <!-- BaseDialogFragment -->
+    <color name="base_dialog_card_bg">#e9eeeeee</color>
+    <color name="base_dialog_content_color">#5e5e5e</color>
+    <color name="base_dialog_btn_color">#ff468a</color>
 </resources>

@@ -10,6 +10,17 @@
     <dimen name="dialog_btn_textSize">15sp</dimen>
     <dimen name="dialog_drawable_frame_width_height">53dp</dimen>
 
+    <!-- BaseDialogFragment -->
+    <dimen name="dialog_fragment_padding_top_bottom">15dp</dimen>
+    <dimen name="dialog_fragment_padding_left_right">18dp</dimen>
+    <dimen name="dialog_fragment_title_heigh">40dp</dimen>
+    <dimen name="dialog_fragment_title_textSize">26sp</dimen>
+    <dimen name="dialog_fragment_content_textSize">20sp</dimen>
+    <dimen name="dialog_fragment_content_maxheight">180dp</dimen>
+    <dimen name="dialog_fragment_btn_height">23dp</dimen>
+    <dimen name="dialog_fragment_btn_textSize">18sp</dimen>
+    <dimen name="dialog_fragment_btn_padding_left_right">10dp</dimen>
+
     <!-- Toolbar -->
     <dimen name="toolbar_centertitle_size">20sp</dimen>
 </resources>

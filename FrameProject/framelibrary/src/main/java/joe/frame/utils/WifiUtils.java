@@ -7,6 +7,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,18 +25,18 @@ public class WifiUtils {
     public WifiUtils(Context context) {
         mWifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         mWifiInfo = mWifiManager.getConnectionInfo();
+        mWifiList = new ArrayList<>();
     }
 
-    public boolean openWifi() {//打开wifi
+    public boolean isWifiEnable() {
+        return mWifiManager.isWifiEnabled();
+    }
+
+    public void openWifi() {
+        //打开wifi
         if (!mWifiManager.isWifiEnabled()) {
             mWifiManager.setWifiEnabled(true);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
-        return mWifiManager.isWifiEnabled();
     }
 
     public void closeWifi() {
@@ -88,11 +89,37 @@ public class WifiUtils {
     }
 
     public List<ScanResult> getWifiList() {
-        return mWifiList;
+        return mWifiList = mWifiManager.getScanResults();
+    }
+
+    public List<ScanResult> getWifiListWithFilting() {
+        mWifiList = mWifiManager.getScanResults();
+        List<ScanResult> filtWifiLists = new ArrayList<>();
+        boolean tf = false;
+        for (ScanResult result : mWifiList) {
+            tf = false;
+            for (ScanResult r : filtWifiLists) {
+                if (r.SSID.equals(result.SSID)) {
+                    tf = true;
+                    int level1 = WifiManager.calculateSignalLevel(r.level, 5);
+                    int level2 = WifiManager.calculateSignalLevel(result.level, 5);
+                    if (level1 < level2) {
+                        filtWifiLists.remove(r);
+                        filtWifiLists.add(result);
+                    }
+                    break;
+                }
+            }
+            if (!tf) {
+                filtWifiLists.add(result);
+            }
+        }
+        return filtWifiLists;
     }
 
     public StringBuilder lookUpScan() {// 查看扫描结果
         StringBuilder stringBuilder = new StringBuilder();
+        mWifiList = mWifiManager.getScanResults();
         for (int i = 0; i < mWifiList.size(); i++) {
             stringBuilder.append("Index_" + new Integer(i + 1).toString() + ":");
             stringBuilder.append((mWifiList.get(i)).toString());
@@ -102,15 +129,18 @@ public class WifiUtils {
     }
 
     public String getMacAddress() {
-        return (mWifiInfo == null) ? "NULL" : mWifiInfo.getMacAddress();
+        mWifiInfo = mWifiManager.getConnectionInfo();
+        return (mWifiInfo == null) ? "" : mWifiInfo.getMacAddress();
     }
-	
-	public String getSSID() {
-		return (mWifiInfo == null) ? "NULL" : mWifiInfo.getSSID();
-	}
+
+    public String getSSID() {
+        mWifiInfo = mWifiManager.getConnectionInfo();
+        return (mWifiInfo == null) ? "" : mWifiInfo.getSSID().substring(1, mWifiInfo.getSSID().length() - 1);
+    }
 
     public String getBSSID() {
-        return (mWifiInfo == null) ? "NULL" : mWifiInfo.getBSSID();
+        mWifiInfo = mWifiManager.getConnectionInfo();
+        return (mWifiInfo == null) ? "" : mWifiInfo.getBSSID();
     }
 
     public DhcpInfo getDhcpInfo() {
@@ -118,10 +148,12 @@ public class WifiUtils {
     }
 
     public int getIPAddress() {
+        mWifiInfo = mWifiManager.getConnectionInfo();
         return (mWifiInfo == null) ? 0 : mWifiInfo.getIpAddress();
     }
 
     public int getNetworkId() {
+        mWifiInfo = mWifiManager.getConnectionInfo();
         return (mWifiInfo == null) ? 0 : mWifiInfo.getNetworkId();
     }
 
@@ -133,8 +165,8 @@ public class WifiUtils {
     public void addNetwork(WifiConfiguration wcg) { // 添加一个网络配置并连接
         int wcgID = mWifiManager.addNetwork(wcg);
         boolean b = mWifiManager.enableNetwork(wcgID, true);
-        System.out.println("addNetwork--" + wcgID);
-        System.out.println("enableNetwork--" + b);
+        System.out.println("addNetwork:" + wcgID);
+        System.out.println("enableNetwork:" + b);
     }
 
     public void disconnectWifi(int netId) {
@@ -142,7 +174,7 @@ public class WifiUtils {
         mWifiManager.disconnect();
     }
 
-    public WifiConfiguration CreateWifiInfo(String SSID, String Password, int Type) {
+    public WifiConfiguration createWifiInfo(String SSID, String password, int type) {
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
@@ -151,21 +183,20 @@ public class WifiUtils {
         config.allowedProtocols.clear();
         config.SSID = "\"" + SSID + "\"";
 
-        WifiConfiguration tempConfig = this.IsExsits(SSID);
+        WifiConfiguration tempConfig = this.isExsits(SSID);
 
         if (tempConfig != null) {
             mWifiManager.removeNetwork(tempConfig.networkId);
         } else {
         }
-
-        if (Type == 1) { // WIFICIPHER_NOPASS
-            config.wepKeys[0] = "";
+        if (type == 1) { // WIFICIPHER_NOPASS
+            config.wepKeys[0] = "\"" + "\"";
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             config.wepTxKeyIndex = 0;
         }
-        if (Type == 2) {// WIFICIPHER_WEP
+        if (type == 2) {// WIFICIPHER_WEP
             config.hiddenSSID = true;
-            config.wepKeys[0] = "\"" + Password + "\"";
+            config.wepKeys[0] = "\"" + password + "\"";
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -174,8 +205,8 @@ public class WifiUtils {
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
             config.wepTxKeyIndex = 0;
         }
-        if (Type == 3) { // WIFICIPHER_WPA
-            config.preSharedKey = "\"" + Password + "\"";
+        if (type == 3) { // WIFICIPHER_WPA
+            config.preSharedKey = "\"" + password + "\"";
             config.hiddenSSID = true;
             config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
@@ -189,7 +220,7 @@ public class WifiUtils {
         return config;
     }
 
-    private WifiConfiguration IsExsits(String SSID) { // 查看以前是否已经配置过该SSID
+    private WifiConfiguration isExsits(String SSID) { // 查看以前是否已经配置过该SSID
         List<WifiConfiguration> existingConfigs = mWifiManager.getConfiguredNetworks();
         for (WifiConfiguration existingConfig : existingConfigs) {
             if (existingConfig.SSID.equals("\"" + SSID + "\"")) {

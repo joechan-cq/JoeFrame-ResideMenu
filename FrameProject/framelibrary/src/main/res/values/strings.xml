@@ -6,4 +6,7 @@
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
     <string name="LOADING">Loading...</string>
+
+    <string name="dialog_btn_ok">OK</string>
+    <string name="dialog_btn_cancel">CANCEL</string>
 </resources>
