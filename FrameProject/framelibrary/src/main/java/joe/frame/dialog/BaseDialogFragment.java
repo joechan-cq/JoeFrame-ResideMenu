@@ -1,4 +1,4 @@
-﻿package joe.frame.dialog;
+package joe.frame.dialog;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import joe.frame.utils.DensityUtils;
 import joe.framelibrary.R;
 
 /**
@@ -99,7 +100,9 @@ public class BaseDialogFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         if (width >= minWidth && height >= minHeight) {
-            getDialog().getWindow().setLayout(width, height);
+            getDialog().getWindow().setLayout(DensityUtils.dp2px(getContext(), width), DensityUtils.dp2px(getContext(), height));
+        } else {
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, DensityUtils.dp2px(getContext(), minHeight));
         }
     }
 
@@ -129,8 +132,12 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * 设置Dialog内容text
      *
-     * @param content
+     * @param resId
      */
+    public void setContent(int resId) {
+        setContent(getString(resId));
+    }
+
     public void setContent(String content) {
         this.content = content;
         if (isShown) {
@@ -153,9 +160,13 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * 设置Ok按钮
      *
-     * @param text
+     * @param resId
      * @param listener
      */
+    public void setOkBtn(int resId, View.OnClickListener listener) {
+        setOkBtn(getString(resId), listener);
+    }
+
     public void setOkBtn(String text, View.OnClickListener listener) {
         this.okText = text;
         this.okListener = listener;
@@ -179,9 +190,13 @@ public class BaseDialogFragment extends DialogFragment {
     /**
      * 设置cancel按钮
      *
-     * @param text
+     * @param resId
      * @param listener
      */
+    public void setCancelBtn(int resId, View.OnClickListener listener) {
+        setCancelBtn(getString(resId), listener);
+    }
+
     public void setCancelBtn(String text, View.OnClickListener listener) {
         this.cancelText = text;
         this.cancelListener = listener;
@@ -200,6 +215,10 @@ public class BaseDialogFragment extends DialogFragment {
         if (isShown) {
             update();
         }
+    }
+
+    public void setOtherBtn(int resId, View.OnClickListener listener) {
+        setOtherBtn(getString(resId), listener);
     }
 
     public void setOtherBtn(String text, View.OnClickListener listener) {
