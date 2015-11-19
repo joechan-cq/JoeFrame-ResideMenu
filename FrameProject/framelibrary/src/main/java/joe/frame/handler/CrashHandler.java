@@ -162,12 +162,18 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     private void sendCrashReportsToServer(Context ctx) {
         String[] crFiles = getCrashReportFiles(ctx);
+        String filePath;
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            filePath = mContext.getExternalFilesDir("Crash").getAbsolutePath();
+        } else {
+            filePath = ctx.getFilesDir().getAbsolutePath();
+        }
         if (crFiles != null && crFiles.length > 0) {
             TreeSet<String> sortedFiles = new TreeSet<>();
             sortedFiles.addAll(Arrays.asList(crFiles));
 
             for (String fileName : sortedFiles) {
-                File cr = new File(ctx.getExternalFilesDir("Crash").getAbsolutePath(), fileName);
+                File cr = new File(filePath, fileName);
                 postReport(cr);
                 cr.delete();// 删除已发送的报告
             }
@@ -228,7 +234,12 @@ public class CrashHandler implements UncaughtExceptionHandler {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HHmmss", Locale.getDefault());
             String time = format.format(new Date(timestamp));
             fileName = "crash-" + time + CRASH_REPORTER_EXTENSION;
-            String filePath = mContext.getExternalFilesDir("Crash").getAbsolutePath();
+            String filePath;
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                filePath = mContext.getExternalFilesDir("Crash").getAbsolutePath();
+            } else {
+                filePath = mContext.getFilesDir().getAbsolutePath();
+            }
             File file = new File(filePath, fileName);
             trace = new FileOutputStream(file);
             mDeviceCrashInfo.storeToXML(trace, "crashLog");
