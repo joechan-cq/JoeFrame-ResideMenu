@@ -39,9 +39,11 @@
 			btn=(Button)findViewById(R.id.xxx);
 	
 ###Toolbar：
-设置标题，直接在Activity中使用setToolbarTitle（title,isCenter）来设置，<br>根据inCenter的值，将会显示在不同位置。
+设置标题，直接在Activity中使用setToolbarTitle（title,isCenter）来设置，<br>
+根据inCenter的值，将会显示在不同位置。<br>
 设置标题颜色和字体大小，getToolbar.setTitleColor。<br>
 使用Toolbar代替Actionbar。通过hideToolbar和showToolbar控制Toolbar的显示<br>隐藏（默认显示），通过getToolbar获取Toolbar对象。Toolbar用法，请查询资料。<br>
+设置Toobar的背景颜色使用getToolbar().setbackground取代style中的colorPrimary属性。<br>
 要改变弹出菜单，可使用getToobar().setPopupTheme(styleId)来设置：<br>
 ```
 <style name="PopupMenuTheme" parent="Theme.AppCompat.Light.NoActionBar">
