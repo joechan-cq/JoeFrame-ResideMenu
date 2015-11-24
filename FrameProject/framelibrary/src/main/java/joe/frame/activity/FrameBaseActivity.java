@@ -74,7 +74,6 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
             setSupportActionBar(mToolbar);
         } else {
             isSupportActionbar = false;
-            setSupportActionBar(null);
         }
 
         setTitle("");
