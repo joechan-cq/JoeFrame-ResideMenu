@@ -63,10 +63,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         mContentLayout = (FrameLayout) findViewById(R.id.rootlayout_baseactivity);
         context = this;
         ActivityTaskStack.add(this);
-
         mToolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        mToolbar.setBackgroundResource(R.color.royalblue);
-
         mTitleTv = (TextView) findViewById(R.id.toolbarTitle);
 
         if (setToolbarAsActionbar()) {
@@ -75,7 +72,6 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
         } else {
             isSupportActionbar = false;
         }
-
         setTitle("");
         fragmentManager = getSupportFragmentManager();
         onBaseActivityCreated(savedInstanceState);

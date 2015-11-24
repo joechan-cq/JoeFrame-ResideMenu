@@ -50,12 +50,12 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
         residemenu.addMenuHeader(img, DIRECTION_LEFT, null);
 
         getToolbar().setLogo(R.mipmap.ic_launcher);//LOGO,无点击事件
+        getToolbar().setBackgroundResource(R.color.greenyellow);
         //设置toolbar标题(兼容性)
         setToolbarTitle("test title", false);
 
         //设置toolbar
         getToolbar().setSubtitle("My sub title");
-        getToolbar().setBackgroundColor(getResources().getColor(R.color.royalblue));
         //设置弹出菜单的theme
         getToolbar().setPopupTheme(R.style.MenuTheme);
         //左上角按钮，可以绑定点击事件。
