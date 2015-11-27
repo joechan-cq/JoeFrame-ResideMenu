@@ -210,7 +210,7 @@ public class SwitchButton extends View {
         float halfHeightofS = sHeight / 2;
         bRadius = halfHeightofS;
         bOffset = bRadius * 0.3f;//变宽的度量,按钮中心点偏移1/3半径
-        bStrokeWidth = (halfHeightofS - bRadius) / 2;//按钮边框线宽度
+        bStrokeWidth = 0;//按钮边框线宽度
         sScale = 1 - bStrokeWidth / sHeight;//缩放比例
         sScaleCenterX = sWidth - halfHeightofS;//缩放坐标点
         sScaleCenterY = sCenterY;
@@ -245,16 +245,15 @@ public class SwitchButton extends View {
         return super.onTouchEvent(event);
     }
 
-
     public boolean isChecked() {
         return isChecked;
     }
 
     public void setChecked(boolean isChecked) {
         this.isChecked = isChecked;
-        if (isChecked) {
+        if (isChecked && (state == STATE_OFF || state == STATE_ONING)) {
             refreshState(STATE_ON);
-        } else {
+        } else if (state == STATE_ON || state == STATE_OFFING) {
             refreshState(STATE_OFF);
         }
     }
