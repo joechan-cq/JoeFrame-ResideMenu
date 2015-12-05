@@ -59,7 +59,7 @@ public class DemoSecondActivity extends FrameSecondaryActivity implements View.O
                     public AppUpdateInfo parseUpdateInfo(String info) {
                         AppUpdateInfo myinfo = new AppUpdateInfo();
                         myinfo.setAppName("heater");
-                        myinfo.setDownloadUrl("http://ota.53iq.com/static/file/heater_1440677443911812.apk");
+                        myinfo.setDownloadUrl("http://gdown.baidu.com/data/wisegame/995c832ad66b936c/yingyongbao_6003130.apk");
                         myinfo.setVersionName("2.0");
                         myinfo.setSuffixName(".apk");
                         myinfo.setUpdateInfo("it's a test");
