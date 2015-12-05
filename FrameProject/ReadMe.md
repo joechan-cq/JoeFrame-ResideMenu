@@ -129,7 +129,7 @@
 
 ##CrashHandler
 CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Application集成框架中的BaseApplication即可。<br>
-崩溃产生的日志，在内部存储中Android/data/<package-name>/files/Crash文件夹内，以XML形式记录，包括手机信息，系统信息，崩溃信息等。<br>
+崩溃产生的日志，在内部存储中Android/data/package-name/files/Crash文件夹内，以XML形式记录，包括手机信息，系统信息，崩溃信息等。<br>
 崩溃产生时，使用Toast进行提示，3S后自动关闭程序，不再弹出“程序停止运行”的对话框。
 
 ##Dialog类
@@ -141,4 +141,5 @@ CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Appli
 ##自定义View
 ###CountDownView——倒计时View
 ###RoundImageView——圆（角）的ImageView
+###SwitchButton——和IOS的switchbutton类似
 ![](https://github.com/1030310877/JoeFrame-ResideMenu/blob/master/pic/countdownroundiamge.png)
