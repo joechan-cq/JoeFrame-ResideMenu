@@ -5,6 +5,7 @@
     <string name="dialog_default_title">Here\'s a message!</string>
     <string name="dialog_ok">OK</string>
     <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_other">More</string>
     <string name="LOADING">Loading...</string>
 
     <string name="dialog_btn_ok">OK</string>

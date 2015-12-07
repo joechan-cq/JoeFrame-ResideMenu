@@ -1,12 +1,12 @@
 <resources>
     <!-- sweet dialog -->
-    <dimen name="alert_width">290dp</dimen>
+    <dimen name="alert_width">300dp</dimen>
     <dimen name="common_circle_width">3dp</dimen>
     <dimen name="progress_circle_radius">34dp</dimen>
     <dimen name="progress_wheel_width_height">80dp</dimen>
-    <dimen name="dialog_title_textSize">19sp</dimen>
+    <dimen name="dialog_title_textSize">20sp</dimen>
     <dimen name="dialog_btn_height">31dp</dimen>
-    <dimen name="dialog_content_textSize">14sp</dimen>
+    <dimen name="dialog_content_textSize">15sp</dimen>
     <dimen name="dialog_btn_textSize">15sp</dimen>
     <dimen name="dialog_drawable_frame_width_height">53dp</dimen>
 
