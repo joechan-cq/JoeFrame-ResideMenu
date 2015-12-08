@@ -27,6 +27,7 @@
 	12.升级任务添加强制升级操作。
 	13.更改asynchttp为1.4.9版，兼容API23及以上版本。
 	14.优化CountDownView。
+	15.优化AppupdateTask类，添加忽略该版本功能，以及根据MD5码判断是否已有安装包功能。
 	
 ##Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onBaseActivityCreated()。
@@ -74,7 +75,7 @@
 提示：在onCreateOptionsMenu中根据需要进行menu.clear()，不然会和activity的菜单进行叠加，一起显示。
 		
 ##AndroidEventBus：
-在Activity或Fragment中直接使用registerEventBus或regiseterEventBusForSticky注册即可,<br>注册后会自动在onDestroy中注销。
+在Activity或Fragment中直接使用registerEventBus或regiseterEventBusForSticky注册即可,<br>注册后会自动在onDestroy中注销。如需自行管理注销，仍旧按照原有方法使用。
 
 ##常用工具类：
 ###HttpUtils： 使用原生API进行http异步请求。
@@ -93,7 +94,7 @@
 <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 ```
 ###ToastUtils:	吐司类
-对Toast类进行简单封装。
+对Toast类进行简单封装，实现同一个context下，toast不会进行叠加延迟显示。
 
 ###ServiceUtils：  服务工具类
 作为工具类提供isServiceRunning()方法查询服务是否在运行。<br>
@@ -122,7 +123,7 @@
 
 ##Task类
 ###AppUpdateTask：
-使用时进行实例化，重写parseUpdateInfo方法进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。<br>该类使用AsyncHttpUtils进行下载，暂不支持断点下载，会有下载进度提示，完成后可点击进行安装。
+请继承该类，重写parseUpdateInfo方法和ignoreThisVersion方法。进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。<br>该类使用AsyncHttpUtils进行下载，暂不支持断点下载，会有下载进度提示，完成后可点击进行安装。
 
 ###SocketAsyncTask
 使用比较简单，内含心跳机制，有三种状态回调：连接成功，连接失败，连接断开。<br>接收和发送数据均已进行封装，可进行byte[]和String类型的发送和接收。<br>·注意点：内部使用了AsyncTask，因此使用时，和AsyncTask一样，<br>不能重复执行connect操作，每次均需要重新实例化。·
@@ -133,7 +134,7 @@ CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Appli
 崩溃产生时，使用Toast进行提示，3S后自动关闭程序，不再弹出“程序停止运行”的对话框。
 
 ##Dialog类
-集成了SweetAlert—dialog，可直接使用。
+集成了SweetAlert—dialog，并加以修改，添加第三个button。
 ###DirChooserDialog
 目录选择或文件选择对话框，可以直接使用，在回调中接收选择结果。
 ![](https://github.com/1030310877/JoeFrame-ResideMenu/blob/master/pic/dirchooserdialog.png)
