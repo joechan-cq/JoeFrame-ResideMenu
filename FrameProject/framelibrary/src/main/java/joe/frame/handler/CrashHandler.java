@@ -58,6 +58,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
      */
     private Context mContext;
 
+    private CrashFileSaveListener listener;
+
     /**
      * 使用Properties来保存设备的信息和错误堆栈信息
      */
@@ -72,16 +74,19 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 保证只有一个CrashHandler实例
+     *
+     * @param listener
      */
-    private CrashHandler() {
+    private CrashHandler(CrashFileSaveListener listener) {
+        this.listener = listener;
     }
 
     /**
      * 获取CrashHandler实例 ,单例模式
      */
-    public static CrashHandler getInstance() {
+    public static CrashHandler getInstance(CrashFileSaveListener listener) {
         if (INSTANCE == null) {
-            INSTANCE = new CrashHandler();
+            INSTANCE = new CrashHandler(listener);
         }
         return INSTANCE;
     }
@@ -143,6 +148,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
         collectCrashDeviceInfo(mContext);
         // 保存错误报告文件
         String crashFileName = saveCrashInfoToFile(ex);
+
+        listener.crashFileSaveTo(crashFileName);
         // 发送错误报告到服务器
         //sendPreviousReportsToServer();
         return true;
@@ -238,9 +245,12 @@ public class CrashHandler implements UncaughtExceptionHandler {
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
                 filePath = mContext.getExternalFilesDir("Crash").getAbsolutePath();
             } else {
-                filePath = mContext.getFilesDir().getAbsolutePath();
+                filePath = mContext.getFilesDir().getAbsolutePath() + File.separator + "Crash";
             }
             File file = new File(filePath, fileName);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdir();
+            }
             trace = new FileOutputStream(file);
             mDeviceCrashInfo.storeToXML(trace, "crashLog");
             trace.flush();
