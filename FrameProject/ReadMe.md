@@ -11,6 +11,7 @@
 ####如果使用Toolbar作为Actionbar，则项目Theme需要为AppCompat.NoActionbar，或直接使用框架内的AppTheme。
 ####该框架已整合成Library形式，添加项目依赖即可使用。
 ####Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成。
+####独立线程中无法使用asynchttputils，需要使用synchttputils。
 	
 #更新：
 	1.添加流式线性布局和竖型Viewpager。
@@ -28,6 +29,7 @@
 	13.更改asynchttp为1.4.9版，兼容API23及以上版本。
 	14.优化CountDownView。
 	15.优化AppupdateTask类，添加忽略该版本功能，以及根据MD5码判断是否已有安装包功能。
+	16.添加同步网络请求工具类。
 	
 ##Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onBaseActivityCreated()。
@@ -85,7 +87,10 @@
 参数类FrameRequestParams继承自asynchttp库的RequestParmas类，使用put(key,value)添<br>加参数。也可添加对象类型参数。<br>
 使用FrameHttpRspBytes，FrameHttpRspJson，FrameHttpRspString进行http请求回调。<br>
 回调方法onSuccess和onFailed中会有http状态码及其所表示的含义。<br>
-		
+
+###SyncHttpUtils:	封装了android-async-http库的同步请求
+`因为async-http内部实现中，好像无法在独立线程中使用asynchttpclient（为了安全防止回调所在线程被销毁造成异常），因此在独立线程中，需要使用同步网络请求synchttpclient，所以再封装了工具类，使用方法同AsyncHttpUtils，只是这个是同步的，会阻塞线程。`
+
 ###LogUtils：	日志记录类
 使用方法：LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
 使用时，更改其中isDebugModel为true，TAG为所需标识。如果需要保存到SD卡，<br>更改LogUtils下的isSaveDebugInfo和isSaveCrashInfo，以及更改CACHE_DIR_NAME。同时添加对应权限：
@@ -129,7 +134,7 @@
 使用比较简单，内含心跳机制，有三种状态回调：连接成功，连接失败，连接断开。<br>接收和发送数据均已进行封装，可进行byte[]和String类型的发送和接收。<br>·注意点：内部使用了AsyncTask，因此使用时，和AsyncTask一样，<br>不能重复执行connect操作，每次均需要重新实例化。·
 
 ##CrashHandler
-CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Application集成框架中的BaseApplication即可。<br>
+CrashHandler取代默认崩溃异常捕捉线程。使用时只要使项目Application集成框架中的BaseApplication即可，重写BaseApplication中的抽象方法，可以获取到保存的崩溃日志的地址。<br>
 崩溃产生的日志，在内部存储中Android/data/package-name/files/Crash文件夹内，以XML形式记录，包括手机信息，系统信息，崩溃信息等。<br>
 崩溃产生时，使用Toast进行提示，3S后自动关闭程序，不再弹出“程序停止运行”的对话框。
 
