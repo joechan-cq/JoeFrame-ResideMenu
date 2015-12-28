@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Description  Wifi设置工具类
+ * Description  Wifi设置工具类,建议在Application中进行实例化后全局使用
  * Created by chenqiao on 2015/11/11.
  */
 public class WifiUtils {

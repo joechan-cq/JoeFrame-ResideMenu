@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 
 /**
- * Description  音乐媒体播放工具类
+ * Description  音乐媒体播放工具类,因为是静态，所以每次使用前请release。
  * Created by chenqiao on 2015/10/16.
  */
 public class MediaUtils {
@@ -45,9 +45,11 @@ public class MediaUtils {
      * @param context 上下文
      * @param resId   资源ID
      */
-    public static void playFromRes(Context context, int resId) {
+    public static void playFromRes(Context context, int resId, boolean isLoop) {
         try {
-            MediaPlayer.create(context, resId).start();
+            mediaPlayer = MediaPlayer.create(context, resId);
+            mediaPlayer.setLooping(isLoop);
+            mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,12 +60,24 @@ public class MediaUtils {
      *
      * @param context 上下文
      * @param uri     资源Uri
+     * @param isLoop  是否循环播放
      */
-    public static void playFromUri(Context context, Uri uri) {
+    public static void playFromUri(Context context, Uri uri, boolean isLoop) {
         try {
-            MediaPlayer.create(context, uri).start();
+            mediaPlayer = MediaPlayer.create(context, uri);
+            mediaPlayer.setLooping(isLoop);
+            mediaPlayer.start();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * 释放MediaPlayer
+     */
+    public static void releaseMediaPlayer() {
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
         }
     }
 }

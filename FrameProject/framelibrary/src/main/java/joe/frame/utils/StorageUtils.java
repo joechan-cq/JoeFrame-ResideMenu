@@ -5,7 +5,7 @@ import android.content.Context;
 import java.io.File;
 
 /**
- * Description
+ * Description  更具
  * Created by chenqiao on 2015/11/19.
  */
 public class StorageUtils {

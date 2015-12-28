@@ -6,7 +6,7 @@ import joe.frame.handler.CrashFileSaveListener;
 import joe.frame.handler.CrashHandler;
 
 /**
- * Description
+ * Description  实现自定义异常处理的Application
  * Created by chenqiao on 2015/9/21.
  */
 public abstract class BaseApplication extends Application implements CrashFileSaveListener {

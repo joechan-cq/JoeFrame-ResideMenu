@@ -98,8 +98,12 @@ public class LocationUtils {
     public void locate(LocationChangedListener clistener) {
         this.locationChangedListener = clistener;
         //  每隔5秒请求定位一次，移动5米回调一次
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, time, distance, listener);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time, distance, listener);
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, time, distance, listener);
+        }
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time, distance, listener);
+        }
     }
 
     /**
