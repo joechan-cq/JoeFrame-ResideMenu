@@ -2,6 +2,7 @@ package com.demo.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -30,6 +31,11 @@ public class SecondFragment extends FrameBaseFragment {
 
     @ViewInject(R.id.countdown)
     private CountdownView countdownView;
+
+    @Override
+    protected boolean isShowLoading() {
+        return true;
+    }
 
     @Override
     protected void onBaseFragmentCreate(Bundle savedInstanceState) {
@@ -65,6 +71,13 @@ public class SecondFragment extends FrameBaseFragment {
         });
 
         countdownView.startCountDown(45 * 1000, 45 * 1000);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadFinished();
+            }
+        }, 2000);
     }
 
     @Override

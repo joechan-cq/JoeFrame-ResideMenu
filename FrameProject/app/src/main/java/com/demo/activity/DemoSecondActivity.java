@@ -67,6 +67,11 @@ public class DemoSecondActivity extends FrameSecondaryActivity implements View.O
                         myinfo.setIsMust(false);
                         return myinfo;
                     }
+
+                    @Override
+                    protected void ignoreThisVersion(AppUpdateInfo info) {
+
+                    }
                 };
                 String path = "";
                 if (SDCardUtils.isSDCardEnable()) {

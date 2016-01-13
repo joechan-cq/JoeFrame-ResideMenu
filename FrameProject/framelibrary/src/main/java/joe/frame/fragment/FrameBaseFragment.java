@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import org.simple.eventbus.EventBus;
 
@@ -28,6 +29,7 @@ public abstract class FrameBaseFragment extends Fragment {
 
     protected FrameBaseActivity context;
     private FrameLayout frameLayout;
+    private TextView loadingTv;
     private View contentView;
     private FragmentManager fragmentManager;
     private boolean isRegisterEventBus = false;
@@ -40,7 +42,14 @@ public abstract class FrameBaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingTv = (TextView) view.findViewById(R.id.tv_loading_root_fragment);
         frameLayout = (FrameLayout) view.findViewById(R.id.rootlayout_basefragment);
+        if (isShowLoading()) {
+            frameLayout.setVisibility(View.GONE);
+            loadingTv.setVisibility(View.VISIBLE);
+        } else {
+            loadFinished();
+        }
         frameLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -48,6 +57,22 @@ public abstract class FrameBaseFragment extends Fragment {
             }
         });
     }
+
+    /**
+     * 加载完成后需要显示内容调用该方法
+     */
+    public void loadFinished() {
+        frameLayout.setVisibility(View.VISIBLE);
+        loadingTv.setVisibility(View.GONE);
+    }
+
+    /**
+     * 是否显示等待
+     *
+     * @return true：fragment不会马上显示内容，而是显示loading背景，调用showContent方法显示内容
+     * false:直接显示内容
+     */
+    protected abstract boolean isShowLoading();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -59,9 +84,6 @@ public abstract class FrameBaseFragment extends Fragment {
 
     /**
      * Fragment创建
-     *
-     * @param savedInstanceState
-     * @author chenqiao
      */
     protected abstract void onBaseFragmentCreate(Bundle savedInstanceState);
 
@@ -95,8 +117,6 @@ public abstract class FrameBaseFragment extends Fragment {
 
     /**
      * 获取Fragment显示的View
-     *
-     * @return
      */
     public final View getContentView() {
         return contentView;
@@ -104,8 +124,6 @@ public abstract class FrameBaseFragment extends Fragment {
 
     /**
      * 设置内容
-     *
-     * @param resID
      */
     protected final void setMyContentView(int resID) {
         frameLayout.removeAllViews();
@@ -123,7 +141,7 @@ public abstract class FrameBaseFragment extends Fragment {
     /**
      * 解析注解，给带有@ViewInject注解的View赋值
      */
-    private final void autoInjectViewField() {
+    private void autoInjectViewField() {
         try {
             Class<?> clazz = this.getClass();
             Field[] fields = clazz.getDeclaredFields();//获得Fragment中声明的字段
@@ -145,9 +163,6 @@ public abstract class FrameBaseFragment extends Fragment {
 
     /**
      * 替换Activity的内容
-     *
-     * @param fragment
-     * @param isBackStack
      */
     protected void replaceFragment(FrameBaseFragment fragment, String isBackStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -163,9 +178,6 @@ public abstract class FrameBaseFragment extends Fragment {
 
     /**
      * 在{@link #setMyContentView(int) or #setMyContentView(View)}之后获取其中View
-     *
-     * @param resId
-     * @return
      */
     protected final View findViewById(int resId) {
         return frameLayout.findViewById(resId);

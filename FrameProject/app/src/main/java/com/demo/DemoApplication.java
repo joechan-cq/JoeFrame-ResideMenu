@@ -14,6 +14,11 @@ public class DemoApplication extends BaseApplication {
         instance = this;
     }
 
+    @Override
+    public void crashFileSaveTo(String filePath) {
+
+    }
+
     public synchronized static DemoApplication getInstance() {
         return instance;
     }

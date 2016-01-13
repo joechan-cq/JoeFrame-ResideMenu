@@ -31,6 +31,11 @@ public class DemoFragment extends FrameBaseFragment {
     private ListView listView;
 
     @Override
+    protected boolean isShowLoading() {
+        return false;
+    }
+
+    @Override
     protected void onBaseFragmentCreate(Bundle savedInstanceState) {
         setMyContentView(R.layout.demo_weblayout);
         btn.setOnClickListener(new View.OnClickListener() {

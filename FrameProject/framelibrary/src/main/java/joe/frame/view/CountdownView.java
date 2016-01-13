@@ -34,7 +34,7 @@ public class CountdownView extends View {
 
     private int mFirstColor, mSecondColor, mTextColor;
 
-    private int mCircleWidth = 15, mTextSize = 40;
+    private int mCircleWidth = 12, mTextSize = 30;
 
     private Paint mPaint;
     private Rect bound;
@@ -105,7 +105,7 @@ public class CountdownView extends View {
         } else {
             mPaint.setTextSize(mTextSize);
             mPaint.getTextBounds("00:00", 0, "00:00".length(), bound);
-            width = bound.width() + mCircleWidth * 2 + 120;
+            width = bound.width() + mCircleWidth * 2 + 180;
         }
         height = width;
         setMeasuredDimension(width, height);
@@ -131,11 +131,11 @@ public class CountdownView extends View {
         }
         mPaint.reset();
         mPaint.setColor(Color.parseColor("#4388FC"));
-        mPaint.setTextSize(mTextSize - 20);
+        mPaint.setTextSize(mTextSize - 10);
         mPaint.setAntiAlias(true);
         Rect remindBound = new Rect();
         mPaint.getTextBounds(remind, 0, remind.length(), remindBound);
-        canvas.drawText(remind, (getMeasuredWidth() - remindBound.width()) / 2, (getMeasuredHeight() + remindBound.height()) / 2 - 50, mPaint);
+        canvas.drawText(remind, (getMeasuredWidth() - remindBound.width()) / 2, (getMeasuredHeight() + remindBound.height()) / 2 - 35, mPaint);
 
         //画时间
         mPaint.reset();

@@ -255,7 +255,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
             mDeviceCrashInfo.storeToXML(trace, "crashLog");
             trace.flush();
             trace.close();
-            return fileName;
+            return file.getAbsolutePath();
         } catch (Exception e) {
             Log.e(TAG, "an error occured while writing report file..."
                     + fileName, e);
