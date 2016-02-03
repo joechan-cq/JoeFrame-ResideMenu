@@ -189,13 +189,19 @@ public abstract class FrameBaseFragment extends Fragment {
 
     /**
      * 结束当前fragment
+     *
+     * @param tf 当前framgent为根时，时候退出activity
      */
-    protected final void finish() {
+    protected final void finish(boolean tf) {
         /**
          * 如果当前fragment不是根fragment
          */
         if (fragmentManager.getBackStackEntryCount() > 1) {
             fragmentManager.popBackStack();
+        } else {
+            if (tf) {
+                getActivity().finish();
+            }
         }
     }
 }
