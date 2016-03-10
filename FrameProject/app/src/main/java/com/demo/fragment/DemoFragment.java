@@ -10,7 +10,6 @@ import android.widget.ListView;
 
 import com.demo.frameproject.R;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +17,6 @@ import joe.frame.adapter.CommonAdapter;
 import joe.frame.adapter.ViewHolder;
 import joe.frame.annotations.ViewInject;
 import joe.frame.fragment.FrameBaseFragment;
-import joe.frame.utils.FileScanUtils;
-import joe.frame.utils.SDCardUtils;
-import joe.frame.utils.ToastUtils;
 
 /**
  * Description
@@ -64,10 +60,6 @@ public class DemoFragment extends FrameBaseFragment {
             }
         };
         listView.setAdapter(myAdapter);
-
-        FileScanUtils scanUtils = new FileScanUtils();
-        List<File> result = scanUtils.scanBySuffixes(new File(SDCardUtils.getSDCardPath() + "nd"), FileScanUtils.DOCUMENT_SUFFIX, 2);
-        ToastUtils.show(getActivity(), result.toString());
     }
 
     @Override

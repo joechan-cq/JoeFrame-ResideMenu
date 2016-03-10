@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/whitesmoke">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whitesmoke">
 
     <Button
         android:id="@+id/jump"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="切换Fragment"/>
+        android:layout_alignParentLeft="true"
+        android:text="切换Fragment" />
+
+    <joe.frame.view.MarqueeTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/jump"
+        android:text="这是一个跑马灯"
+        android:textColor="@color/black" />
 
     <ListView
         android:id="@+id/listView"
@@ -19,15 +28,5 @@
         android:layout_above="@+id/jump"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/view2"/>
-
-    <joe.frame.view.ClearEditText
-        android:id="@+id/view2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/black"
-        android:textSize="24sp"/>
+        android:layout_below="@+id/view2" />
 </RelativeLayout>
