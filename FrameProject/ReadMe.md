@@ -2,16 +2,13 @@
 	该框架集成使用了如下第三方库：
 	1.SweetDialog（对话框）、Progresswheel（圆形进度条）、nineoldandroids.jar（动画兼容包）
 	2.ResideMenu（侧滑菜单）
-	3.android-async-http-1.4.9.jar（异步网络请求）
-	4.androidEventBus（事件订阅处理）
-	5.@Trinea大神些的工具类
+	3.androidEventBus（事件订阅处理）
+	4.@Trinea大神些的工具类
 
 ##注意
 ###该框架要求API>=11。
 ####如果使用Toolbar作为Actionbar，则项目Theme需要为AppCompat.NoActionbar，或直接使用框架内的AppTheme。
 ####该框架已整合成Library形式，添加项目依赖即可使用。
-####Library之外无需再导入eventbus和asynchttp的jar包，更易进行集成。
-####独立线程中无法使用asynchttputils，需要使用synchttputils。
 	
 #更新：
 	1.添加流式线性布局和竖型Viewpager。
@@ -26,10 +23,10 @@
 	10.添加崩溃捕捉crashHandler类,集成BaseApplication即可使用。
 	11.完善ServiceUtils类，可以简单几步实现服务监听防杀。
 	12.升级任务添加强制升级操作。
-	13.更改asynchttp为1.4.9版，兼容API23及以上版本。
-	14.优化CountDownView。
-	15.优化AppupdateTask类，添加忽略该版本功能，以及根据MD5码判断是否已有安装包功能。
-	16.添加同步网络请求工具类。
+	13.优化CountDownView。
+	14.优化AppupdateTask类，添加忽略该版本功能，以及根据MD5码判断是否已有安装包功能。
+	15.添加同步网络请求工具类。
+	16.去除了封装的网络框架。AppupdateTask采用DownloadManager下载
 	
 ##Activity：FrameBaseActivity
 	使用时继承FrameBaseActivity。入口方法为onBaseActivityCreated()。
@@ -81,15 +78,6 @@
 
 ##常用工具类：
 ###HttpUtils： 使用原生API进行http异步请求。
-	
-###AsyncHttpUtils:	完全再封装android-async-http库
-使用doHttpRequestForXXXX的方法进行不同返回值的请求，具体查看该类源代码。<br>
-参数类FrameRequestParams继承自asynchttp库的RequestParmas类，使用put(key,value)添<br>加参数。也可添加对象类型参数。<br>
-使用FrameHttpRspBytes，FrameHttpRspJson，FrameHttpRspString进行http请求回调。<br>
-回调方法onSuccess和onFailed中会有http状态码及其所表示的含义。<br>
-
-###SyncHttpUtils:	封装了android-async-http库的同步请求
-`因为async-http内部实现中，好像无法在独立线程中使用asynchttpclient（为了安全防止回调所在线程被销毁造成异常），因此在独立线程中，需要使用同步网络请求synchttpclient，所以再封装了工具类，使用方法同AsyncHttpUtils，只是这个是同步的，会阻塞线程。`
 
 ###LogUtils：	日志记录类
 使用方法：LogUtils.d	LogUtils.i	LogUtils.e	LogUtils.v
@@ -128,7 +116,7 @@
 
 ##Task类
 ###AppUpdateTask：
-请继承该类，重写parseUpdateInfo方法和ignoreThisVersion方法。进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。<br>该类使用AsyncHttpUtils进行下载，暂不支持断点下载，会有下载进度提示，完成后可点击进行安装。
+请继承该类，重写parseUpdateInfo方法和ignoreThisVersion方法。进行从服务器获取的版本信息的解析，<br>并再封装成AppUpdateInfo类回传。AppUpdateInfo中的appname，downloadUrl，<br>versionname，suffixname（.apk），updateinfo数据必须进行设值。<br>并且调用info.setIsNeedToUpdate（true）后。在checkVersion时会进行升级提示。<br>调用checkVersion传入保存APK的路径请保证具有读写权限。
 
 ###SocketAsyncTask
 使用比较简单，内含心跳机制，有三种状态回调：连接成功，连接失败，连接断开。<br>接收和发送数据均已进行封装，可进行byte[]和String类型的发送和接收。<br>·注意点：内部使用了AsyncTask，因此使用时，和AsyncTask一样，<br>不能重复执行connect操作，每次均需要重新实例化。·
