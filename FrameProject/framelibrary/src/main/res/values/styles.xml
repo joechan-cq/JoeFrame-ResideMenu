@@ -17,6 +17,13 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="FullScreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <!-- sweet dialog -->
     <style name="alert_dialog" parent="android:Theme.Dialog">
         <item name="android:windowIsFloating">true</item>
@@ -34,8 +41,8 @@
         <item name="android:layout_height">@dimen/dialog_btn_height</item>
         <item name="android:background">@drawable/blue_button_background</item>
         <item name="android:textSize">@dimen/dialog_btn_textSize</item>
-        <item name="android:paddingLeft">21dp</item>
-        <item name="android:paddingRight">21dp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">18dp</item>
         <item name="android:textColor">@color/button_text_color</item>
     </style>
 </resources>

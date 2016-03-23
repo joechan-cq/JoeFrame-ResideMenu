@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import com.demo.fragment.DemoFragment;
 import com.demo.frameproject.R;
 import com.demo.service.DemoService;
-import com.demo.task.AboutTask;
 
 import joe.frame.activity.FrameBaseActivity;
 import joe.frame.dialog.SweetAlertDialog;
@@ -66,10 +65,6 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
                 residemenu.openMenu(DIRECTION_LEFT);
             }
         });
-
-        //进行HTTP请求
-        AboutTask.getInstance().getAboutForString();
-        AboutTask.getInstance().getAboutForJson(this);
 
         //启动服务
         Intent intent = new Intent(this, DemoService.class);

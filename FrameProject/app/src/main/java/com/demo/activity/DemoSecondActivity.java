@@ -15,7 +15,6 @@ import joe.frame.model.AppUpdateInfo;
 import joe.frame.task.AppUpdateTask;
 import joe.frame.utils.LogUtils;
 import joe.frame.utils.SDCardUtils;
-import joe.frame.utils.http.HttpMethod;
 
 /**
  * Description
@@ -59,7 +58,7 @@ public class DemoSecondActivity extends FrameSecondaryActivity implements View.O
                     public AppUpdateInfo parseUpdateInfo(String info) {
                         AppUpdateInfo myinfo = new AppUpdateInfo();
                         myinfo.setAppName("heater");
-                        myinfo.setDownloadUrl("http://gdown.baidu.com/data/wisegame/995c832ad66b936c/yingyongbao_6003130.apk");
+                        myinfo.setDownloadUrl("http://storage.56iq.net/group1/M00/00/03/CgoKRFbw1XyAQRMuACLWrYVlh-4040.apk");
                         myinfo.setVersionName("2.0");
                         myinfo.setSuffixName(".apk");
                         myinfo.setUpdateInfo("it's a test");
@@ -80,7 +79,7 @@ public class DemoSecondActivity extends FrameSecondaryActivity implements View.O
                 } else {
                     path = Environment.getDataDirectory().getPath();
                 }
-                task.checkVersion(this, true, "http://192.168.191.1:8020/AlipayTest/js/update.txt", path + "frame/", HttpMethod.GET);
+                task.checkVersion(this, true, "http://ota.53iq.com/static/file/daiji.txt", path + "frame/");
                 break;
         }
     }
