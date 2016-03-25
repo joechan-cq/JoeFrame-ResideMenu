@@ -16,9 +16,12 @@ import joe.framelibrary.R;
  */
 public class MarqueeTextView extends TextView {
 
-    //滚动速度
+    public static final int VERTICAL = 0;
+    public static final int HORIZONTAL = 1;
+
+    // 滚动速度
     private float speed;
-    //滚动的方向 0为垂直，1为水平
+    // 滚动的方向 0为垂直，1为水平
     private int orientation;
 
     public MarqueeTextView(Context context) {
@@ -31,7 +34,8 @@ public class MarqueeTextView extends TextView {
 
     public MarqueeTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.MarqueeTextView);
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.MarqueeTextView);
         orientation = a.getInt(R.styleable.MarqueeTextView_orientation, 1);
         speed = a.getFloat(R.styleable.MarqueeTextView_speed, 1.0f);
         if (speed < 0 || speed > 1.0f) {
@@ -100,7 +104,7 @@ public class MarqueeTextView extends TextView {
                 maxWidth += getTotalPaddingRight();
                 height += getTotalPaddingBottom();
                 height += getTotalPaddingTop();
-                setMeasuredDimension(maxWidth, height);
+                setMeasuredDimension(maxWidth + 20, height);
                 break;
             case 1:
                 break;
@@ -115,7 +119,8 @@ public class MarqueeTextView extends TextView {
                 String[] content = getText().toString().split("\n");
                 pointX = 0;
                 for (int p = 0; p < content.length; p++) {
-                    pointY = getHeight() / 2 - (metrics.ascent + metrics.descent) / 2 + p * getHeight() - scrollY;
+                    pointY = getHeight() / 2 - (metrics.ascent + metrics.descent)
+                            / 2 + p * getHeight() - scrollY;
                     float size = getTextSize();
                     Paint paint = new Paint();
                     paint.setAntiAlias(true);
@@ -124,7 +129,8 @@ public class MarqueeTextView extends TextView {
                     canvas.drawText(content[p], pointX, pointY, paint);
                 }
                 scrollY += step;
-                if (pointY < -getHeight() / 2 + (metrics.ascent + metrics.descent) / 2 - 5) {
+                if (pointY < -getHeight() / 2 + (metrics.ascent + metrics.descent)
+                        / 2 - 5) {
                     scrollY = -getHeight();
                 }
                 break;
@@ -149,8 +155,25 @@ public class MarqueeTextView extends TextView {
     }
 
     @Override
-    protected void onTextChanged(CharSequence text, int start, int lengthBefore, int lengthAfter) {
+    protected void onTextChanged(CharSequence text, int start,
+                                 int lengthBefore, int lengthAfter) {
         super.onTextChanged(text, start, lengthBefore, lengthAfter);
         initView();
+    }
+
+    public void setOrientation(int direction) {
+        if (direction < 0 || direction > 1) {
+
+        } else {
+            this.orientation = direction;
+        }
+    }
+
+    public void setSpeed(float spd) {
+        if (spd < 0 || spd > 1) {
+
+        } else {
+            this.speed = spd;
+        }
     }
 }
