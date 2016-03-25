@@ -3,63 +3,72 @@
     <!-- sweet dialog -->
     <declare-styleable name="Rotate3dAnimation">
         <attr name="rollType" format="enum">
-            <enum name="x" value="0"/>
-            <enum name="y" value="1"/>
-            <enum name="z" value="2"/>
+            <enum name="x" value="0" />
+            <enum name="y" value="1" />
+            <enum name="z" value="2" />
         </attr>
-        <attr name="fromDeg" format="float"/>
-        <attr name="toDeg" format="float"/>
-        <attr name="pivotX" format="fraction"/>
-        <attr name="pivotY" format="fraction"/>
+        <attr name="fromDeg" format="float" />
+        <attr name="toDeg" format="float" />
+        <attr name="pivotX" format="fraction" />
+        <attr name="pivotY" format="fraction" />
     </declare-styleable>
 
     <!-- progresswheel -->
     <declare-styleable name="ProgressWheel">
-        <attr name="matProg_progressIndeterminate" format="boolean"/>
-        <attr name="matProg_barColor" format="color"/>
-        <attr name="matProg_rimColor" format="color"/>
-        <attr name="matProg_rimWidth" format="dimension"/>
-        <attr name="matProg_spinSpeed" format="float"/>
-        <attr name="matProg_barSpinCycleTime" format="integer"/>
-        <attr name="matProg_circleRadius" format="dimension"/>
-        <attr name="matProg_fillRadius" format="boolean"/>
-        <attr name="matProg_barWidth" format="dimension"/>
-        <attr name="matProg_linearProgress" format="boolean"/>
+        <attr name="matProg_progressIndeterminate" format="boolean" />
+        <attr name="matProg_barColor" format="color" />
+        <attr name="matProg_rimColor" format="color" />
+        <attr name="matProg_rimWidth" format="dimension" />
+        <attr name="matProg_spinSpeed" format="float" />
+        <attr name="matProg_barSpinCycleTime" format="integer" />
+        <attr name="matProg_circleRadius" format="dimension" />
+        <attr name="matProg_fillRadius" format="boolean" />
+        <attr name="matProg_barWidth" format="dimension" />
+        <attr name="matProg_linearProgress" format="boolean" />
     </declare-styleable>
 
     <!-- RoundImageView -->
     <declare-styleable name="RoundImageView">
-        <attr name="borderRadius" format="dimension"/>
+        <attr name="borderRadius" format="dimension" />
         <attr name="type">
-            <enum name="circle" value="0"/>
-            <enum name="round" value="1"/>
+            <enum name="circle" value="0" />
+            <enum name="round" value="1" />
         </attr>
     </declare-styleable>
 
     <!-- SwitchButton -->
     <declare-styleable name="SwitchButton">
-        <attr name="isChecked" format="boolean"/>
-        <attr name="offColor" format="color"/>
-        <attr name="onColor" format="color"/>
-        <attr name="btnColor" format="color"/>
+        <attr name="isChecked" format="boolean" />
+        <attr name="offColor" format="color" />
+        <attr name="onColor" format="color" />
+        <attr name="btnColor" format="color" />
     </declare-styleable>
 
     <!-- CountDownView -->
     <declare-styleable name="CountdownView">
-        <attr name="firstColor" format="color"/>
-        <attr name="secondColor" format="color"/>
-        <attr name="circleWidth" format="dimension"/>
-        <attr name="textColor" format="color"/>
-        <attr name="textSize" format="dimension"/>
+        <attr name="firstColor" format="color" />
+        <attr name="secondColor" format="color" />
+        <attr name="circleWidth" format="dimension" />
+        <attr name="textColor" format="color" />
+        <attr name="textSize" format="dimension" />
     </declare-styleable>
 
     <!-- PeriodView -->
     <declare-styleable name="PeriodView">
-        <attr name="periodnum" format="integer"/>
-        <attr name="periodColor" format="color"/>
-        <attr name="uptextColor" format="color"/>
-        <attr name="downtextColor" format="color"/>
-        <attr name="uptextArray" format="reference"/>
-        <attr name="downtextArray" format="reference"/>
+        <attr name="periodnum" format="integer" />
+        <attr name="periodColor" format="color" />
+        <attr name="uptextColor" format="color" />
+        <attr name="downtextColor" format="color" />
+        <attr name="uptextArray" format="reference" />
+        <attr name="downtextArray" format="reference" />
+    </declare-styleable>
+
+    <!--MarqueeTextView-->
+    <declare-styleable name="MarqueeTextView">
+        <attr name="speed" format="float" />
+        <attr name="orientation">
+            <enum name="vertical" value="0" />
+            <enum name="horizontal" value="1" />
+        </attr>
     </declare-styleable>
 </resources>

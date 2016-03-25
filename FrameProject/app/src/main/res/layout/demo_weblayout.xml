@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whitesmoke">
@@ -18,8 +19,12 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/jump"
-        android:text="这是一个跑马灯"
-        android:textColor="@color/black" />
+        android:paddingBottom="15px"
+        android:paddingTop="15px"
+        android:text="这是一个跑马灯\n这是第二个跑马灯\n这是第三个跑马灯dafdsfasdfsdafdsafdsads"
+        android:textColor="@color/black"
+        app:orientation="vertical"
+        app:speed="0.3" />
 
     <ListView
         android:id="@+id/listView"
@@ -27,6 +32,5 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/jump"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/view2" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
