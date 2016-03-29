@@ -21,7 +21,7 @@
         android:layout_toRightOf="@+id/jump"
         android:paddingBottom="15px"
         android:paddingTop="15px"
-        android:text="这是一个跑马灯\n这是第二个跑马灯\n这是第三个跑马灯dafdsfasdfsdafdsafdsads"
+        android:text="这是一个跑马灯\n这是跑马灯的2号\n这是三号\n这是测试的fjdksfjksdafsdaf的打"
         android:textColor="@color/black"
         app:orientation="vertical"
         app:speed="0.3" />

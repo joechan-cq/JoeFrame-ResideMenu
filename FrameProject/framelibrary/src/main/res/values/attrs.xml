@@ -66,6 +66,7 @@
     <!--MarqueeTextView-->
     <declare-styleable name="MarqueeTextView">
         <attr name="speed" format="float" />
+        <attr name="newLine" format="integer" />
         <attr name="orientation">
             <enum name="vertical" value="0" />
             <enum name="horizontal" value="1" />

@@ -5,6 +5,9 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -24,6 +27,8 @@ public class MarqueeTextView extends TextView {
     // 滚动的方向 0为垂直，1为水平
     private int orientation;
 
+    private int newLine = 100;
+
     public MarqueeTextView(Context context) {
         this(context, null);
     }
@@ -38,6 +43,7 @@ public class MarqueeTextView extends TextView {
                 R.styleable.MarqueeTextView);
         orientation = a.getInt(R.styleable.MarqueeTextView_orientation, 1);
         speed = a.getFloat(R.styleable.MarqueeTextView_speed, 1.0f);
+        newLine = a.getInt(R.styleable.MarqueeTextView_newLine, 100);
         if (speed < 0 || speed > 1.0f) {
             speed = 1.0f;
         }
@@ -45,7 +51,7 @@ public class MarqueeTextView extends TextView {
         initView();
     }
 
-    private int textLength, textHeight;
+    private int textLength;
 
     private float pointX = 0;
     private float pointY = 0;
@@ -92,19 +98,19 @@ public class MarqueeTextView extends TextView {
                 String text = getText().toString();
                 String[] s = text.split("\n");
                 int maxWidth = 0;
-                int height = 0;
+                int minHeight = 999;
                 for (String item : s) {
                     Rect rect = measureText(item);
                     if (rect.width() > maxWidth) {
                         maxWidth = rect.width();
                     }
-                    textHeight = height = rect.height();
+                    if (rect.height() < minHeight) {
+                        minHeight = rect.height();
+                    }
                 }
                 maxWidth += getTotalPaddingLeft();
                 maxWidth += getTotalPaddingRight();
-                height += getTotalPaddingBottom();
-                height += getTotalPaddingTop();
-                setMeasuredDimension(maxWidth + 20, height);
+                setMeasuredDimension(maxWidth, minHeight + 10);
                 break;
             case 1:
                 break;
@@ -118,21 +124,26 @@ public class MarqueeTextView extends TextView {
             case 0:
                 String[] content = getText().toString().split("\n");
                 pointX = 0;
+                float y = 0;
+                float realY = 0;
+                float lastHeight = 0;
                 for (int p = 0; p < content.length; p++) {
-                    pointY = getHeight() / 2 - (metrics.ascent + metrics.descent)
-                            / 2 + p * getHeight() - scrollY;
-                    float size = getTextSize();
-                    Paint paint = new Paint();
-                    paint.setAntiAlias(true);
-                    paint.setTextSize(size);
-                    paint.setColor(getCurrentTextColor());
-                    canvas.drawText(content[p], pointX, pointY, paint);
+                    TextPaint textPaint = new TextPaint();
+                    textPaint.setColor(getCurrentTextColor());
+                    textPaint.setTextSize(getTextSize());
+                    canvas.save();
+                    realY = y + scrollY;
+                    canvas.translate(0, realY);
+                    StaticLayout layout = new StaticLayout(content[p], textPaint, newLine, Layout.Alignment.ALIGN_NORMAL, 1.0f, 0, false);
+                    layout.draw(canvas);
+                    canvas.restore();
+                    y += layout.getHeight();
+                    lastHeight = layout.getHeight();
                 }
-                scrollY += step;
-                if (pointY < -getHeight() / 2 + (metrics.ascent + metrics.descent)
-                        / 2 - 5) {
-                    scrollY = -getHeight();
+                if (realY + lastHeight < 0) {
+                    scrollY = getMeasuredHeight();
                 }
+                scrollY -= step;
                 break;
             case 1:
                 if (pointX >= width + 5) {
@@ -174,6 +185,12 @@ public class MarqueeTextView extends TextView {
 
         } else {
             this.speed = spd;
+        }
+    }
+
+    public void setNewLine(int length) {
+        if (length > 0) {
+            newLine = length;
         }
     }
 }
