@@ -5,7 +5,7 @@ import android.content.Context;
 import java.io.File;
 
 /**
- * Description  更具
+ * Description  根据是否有外部存储来获取缓存路径
  * Created by chenqiao on 2015/11/19.
  */
 public class StorageUtils {

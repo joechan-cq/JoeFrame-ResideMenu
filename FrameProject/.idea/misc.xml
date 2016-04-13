@@ -48,9 +48,6 @@
             <id>Android</id>
           </State>
           <State>
-            <id>Android Lint</id>
-          </State>
-          <State>
             <id>Code style issuesJava</id>
           </State>
           <State>

@@ -162,15 +162,31 @@ public abstract class FrameBaseFragment extends Fragment {
     }
 
     /**
-     * 替换Activity的内容
+     * 替换Activity的内容,或替换本身
      */
-    protected void replaceFragment(FrameBaseFragment fragment, String isBackStack) {
+    protected void replaceFragment(FrameBaseFragment fragment, String isBackToStack) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        if (TextUtils.isEmpty(isBackStack)) {
+        if (TextUtils.isEmpty(isBackToStack)) {
             fragmentTransaction.replace(context.getRootFrameLayoutId(), fragment);
         } else {
-            fragmentTransaction.replace(context.getRootFrameLayoutId(), fragment, isBackStack);
-            fragmentTransaction.addToBackStack(isBackStack);
+            fragmentTransaction.replace(context.getRootFrameLayoutId(), fragment, isBackToStack);
+            fragmentTransaction.addToBackStack(isBackToStack);
+        }
+        KeyBoardUtils.closeKeyboard(context);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+    /**
+     * 替换该Fragment内部的layout显示为fragment
+     */
+    protected void replaceChildFragment(int layoutId, FrameBaseFragment fragment, String isBackToStack) {
+        FragmentManager childFragmentManager = getChildFragmentManager();
+        FragmentTransaction fragmentTransaction = childFragmentManager.beginTransaction();
+        if (TextUtils.isEmpty(isBackToStack)) {
+            fragmentTransaction.replace(layoutId, fragment);
+        } else {
+            fragmentTransaction.replace(layoutId, fragment, isBackToStack);
+            fragmentTransaction.addToBackStack(isBackToStack);
         }
         KeyBoardUtils.closeKeyboard(context);
         fragmentTransaction.commitAllowingStateLoss();
@@ -197,9 +213,13 @@ public abstract class FrameBaseFragment extends Fragment {
          * 如果当前fragment不是根fragment
          */
         if (fragmentManager.getBackStackEntryCount() > 0) {
-            fragmentManager.popBackStack();
-            if (tf) {
-                getActivity().finish();
+            if (fragmentManager.getBackStackEntryCount() == 1) {
+                fragmentManager.popBackStack();
+                if (tf) {
+                    getActivity().finish();
+                }
+            } else {
+                fragmentManager.popBackStack();
             }
         } else {
             getActivity().finish();

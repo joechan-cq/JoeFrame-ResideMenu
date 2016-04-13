@@ -16,7 +16,6 @@ public class DemoApplication extends BaseApplication {
 
     @Override
     public void crashFileSaveTo(String filePath) {
-
     }
 
     public synchronized static DemoApplication getInstance() {
