@@ -423,7 +423,7 @@ public class PackageUtils {
     }
 
     /**
-     * whether the app whost package's name is packageName is on the top of the
+     * whether the app whose package's name is packageName is on the top of the
      * stack
      * <ul>
      * <strong>Attentions:</strong>

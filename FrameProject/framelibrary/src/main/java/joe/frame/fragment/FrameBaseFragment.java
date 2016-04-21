@@ -36,7 +36,7 @@ public abstract class FrameBaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.frame_fragment_layout, null);
+        return inflater.inflate(R.layout.frame_fragment_layout, container, false);
     }
 
     @Override
