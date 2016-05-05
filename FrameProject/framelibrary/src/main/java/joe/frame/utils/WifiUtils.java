@@ -164,6 +164,7 @@ public class WifiUtils {
 
     public void addNetwork(WifiConfiguration wcg) { // 添加一个网络配置并连接
         int wcgID = mWifiManager.addNetwork(wcg);
+        mWifiManager.saveConfiguration();
         boolean b = mWifiManager.enableNetwork(wcgID, true);
         System.out.println("addNetwork:" + wcgID);
         System.out.println("enableNetwork:" + b);
