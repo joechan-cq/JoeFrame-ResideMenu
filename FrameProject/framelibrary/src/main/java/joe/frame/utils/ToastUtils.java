@@ -1,6 +1,7 @@
 package joe.frame.utils;
 
 import android.content.Context;
+import android.os.Looper;
 import android.widget.Toast;
 
 /**
@@ -47,6 +48,12 @@ public class ToastUtils {
     }
 
     public static void show(Context context, CharSequence text, int duration) {
+        if (Looper.myLooper() != Looper.getMainLooper()) {
+            return;
+        }
+        if (context == null) {
+            return;
+        }
         if (toast == null || mContext == null || mContext != context) {
             toast = Toast.makeText(context, text, duration);
             mContext = context;
