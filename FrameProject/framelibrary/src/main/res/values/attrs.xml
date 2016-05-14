@@ -72,4 +72,9 @@
             <enum name="horizontal" value="1" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="StatusButton">
+        <attr name="statusChecked" format="boolean" />
+        <attr name="statusSrc" format="reference" />
+    </declare-styleable>
 </resources>

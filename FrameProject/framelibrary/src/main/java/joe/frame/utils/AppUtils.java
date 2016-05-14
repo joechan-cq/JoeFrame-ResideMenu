@@ -1,6 +1,7 @@
 package joe.frame.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -81,5 +82,23 @@ public class AppUtils {
             }
         }
         return pName.contains(packageName);
+    }
+
+    /**
+     * 启动其他应用
+     *
+     * @param context     Context
+     * @param packageName 应用包名
+     */
+    public static boolean startOtherApp(Context context, String packageName) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent intent;
+        try {
+            intent = packageManager.getLaunchIntentForPackage(packageName);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }
