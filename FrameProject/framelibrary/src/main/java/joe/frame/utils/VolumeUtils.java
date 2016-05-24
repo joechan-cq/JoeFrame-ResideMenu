@@ -44,6 +44,31 @@ public class VolumeUtils {
     }
 
     /**
+     * 增加指定类型的音量
+     *
+     * @param type 音量类型
+     */
+    public void addVolume(int type) {
+        int current = getVolume(type);
+        int max = getMaxVolume(type);
+        if (current + 1 <= max) {
+            setVolume(type, current + 1);
+        }
+    }
+
+    /**
+     * 减少指定类型的音量
+     *
+     * @param type 音量类型
+     */
+    public void decVolume(int type) {
+        int current = getVolume(type);
+        if (current - 1 >= 0) {
+            setVolume(type, current - 1);
+        }
+    }
+
+    /**
      * 设置音量
      *
      * @param type  音量类型
