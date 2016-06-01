@@ -14,7 +14,6 @@ import joe.frame.handler.CrashHandler;
 public abstract class BaseApplication extends Application implements CrashFileSaveListener {
 
     protected CrashHandler crashHandler;
-    private boolean checkMemory = false;
 
     @Override
     public void onCreate() {
