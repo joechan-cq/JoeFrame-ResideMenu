@@ -1,6 +1,8 @@
 package joe.frame.application;
 
 import android.app.Application;
+import android.content.pm.ApplicationInfo;
+import android.os.StrictMode;
 
 import joe.frame.handler.CrashFileSaveListener;
 import joe.frame.handler.CrashHandler;
@@ -12,6 +14,7 @@ import joe.frame.handler.CrashHandler;
 public abstract class BaseApplication extends Application implements CrashFileSaveListener {
 
     protected CrashHandler crashHandler;
+    private boolean checkMemory = false;
 
     @Override
     public void onCreate() {
@@ -22,6 +25,17 @@ public abstract class BaseApplication extends Application implements CrashFileSa
         crashHandler = CrashHandler.getInstance(this);
         crashHandler.init(getApplicationContext());
         onBaseCreate();
+        ApplicationInfo appInfo = this.getApplicationInfo();
+        //调试模式下是使用严苛模式
+        int appFlags = appInfo.flags;
+        if ((appFlags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
+            // Do StrictMode setup here
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
     }
 
     protected abstract void onBaseCreate();
