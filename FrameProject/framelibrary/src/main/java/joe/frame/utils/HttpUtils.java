@@ -8,25 +8,40 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 //Http请求的工具类
 public class HttpUtils {
 
-    private static final int TIMEOUT_IN_MILLIONS = 5000;
+    private static final int TIMEOUT_IN_MILLIONS = 8000;
+    private static ExecutorService coreExecutorService = Executors.newCachedThreadPool();
 
     public interface CallBack {
         void onRequestComplete(String result);
+
+        void onError(Exception e);
     }
 
+    public static void doGetAsync(String urlString, Map<String, String> params, CallBack callBack) {
+        StringBuilder urlBuilder = new StringBuilder(urlString.trim() + "?");
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+        }
+        String url = urlBuilder.substring(0, urlBuilder.length() - 1);
+        doGetAsync(url, callBack);
+    }
 
     /**
      * 异步的Get请求
      *
-     * @param urlStr
-     * @param callBack
+     * @param urlStr   请求地址
+     * @param callBack 结果回调
      */
-    public static void doGetAsyn(final String urlStr, final CallBack callBack) {
-        new Thread() {
+    public static void doGetAsync(final String urlStr, final CallBack callBack) {
+        Runnable runnable = new Runnable() {
+            @Override
             public void run() {
                 try {
                     String result = doGet(urlStr);
@@ -34,25 +49,36 @@ public class HttpUtils {
                         callBack.onRequestComplete(result);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogUtils.e(e.toString());
+                    if (callBack != null) {
+                        callBack.onError(e);
+                    }
                 }
-
             }
+        };
+        coreExecutorService.execute(runnable);
+    }
 
-        }.start();
+    public static void doPostAsync(String urlString, Map<String, String> params, CallBack callBack) {
+        StringBuilder paramsBuilder = new StringBuilder();
+        for (Map.Entry<String, String> entry : params.entrySet()) {
+            paramsBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+        }
+        String paramsStr = paramsBuilder.substring(0, paramsBuilder.length() - 1);
+        LogUtils.d("doPost params:" + paramsStr);
+        doPostAsync(urlString, paramsStr, callBack);
     }
 
     /**
      * 异步的Post请求
      *
-     * @param urlStr
-     * @param params
-     * @param callBack
-     * @throws Exception
+     * @param urlStr   请求地址
+     * @param params   请求参数
+     * @param callBack 结果回调
      */
-    public static void doPostAsyn(final String urlStr, final String params,
-                                  final CallBack callBack) throws Exception {
-        new Thread() {
+    public static void doPostAsync(final String urlStr, final String params, final CallBack callBack) {
+        Runnable runnable = new Runnable() {
+            @Override
             public void run() {
                 try {
                     String result = doPost(urlStr, params);
@@ -60,68 +86,53 @@ public class HttpUtils {
                         callBack.onRequestComplete(result);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    LogUtils.e(e.toString());
+                    if (callBack != null) {
+                        callBack.onError(e);
+                    }
                 }
-
             }
-
-        }.start();
-
+        };
+        coreExecutorService.execute(runnable);
     }
 
     /**
      * Get请求，获得返回数据
      *
-     * @param urlStr
-     * @return
-     * @throws Exception
+     * @param urlStr 请求地址
+     * @return 请求结果
+     * @throws IOException
      */
-    public static String doGet(String urlStr) {
-        URL url = null;
-        HttpURLConnection conn = null;
-        InputStream is = null;
-        ByteArrayOutputStream baos = null;
-        try {
-            url = new URL(urlStr);
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(TIMEOUT_IN_MILLIONS);
-            conn.setConnectTimeout(TIMEOUT_IN_MILLIONS);
-            conn.setRequestMethod("GET");
-            conn.setRequestProperty("accept", "*/*");
-            conn.setRequestProperty("connection", "Keep-Alive");
-            if (conn.getResponseCode() == 200) {
-                is = conn.getInputStream();
-                baos = new ByteArrayOutputStream();
-                int len = -1;
-                byte[] buf = new byte[128];
-
-                while ((len = is.read(buf)) != -1) {
-                    baos.write(buf, 0, len);
-                }
-                baos.flush();
-                return baos.toString();
-            } else {
-                throw new RuntimeException(" responseCode is not 200 ... ");
+    public static String doGet(String urlStr) throws IOException {
+        LogUtils.d("doGet url:" + urlStr);
+        URL url;
+        HttpURLConnection conn;
+        InputStream is;
+        ByteArrayOutputStream baos;
+        url = new URL(urlStr);
+        conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(TIMEOUT_IN_MILLIONS);
+        conn.setConnectTimeout(TIMEOUT_IN_MILLIONS);
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("connection", "Keep-Alive");
+        if (conn.getResponseCode() == 200) {
+            is = conn.getInputStream();
+            baos = new ByteArrayOutputStream();
+            int len;
+            byte[] buf = new byte[128];
+            while ((len = is.read(buf)) != -1) {
+                baos.write(buf, 0, len);
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (is != null)
-                    is.close();
-            } catch (IOException e) {
-            }
-            try {
-                if (baos != null)
-                    baos.close();
-            } catch (IOException e) {
-            }
+            baos.flush();
+            is.close();
+            baos.close();
             conn.disconnect();
+            LogUtils.d("response:" + baos.toString());
+            return baos.toString();
+        } else {
+            throw new RuntimeException(" responseCode is " + conn.getResponseCode());
         }
-
-        return null;
-
     }
 
     /**
@@ -130,62 +141,54 @@ public class HttpUtils {
      * @param url   发送请求的 URL
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
      * @return 所代表远程资源的响应结果
-     * @throws Exception
+     * @throws IOException
      */
-    public static String doPost(String url, String param) {
+    public static String doPost(String url, String param) throws IOException {
+        LogUtils.d("doPost url:" + url + "  params:" + param);
         PrintWriter out = null;
         BufferedReader in = null;
         String result = "";
-        try {
-            URL realUrl = new URL(url);
-            // 打开和URL之间的连接
-            HttpURLConnection conn = (HttpURLConnection) realUrl
-                    .openConnection();
-            // 设置通用的请求属性
-            conn.setRequestProperty("accept", "*/*");
-            conn.setRequestProperty("connection", "Keep-Alive");
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
-            conn.setUseCaches(false);
-            // 发送POST请求必须设置如下两行
-            conn.setDoOutput(true);
-            conn.setDoInput(true);
-            conn.setReadTimeout(TIMEOUT_IN_MILLIONS);
-            conn.setConnectTimeout(TIMEOUT_IN_MILLIONS);
+        URL realUrl = new URL(url);
+        // 打开和URL之间的连接
+        HttpURLConnection conn = (HttpURLConnection) realUrl
+                .openConnection();
+        // 设置通用的请求属性
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("connection", "Keep-Alive");
+        conn.setRequestMethod("POST");
+        conn.setRequestProperty("Content-Type",
+                "application/x-www-form-urlencoded");
+        conn.setRequestProperty("charset", "utf-8");
+        conn.setUseCaches(false);
+        // 发送POST请求必须设置如下两行
+        conn.setDoOutput(true);
+        conn.setDoInput(true);
+        conn.setReadTimeout(TIMEOUT_IN_MILLIONS);
+        conn.setConnectTimeout(TIMEOUT_IN_MILLIONS);
 
-            if (param != null && !param.trim().equals("")) {
-                // 获取URLConnection对象对应的输出流
-                out = new PrintWriter(conn.getOutputStream());
-                // 发送请求参数
-                out.print(param);
-                // flush输出流的缓冲
-                out.flush();
-            }
+        if (param != null && !param.trim().equals("")) {
+            // 获取URLConnection对象对应的输出流
+            out = new PrintWriter(conn.getOutputStream());
+            // 发送请求参数
+            out.print(param);
+            // flush输出流的缓冲
+            out.flush();
+        }
+        if (conn.getResponseCode() == 200) {
             // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(
-                    new InputStreamReader(conn.getInputStream()));
+            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line;
             while ((line = in.readLine()) != null) {
                 result += line;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        // 使用finally块来关闭输出流、输入流
-        finally {
-            try {
-                if (out != null) {
-                    out.close();
-                }
-                if (in != null) {
-                    in.close();
-                }
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if (out != null) {
+                out.close();
             }
+            in.close();
+            LogUtils.d("response:" + result);
+            return result;
+        } else {
+            throw new RuntimeException(" responseCode is " + conn.getResponseCode());
         }
-        return result;
     }
 }
