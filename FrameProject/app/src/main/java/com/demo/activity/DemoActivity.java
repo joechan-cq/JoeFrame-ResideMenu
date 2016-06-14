@@ -1,6 +1,7 @@
 package com.demo.activity;
 
 import android.content.Intent;
+import android.net.wifi.WifiConfiguration;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import joe.frame.service.MonitorService;
 import joe.frame.utils.LogUtils;
 import joe.frame.utils.ServiceUtils;
 import joe.frame.utils.ToastUtils;
+import joe.frame.utils.WifiUtils;
 import joe.frame.view.residemenu.ResideMenu;
 import joe.frame.view.residemenu.ResideMenuItem;
 
@@ -77,6 +79,10 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
                 LogUtils.d("joe----monitor say " + serviceClassName + " is not running");
             }
         });
+
+        WifiUtils wifiUtils = new WifiUtils(this);
+        WifiConfiguration configuration = wifiUtils.createWifiInfo("wifi-ap", "12345678", 3);
+        wifiUtils.enableWifiAp(configuration, true);
     }
 
     /**

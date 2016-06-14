@@ -7,6 +7,8 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -211,7 +213,7 @@ public class WifiUtils {
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
             config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
             config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-            // config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+//             config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
             config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
             config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
             config.status = WifiConfiguration.Status.ENABLED;
@@ -219,8 +221,41 @@ public class WifiUtils {
         return config;
     }
 
+    /**
+     * 开启Wifi-AP热点
+     * <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+     *
+     * @param configuration 热点配置
+     * @param enable        是否开启AP
+     * @return 是否成功
+     */
+    public boolean enableWifiAp(WifiConfiguration configuration, boolean enable) {
+        if (enable) {
+            closeWifi();
+        }
+        try {
+            Method method = mWifiManager.getClass().getDeclaredMethod("setWifiApEnabled", WifiConfiguration.class, Boolean.TYPE);
+            boolean result = (boolean) method.invoke(mWifiManager, configuration, enable);
+            System.out.println("WifiAp result:" + result);
+            return result;
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+            System.out.println("WifiAp Error:" + e.toString());
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            System.out.println("WifiAp Error:" + e.toString());
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            System.out.println("WifiAp Error:" + e.toString());
+        }
+        return false;
+    }
+
     private WifiConfiguration isExsits(String SSID) { // 查看以前是否已经配置过该SSID
         List<WifiConfiguration> existingConfigs = mWifiManager.getConfiguredNetworks();
+        if (existingConfigs == null) {
+            return null;
+        }
         for (WifiConfiguration existingConfig : existingConfigs) {
             if (existingConfig.SSID.equals("\"" + SSID + "\"")) {
                 return existingConfig;
