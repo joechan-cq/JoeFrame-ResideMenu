@@ -83,9 +83,7 @@ public class WifiUtils {
             for (int i = 0; i < mWifiList.size(); i++) {
                 ScanResult result = mWifiList.get(i);
             }
-        } else {
         }
-
     }
 
     public List<ScanResult> getWifiList() {
@@ -94,34 +92,34 @@ public class WifiUtils {
 
     public List<ScanResult> getWifiListWithFilting() {
         mWifiList = mWifiManager.getScanResults();
-        List<ScanResult> filtWifiLists = new ArrayList<>();
-        boolean tf = false;
+        List<ScanResult> filterWifiLists = new ArrayList<>();
+        boolean tf;
         for (ScanResult result : mWifiList) {
             tf = false;
-            for (ScanResult r : filtWifiLists) {
+            for (ScanResult r : filterWifiLists) {
                 if (r.SSID.equals(result.SSID)) {
                     tf = true;
                     int level1 = WifiManager.calculateSignalLevel(r.level, 5);
                     int level2 = WifiManager.calculateSignalLevel(result.level, 5);
                     if (level1 < level2) {
-                        filtWifiLists.remove(r);
-                        filtWifiLists.add(result);
+                        filterWifiLists.remove(r);
+                        filterWifiLists.add(result);
                     }
                     break;
                 }
             }
             if (!tf) {
-                filtWifiLists.add(result);
+                filterWifiLists.add(result);
             }
         }
-        return filtWifiLists;
+        return filterWifiLists;
     }
 
     public StringBuilder lookUpScan() {// 查看扫描结果
         StringBuilder stringBuilder = new StringBuilder();
         mWifiList = mWifiManager.getScanResults();
         for (int i = 0; i < mWifiList.size(); i++) {
-            stringBuilder.append("Index_" + new Integer(i + 1).toString() + ":");
+            stringBuilder.append("Index_" + Integer.valueOf(i + 1).toString() + ":");
             stringBuilder.append((mWifiList.get(i)).toString());
             stringBuilder.append("/n");
         }
