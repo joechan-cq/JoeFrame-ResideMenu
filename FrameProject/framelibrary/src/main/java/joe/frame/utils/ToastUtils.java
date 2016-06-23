@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Looper;
 import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
+
 /**
  * ToastUtils   进行了封装，toast不会进行叠加显示
  *
@@ -13,7 +15,7 @@ public class ToastUtils {
 
     private static Toast toast;
 
-    private static Context mContext;
+    private static WeakReference<Context> mContext;
 
     private ToastUtils() {
         throw new AssertionError();
@@ -54,9 +56,9 @@ public class ToastUtils {
         if (context == null) {
             return;
         }
-        if (toast == null || mContext == null || mContext != context) {
+        if (toast == null || mContext.get() == null || mContext.get() != context) {
             toast = Toast.makeText(context, text, duration);
-            mContext = context;
+            mContext = new WeakReference<>(context);
         } else {
             toast.setDuration(duration);
             toast.setText(text);

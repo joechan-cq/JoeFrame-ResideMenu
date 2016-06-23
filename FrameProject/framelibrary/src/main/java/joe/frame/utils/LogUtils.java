@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * Android开发调试日志工具类[支持保存到SD卡]<br>
  * <br>
- * <p/>
+ * <p>
  * 需要一些权限: <br>
  * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <br>
  * <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"

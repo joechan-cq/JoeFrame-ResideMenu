@@ -9,9 +9,9 @@
  * |  DATE      | NAME       | REASON       | CHANGE REQ.
  * ----------------------------------------------------------------------
  * | 2015年4月8日    | YOLANDA    | Created      |
- * <p/>
+ * <p>
  * DESCRIPTION：create the File, and add the content.
- * <p/>
+ * <p>
  * *********************************************************************
  */
 package joe.frame.compat;
@@ -23,10 +23,6 @@ import android.content.res.Resources.Theme;
 import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 
-/**
- * @author YOLANDA
- * @Time 2015年4月8日 下午4:41:56
- */
 public class ResourcesCompat {
 
     public static Drawable getDrawable(Context context, int resId) {

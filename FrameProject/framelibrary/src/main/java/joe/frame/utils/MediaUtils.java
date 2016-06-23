@@ -20,6 +20,7 @@ public class MediaUtils {
      */
     public static void playFromAssets(Context context, String fileName) {
         try {
+            releaseMediaPlayer();
             AssetFileDescriptor fileDescript = context.getAssets().openFd(fileName);
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(fileDescript.getFileDescriptor(), fileDescript.getStartOffset(), fileDescript.getLength());
@@ -47,6 +48,7 @@ public class MediaUtils {
      */
     public static void playFromRes(Context context, int resId, boolean isLoop) {
         try {
+            releaseMediaPlayer();
             mediaPlayer = MediaPlayer.create(context, resId);
             mediaPlayer.setLooping(isLoop);
             mediaPlayer.start();
@@ -64,6 +66,7 @@ public class MediaUtils {
      */
     public static void playFromUri(Context context, Uri uri, boolean isLoop) {
         try {
+            releaseMediaPlayer();
             mediaPlayer = MediaPlayer.create(context, uri);
             mediaPlayer.setLooping(isLoop);
             mediaPlayer.start();
