@@ -16,8 +16,8 @@ import joe.framelibrary.R;
  */
 public class StatusButton extends ImageView implements Checkable {
     private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
-    private final StateListDrawable stateListDrawable;
-    private boolean mChecked;
+    private StateListDrawable stateListDrawable;
+    private boolean mChecked = false;
 
     public StatusButton(Context context) {
         this(context, null);
@@ -34,6 +34,11 @@ public class StatusButton extends ImageView implements Checkable {
         mChecked = a.getBoolean(R.styleable.StatusButton_statusChecked, false);
         setChecked(mChecked);
         a.recycle();
+    }
+
+    public void setImageResource(int resId) {
+        stateListDrawable = (StateListDrawable) getContext().getResources().getDrawable(resId);
+        invalidate();
     }
 
     @Override
