@@ -37,11 +37,12 @@ public class BaseDialogFragment extends DialogFragment {
     private int width, height;
 
     private int minWidth = 200, minHeight = 150;
+    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        View view = inflater.inflate(R.layout.frame_dialog_base, container);
+        view = inflater.inflate(R.layout.frame_dialog_base, container);
         titleView = (TextView) view.findViewById(R.id.base_dialog_title);
         contentView = (TextView) view.findViewById(R.id.base_dialog_content);
         contentView.setMovementMethod(new ScrollingMovementMethod());
@@ -240,6 +241,16 @@ public class BaseDialogFragment extends DialogFragment {
         this.height = height;
         if (isShown) {
             onResume();
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if (view != null) {
+            ((ViewGroup) view).removeAllViews();
+            view = null;
+            defineView = null;
         }
     }
 }
