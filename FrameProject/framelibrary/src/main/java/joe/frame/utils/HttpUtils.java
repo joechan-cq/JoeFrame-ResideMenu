@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,12 +26,16 @@ public class HttpUtils {
         void onError(Exception e);
     }
 
-    public static void doGetAsync(String urlString, Map<String, String> params, CallBack callBack) {
+    public static void doGetAsync(String urlString, Map<String, String> params, CallBack callBack) throws UnsupportedEncodingException {
         StringBuilder urlBuilder = new StringBuilder(urlString.trim() + "?");
+        StringBuilder paramBuilder = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            urlBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            paramBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
         }
-        String url = urlBuilder.substring(0, urlBuilder.length() - 1);
+        String temp = paramBuilder.toString();
+        temp = temp.substring(0, paramBuilder.length() - 1);
+        String encode = URLEncoder.encode(temp, "UTF-8");
+        String url = urlBuilder.append(encode).toString();
         doGetAsync(url, callBack);
     }
 
@@ -144,9 +150,10 @@ public class HttpUtils {
      * @throws IOException
      */
     public static String doPost(String url, String param) throws IOException {
+        param = URLEncoder.encode(param, "UTF-8");
         LogUtils.d("doPost url:" + url + "  params:" + param);
         PrintWriter out = null;
-        BufferedReader in = null;
+        BufferedReader in;
         String result = "";
         URL realUrl = new URL(url);
         // 打开和URL之间的连接
