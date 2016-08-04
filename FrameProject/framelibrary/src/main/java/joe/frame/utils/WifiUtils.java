@@ -98,31 +98,20 @@ public class WifiUtils {
         boolean tf;
         for (ScanResult result : mWifiList) {
             tf = false;
-            ArrayList<ScanResult> removeList = new ArrayList<>();
-            ArrayList<ScanResult> addList = new ArrayList<>();
             for (ScanResult r : filterWifiLists) {
                 if (r.SSID.equals(result.SSID)) {
                     tf = true;
                     int level1 = WifiManager.calculateSignalLevel(r.level, 5);
                     int level2 = WifiManager.calculateSignalLevel(result.level, 5);
                     if (level1 < level2) {
-                        removeList.add(r);
-                        addList.add(result);
+                        filterWifiLists.remove(r);
+                        filterWifiLists.add(result);
                     }
                     break;
                 }
             }
-            filterWifiLists.removeAll(removeList);
-            filterWifiLists.addAll(addList);
             if (!tf) {
                 filterWifiLists.add(result);
-            }
-        }
-        for (ScanResult result : filterWifiLists) {
-            if (result.BSSID.equals(getBSSID())) {
-                filterWifiLists.remove(result);
-                filterWifiLists.add(0, result);
-                break;
             }
         }
         return filterWifiLists;
@@ -161,6 +150,17 @@ public class WifiUtils {
     public int getIPAddress() {
         mWifiInfo = mWifiManager.getConnectionInfo();
         return (mWifiInfo == null) ? 0 : mWifiInfo.getIpAddress();
+    }
+
+    public String getIPAddressForString() {
+        return intToIp(getIPAddress());
+    }
+
+    private String intToIp(int i) {
+        return (i & 0xFF) + "." +
+                ((i >> 8) & 0xFF) + "." +
+                ((i >> 16) & 0xFF) + "." +
+                (i >> 24 & 0xFF);
     }
 
     public int getNetworkId() {

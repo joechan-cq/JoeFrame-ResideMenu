@@ -8,6 +8,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 
 /**
  * Description  定位工具类
@@ -100,9 +101,11 @@ public class LocationUtils {
         //  每隔5秒请求定位一次，移动5米回调一次
         if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, time, distance, listener);
+            Log.d("chenqiao", "network provider");
         }
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, time, distance, listener);
+            Log.d("chenqiao", "gps provider");
         }
     }
 
