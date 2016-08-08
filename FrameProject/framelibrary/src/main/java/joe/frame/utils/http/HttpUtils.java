@@ -1,10 +1,12 @@
-package joe.frame.utils;
+package joe.frame.utils.http;
 
-import java.io.BufferedReader;
+import android.text.TextUtils;
+
+import com.ebanswers.sdk.util.LogUtils;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -14,6 +16,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+
 //Http请求的工具类
 public class HttpUtils {
 
@@ -21,21 +24,25 @@ public class HttpUtils {
     private static ExecutorService coreExecutorService = Executors.newCachedThreadPool();
 
     public interface CallBack {
-        void onRequestComplete(String result);
+        void onRequestComplete(HttpResponse result);
 
         void onError(Exception e);
     }
 
-    public static void doGetAsync(String urlString, Map<String, String> params, CallBack callBack) throws UnsupportedEncodingException {
+    public static void doGetAsync(String urlString, Map<String, String> params, CallBack callBack) {
         StringBuilder urlBuilder = new StringBuilder(urlString.trim() + "?");
-        StringBuilder paramBuilder = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            paramBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            try {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(value)) {
+                    urlBuilder.append(URLEncoder.encode(key, "UTF-8")).append("=").append(URLEncoder.encode(value, "UTF-8")).append("&");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
-        String temp = paramBuilder.toString();
-        temp = temp.substring(0, paramBuilder.length() - 1);
-        String encode = URLEncoder.encode(temp, "UTF-8");
-        String url = urlBuilder.append(encode).toString();
+        String url = urlBuilder.substring(0, urlBuilder.length() - 1);
         doGetAsync(url, callBack);
     }
 
@@ -50,12 +57,12 @@ public class HttpUtils {
             @Override
             public void run() {
                 try {
-                    String result = doGet(urlStr);
+                    HttpResponse result = doGet(urlStr);
                     if (callBack != null) {
                         callBack.onRequestComplete(result);
                     }
-                } catch (Exception e) {
-                    LogUtils.e(e.toString());
+                } catch (IOException e) {
+                    LogUtils.e("doGetAsync Exception:" + e.toString());
                     if (callBack != null) {
                         callBack.onError(e);
                     }
@@ -68,7 +75,15 @@ public class HttpUtils {
     public static void doPostAsync(String urlString, Map<String, String> params, CallBack callBack) {
         StringBuilder paramsBuilder = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
-            paramsBuilder.append(entry.getKey()).append("=").append(entry.getValue()).append("&");
+            try {
+                String key = entry.getKey();
+                String value = entry.getValue();
+                if (!TextUtils.isEmpty(key) && !TextUtils.isEmpty(value)) {
+                    paramsBuilder.append(URLEncoder.encode(key, "UTF-8")).append("=").append(URLEncoder.encode(value, "UTF-8")).append("&");
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
         String paramsStr = paramsBuilder.substring(0, paramsBuilder.length() - 1);
         LogUtils.d("doPost params:" + paramsStr);
@@ -87,12 +102,12 @@ public class HttpUtils {
             @Override
             public void run() {
                 try {
-                    String result = doPost(urlStr, params);
+                    HttpResponse result = doPost(urlStr, params);
                     if (callBack != null) {
                         callBack.onRequestComplete(result);
                     }
-                } catch (Exception e) {
-                    LogUtils.e(e.toString());
+                } catch (IOException e) {
+                    LogUtils.e("doPostAsync Exception:" + e.toString());
                     if (callBack != null) {
                         callBack.onError(e);
                     }
@@ -109,7 +124,7 @@ public class HttpUtils {
      * @return 请求结果
      * @throws IOException
      */
-    public static String doGet(String urlStr) throws IOException {
+    public static HttpResponse doGet(String urlStr) throws IOException {
         LogUtils.d("doGet url:" + urlStr);
         URL url;
         HttpURLConnection conn;
@@ -122,7 +137,8 @@ public class HttpUtils {
         conn.setRequestMethod("GET");
         conn.setRequestProperty("accept", "*/*");
         conn.setRequestProperty("connection", "Keep-Alive");
-        if (conn.getResponseCode() == 200) {
+        int code = conn.getResponseCode();
+        if (code == 200) {
             is = conn.getInputStream();
             baos = new ByteArrayOutputStream();
             int len;
@@ -132,12 +148,13 @@ public class HttpUtils {
             }
             baos.flush();
             is.close();
+            byte[] result = baos.toByteArray();
             baos.close();
             conn.disconnect();
-            LogUtils.d("response:" + baos.toString());
-            return baos.toString();
+            LogUtils.d("response:" + new String(result));
+            return new HttpResponse(code, result, "");
         } else {
-            throw new RuntimeException(" responseCode is " + conn.getResponseCode());
+            return new HttpResponse(code, null, "ResponseCode is not 200 but " + code);
         }
     }
 
@@ -149,12 +166,9 @@ public class HttpUtils {
      * @return 所代表远程资源的响应结果
      * @throws IOException
      */
-    public static String doPost(String url, String param) throws IOException {
-        param = URLEncoder.encode(param, "UTF-8");
+    public static HttpResponse doPost(String url, String param) throws IOException {
         LogUtils.d("doPost url:" + url + "  params:" + param);
         PrintWriter out = null;
-        BufferedReader in;
-        String result = "";
         URL realUrl = new URL(url);
         // 打开和URL之间的连接
         HttpURLConnection conn = (HttpURLConnection) realUrl
@@ -181,19 +195,46 @@ public class HttpUtils {
             // flush输出流的缓冲
             out.flush();
         }
+        if (out != null) {
+            out.close();
+        }
+        int code = conn.getResponseCode();
+        if (code == 200) {
+            InputStream is = conn.getInputStream();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            int len;
+            byte[] buf = new byte[128];
+            while ((len = is.read(buf)) != -1) {
+                baos.write(buf, 0, len);
+            }
+            baos.flush();
+            is.close();
+            byte[] result = baos.toByteArray();
+            baos.close();
+            conn.disconnect();
+            LogUtils.d("response:" + new String(result));
+            return new HttpResponse(code, result, "");
+        } else {
+            return new HttpResponse(code, null, "ResponseCode is not 200 but " + code);
+        }
+    }
+
+    public static InputStream doGetForInputStream(String urlStr) throws IOException {
+//        urlStr = URLEncoder.encode(urlStr, "UTF-8");
+        LogUtils.d("doGet url:" + urlStr);
+        URL url;
+        HttpURLConnection conn;
+        InputStream is;
+        url = new URL(urlStr);
+        conn = (HttpURLConnection) url.openConnection();
+        conn.setReadTimeout(TIMEOUT_IN_MILLIONS);
+        conn.setConnectTimeout(TIMEOUT_IN_MILLIONS);
+        conn.setRequestMethod("GET");
+        conn.setRequestProperty("accept", "*/*");
+        conn.setRequestProperty("connection", "Keep-Alive");
         if (conn.getResponseCode() == 200) {
-            // 定义BufferedReader输入流来读取URL的响应
-            in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String line;
-            while ((line = in.readLine()) != null) {
-                result += line;
-            }
-            if (out != null) {
-                out.close();
-            }
-            in.close();
-            LogUtils.d("response:" + result);
-            return result;
+            is = conn.getInputStream();
+            return is;
         } else {
             throw new RuntimeException(" responseCode is " + conn.getResponseCode());
         }
