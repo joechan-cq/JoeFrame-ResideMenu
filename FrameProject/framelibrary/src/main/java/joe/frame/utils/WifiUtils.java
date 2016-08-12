@@ -173,15 +173,26 @@ public class WifiUtils {
         return mWifiInfo;
     }
 
-    public void addNetwork(WifiConfiguration wcg) { // 添加一个网络配置并连接
+    public int addNetworkAndSave(WifiConfiguration wcg) { // 添加一个网络配置并连接
         int wcgID = mWifiManager.addNetwork(wcg);
         boolean b = mWifiManager.enableNetwork(wcgID, true);
         mWifiManager.saveConfiguration();
         System.out.println("addNetwork:" + wcgID);
         System.out.println("enableNetwork:" + b);
+        return wcgID;
     }
 
-    public void disconnectWifi(int netId) {
+    public boolean removeConfiguredWifi(int netId) {
+        boolean result = mWifiManager.removeNetwork(netId);
+        mWifiManager.saveConfiguration();
+        return result;
+    }
+
+    public void disconnectWifi() {
+        mWifiManager.disconnect();
+    }
+
+    public void disableWifi(int netId) {
         mWifiManager.disableNetwork(netId);
         mWifiManager.disconnect();
     }
@@ -195,11 +206,10 @@ public class WifiUtils {
         config.allowedProtocols.clear();
         config.SSID = "\"" + SSID + "\"";
 
-        WifiConfiguration tempConfig = this.isExsits(SSID);
+        WifiConfiguration tempConfig = this.isExists(SSID);
 
         if (tempConfig != null) {
             mWifiManager.removeNetwork(tempConfig.networkId);
-        } else {
         }
         if (type == 1) { // WIFICIPHER_NOPASS
             config.wepKeys[0] = "\"" + "\"";
@@ -262,7 +272,7 @@ public class WifiUtils {
         return false;
     }
 
-    private WifiConfiguration isExsits(String SSID) { // 查看以前是否已经配置过该SSID
+    private WifiConfiguration isExists(String SSID) { // 查看以前是否已经配置过该SSID
         List<WifiConfiguration> existingConfigs = mWifiManager.getConfiguredNetworks();
         if (existingConfigs == null) {
             return null;
