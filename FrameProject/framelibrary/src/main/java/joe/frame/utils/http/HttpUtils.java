@@ -2,8 +2,6 @@ package joe.frame.utils.http;
 
 import android.text.TextUtils;
 
-import com.ebanswers.sdk.util.LogUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +13,8 @@ import java.net.URLEncoder;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import joe.frame.utils.LogUtils;
 
 
 //Http请求的工具类
