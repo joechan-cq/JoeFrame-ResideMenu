@@ -1,12 +1,17 @@
 package joe.frame.handler;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -24,6 +29,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.TreeSet;
+
+import joe.frame.activity.ActivityTaskStack;
+import joe.frame.utils.FileUtils;
 
 /**
  * UncaughtException处理类,当程序发生Uncaught异常的时候,有该类 来接管程序,并记录 发送错误报告.. 註冊方式
@@ -60,6 +68,8 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     private CrashFileSaveListener listener;
 
+    private static boolean needCrashAct = true;
+
     /**
      * 使用Properties来保存设备的信息和错误堆栈信息
      */
@@ -70,12 +80,12 @@ public class CrashHandler implements UncaughtExceptionHandler {
     /**
      * 错误报告文件的扩展名
      */
-    private static final String CRASH_REPORTER_EXTENSION = ".cr";
+    private static final String CRASH_REPORTER_EXTENSION = ".txt";
+
+    private SharedPreferences sp;
 
     /**
      * 保证只有一个CrashHandler实例
-     *
-     * @param listener
      */
     private CrashHandler(CrashFileSaveListener listener) {
         this.listener = listener;
@@ -93,13 +103,35 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 初始化,注册Context对象, 获取系统默认的UncaughtException处理器, 设置该CrashHandler为程序的默认处理器
-     *
-     * @param ctx
      */
     public void init(Context ctx) {
         mContext = ctx;
         mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        sp = mContext.getSharedPreferences("crashTime", Context.MODE_PRIVATE);
         Thread.setDefaultUncaughtExceptionHandler(this);
+    }
+
+    /**
+     * 是否使用CrashActivity方案，如果使用，需在主module的清单文件中对CrashActivity进行注册
+     */
+    public static void setEnableCrashActivity(boolean isEnable) {
+        needCrashAct = isEnable;
+    }
+
+    private static final String KEY_LAST_CRASH_TIME = "KEY_LAST_CRASH_TIME";
+
+    /**
+     * 保存上次崩溃的时间
+     */
+    private void saveLastCrashTime() {
+        sp.edit().putLong(KEY_LAST_CRASH_TIME, System.currentTimeMillis()).apply();
+    }
+
+    /**
+     * 获取上次崩溃的时间
+     */
+    private long getLastCrashTime() {
+        return sp.getLong(KEY_LAST_CRASH_TIME, -1);
     }
 
     /**
@@ -117,6 +149,25 @@ public class CrashHandler implements UncaughtExceptionHandler {
             } catch (InterruptedException e) {
                 Log.e(TAG, "Error : ", e);
             }
+
+            if (needCrashAct) {
+                Intent intent;
+                AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+                if (System.currentTimeMillis() - getLastCrashTime() > 60 * 1000) {
+                    intent = mContext.getPackageManager().getLaunchIntentForPackage(mContext.getPackageName());
+                } else {
+                    //如果1分钟内频繁崩溃，则启动crash修复界面
+                    intent = new Intent(mContext, CrashActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                PendingIntent restartIntent = PendingIntent.getActivity(mContext, 0,
+                        intent, 0);
+                mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 1000,
+                        restartIntent); // 1秒钟后重启应用
+            }
+            saveLastCrashTime();
+
+            ActivityTaskStack.exit();
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(10);
         }
@@ -125,7 +176,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
     /**
      * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成. 开发者可以根据自己的情况来自定义异常处理逻辑
      *
-     * @param ex
      * @return true:如果处理了该异常信息;否则返回false
      */
     private boolean handleException(Throwable ex) {
@@ -148,7 +198,7 @@ public class CrashHandler implements UncaughtExceptionHandler {
         collectCrashDeviceInfo(mContext);
         // 保存错误报告文件
         String crashFileName = saveCrashInfoToFile(ex);
-
+        sp.edit().putString("crashFile", crashFileName).apply();
         listener.crashFileSaveTo(crashFileName);
         // 发送错误报告到服务器
         //sendPreviousReportsToServer();
@@ -164,8 +214,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 把错误报告发送给服务器,包含新产生的和以前没发送的.
-     *
-     * @param ctx
      */
     private void sendCrashReportsToServer(Context ctx) {
         String[] crFiles = getCrashReportFiles(ctx);
@@ -191,11 +239,23 @@ public class CrashHandler implements UncaughtExceptionHandler {
         // TODO 使用HTTP Post 发送错误报告到服务器
     }
 
+    public String getLastCrashFile() {
+        String crashFile = sp.getString("crashFile", "");
+        if (TextUtils.isEmpty(crashFile)) {
+            return "";
+        } else {
+            File file = new File(crashFile);
+            if (!file.exists()) {
+                return "";
+            } else {
+                StringBuilder sb = FileUtils.readFile(crashFile, "UTF-8");
+                return sb == null ? "" : sb.toString();
+            }
+        }
+    }
+
     /**
      * 获取错误报告文件名
-     *
-     * @param ctx
-     * @return
      */
     private String[] getCrashReportFiles(Context ctx) {
         FilenameFilter filter = new FilenameFilter() {
@@ -216,9 +276,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 保存错误信息到文件中
-     *
-     * @param ex
-     * @return
      */
     private String saveCrashInfoToFile(Throwable ex) {
         Writer info = new StringWriter();
@@ -265,8 +322,6 @@ public class CrashHandler implements UncaughtExceptionHandler {
 
     /**
      * 收集程序崩溃的设备信息
-     *
-     * @param ctx
      */
     public void collectCrashDeviceInfo(Context ctx) {
         try {

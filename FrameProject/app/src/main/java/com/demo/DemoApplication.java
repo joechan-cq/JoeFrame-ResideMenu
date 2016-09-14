@@ -12,6 +12,7 @@ public class DemoApplication extends BaseApplication {
     @Override
     protected void onBaseCreate() {
         instance = this;
+        setCrashHandlerEnable(true);
     }
 
     @Override

@@ -10,4 +10,8 @@
 
     <string name="dialog_btn_ok">OK</string>
     <string name="dialog_btn_cancel">CANCEL</string>
+    <string name="sorry_crash">很抱歉，应用出现错误发生了崩溃。左边为修复方案，右边为最近崩溃日志。</string>
+    <string name="restart">重启应用</string>
+    <string name="restart_no_wifi">关闭Wifi并重启</string>
+    <string name="restart_clear_cache">清除缓存并重启</string>
 </resources>

@@ -227,7 +227,7 @@ public abstract class FrameBaseActivity extends AppCompatActivity {
     /**
      * 解析注解，给带有@ViewInject注解的View赋值
      */
-    private final void autoInjectViewField() {
+    private void autoInjectViewField() {
         try {
             Class<?> clazz = this.getClass();
             Field[] fields = clazz.getDeclaredFields();//获得Activity中声明的字段

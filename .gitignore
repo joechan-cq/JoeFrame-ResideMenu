@@ -71,6 +71,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+FrameProject/.gradle
+FrameProject/.idea
 FrameProject/.idea/vcs.xml
 FrameProject/.idea/misc.xml
 FrameProject/.idea/misc.xml

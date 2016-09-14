@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE" />
 
     <application
         android:name="com.demo.DemoApplication"
@@ -28,6 +29,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.demo.activity.DemoSecondActivity" />
+
+        <activity android:name="joe.frame.handler.CrashActivity" />
 
         <service android:name="com.demo.service.DemoService" />
         <service android:name="joe.frame.service.MonitorService" />

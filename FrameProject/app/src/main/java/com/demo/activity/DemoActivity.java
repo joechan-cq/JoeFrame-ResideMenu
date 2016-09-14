@@ -8,12 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.demo.fragment.DemoFragment;
 import com.demo.frameproject.R;
 import com.demo.service.DemoService;
 
 import joe.frame.activity.FrameBaseActivity;
+import joe.frame.annotations.ViewInject;
 import joe.frame.dialog.SweetAlertDialog;
 import joe.frame.service.MonitorService;
 import joe.frame.utils.LocationUtils;

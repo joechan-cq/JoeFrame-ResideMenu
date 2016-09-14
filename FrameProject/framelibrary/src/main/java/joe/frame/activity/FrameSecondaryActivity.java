@@ -25,7 +25,7 @@ public abstract class FrameSecondaryActivity extends FrameBaseActivity {
     protected abstract void onSecondaryActivityCreated(Bundle saveInstanceState);
 
     /**
-     * Toobar返回键点击事件
+     * Toolbar返回键点击事件
      */
     protected abstract void onToolbarBackClicked();
 }
