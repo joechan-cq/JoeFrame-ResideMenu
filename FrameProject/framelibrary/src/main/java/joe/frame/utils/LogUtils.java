@@ -15,6 +15,8 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Android开发调试日志工具类[支持保存到SD卡]<br>
@@ -34,10 +36,26 @@ public class LogUtils {
     public static boolean isDebugModel = true;// 是否输出日志
     public static boolean isSaveDebugInfo = false;// 是否保存调试日志
     public static boolean isSaveCrashInfo = false;// 是否保存报错日志
+    private static ExecutorService singleThread = Executors.newSingleThreadExecutor();
 
     public static void v(final String tag, final String msg) {
         if (isDebugModel) {
             Log.v(tag, "--> " + msg);
+        }
+    }
+
+    public static void json(final String tag, final String jsonStr) {
+        final String msg = JsonUtils.formatJsonString(jsonStr);
+        if (isDebugModel) {
+            Log.d(tag, "--> \n==================JSON====================\n" + msg + "\n=====================================");
+        }
+        if (isSaveDebugInfo) {
+            singleThread.execute(new Runnable() {
+                @Override
+                public void run() {
+                    write(time() + tag + " --> " + msg + "\n");
+                }
+            });
         }
     }
 
@@ -46,11 +64,12 @@ public class LogUtils {
             Log.d(tag, "--> " + msg);
         }
         if (isSaveDebugInfo) {
-            new Thread() {
+            singleThread.execute(new Runnable() {
+                @Override
                 public void run() {
                     write(time() + tag + " --> " + msg + "\n");
                 }
-            }.start();
+            });
         }
     }
 
@@ -68,9 +87,6 @@ public class LogUtils {
 
     /**
      * 调试日志，便于开发跟踪。
-     *
-     * @param tag
-     * @param msg
      */
     public static void e(final String tag, final String msg) {
         if (isDebugModel) {
@@ -78,78 +94,54 @@ public class LogUtils {
         }
 
         if (isSaveCrashInfo) {
-            new Thread() {
+            singleThread.execute(new Runnable() {
+                @Override
                 public void run() {
                     write(time() + tag + " [CRASH] --> " + msg + "\n");
                 }
-            }.start();
+            });
         }
     }
 
     /**
      * try catch 时使用，上线产品可上传反馈。
-     *
-     * @param tag
-     * @param tr
      */
     public static void e(final String tag, final Throwable tr) {
         if (isSaveCrashInfo) {
-            new Thread() {
+            singleThread.execute(new Runnable() {
+                @Override
                 public void run() {
                     write(time() + tag + " [CRASH] --> " + getStackTraceString(tr) + "\n");
                 }
-            }.start();
+            });
         }
     }
 
     public static void v(String msg) {
-        if (isDebugModel) {
-            Log.v(TAG, "--> " + msg);
-        }
+        v(TAG, msg);
+    }
+
+    public static void json(final String jsonStr) {
+        json(TAG, jsonStr);
     }
 
     public static void d(final String msg) {
-        if (isDebugModel) {
-            Log.d(TAG, "--> " + msg);
-        }
-        if (isSaveDebugInfo) {
-            new Thread() {
-                public void run() {
-                    write(time() + TAG + " --> " + msg + "\n");
-                }
-            }.start();
-        }
+        d(TAG, msg);
     }
 
     public static void i(String msg) {
-        if (isDebugModel) {
-            Log.i(TAG, "--> " + msg);
-        }
+        i(TAG, msg);
     }
 
     public static void w(String msg) {
-        if (isDebugModel) {
-            Log.w(TAG, "--> " + msg);
-        }
+        w(TAG, msg);
     }
 
     /**
      * 调试日志，便于开发跟踪。
-     *
-     * @param msg
      */
     public static void e(final String msg) {
-        if (isDebugModel) {
-            Log.e(TAG, " [CRASH] --> " + msg);
-        }
-
-        if (isSaveCrashInfo) {
-            new Thread() {
-                public void run() {
-                    write(time() + TAG + "[CRASH] --> " + msg + "\n");
-                }
-            }.start();
-        }
+        d(TAG, msg);
     }
 
     /**
@@ -158,22 +150,13 @@ public class LogUtils {
      * @param tr
      */
     public static void e(final Throwable tr) {
-        if (isSaveCrashInfo) {
-            new Thread() {
-                public void run() {
-                    write(time() + TAG + " [CRASH] --> " + getStackTraceString(tr) + "\n");
-                }
-            }.start();
-        }
+        e(TAG, tr);
     }
 
     /**
      * 获取捕捉到的异常的字符串
-     *
-     * @param tr
-     * @return
      */
-    public static String getStackTraceString(Throwable tr) {
+    private static String getStackTraceString(Throwable tr) {
         if (tr == null) {
             return "";
         }
@@ -194,8 +177,6 @@ public class LogUtils {
 
     /**
      * 标识每条日志产生的时间
-     *
-     * @return
      */
     private static String time() {
         return "[" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date(System.currentTimeMillis())) + "] ";
@@ -203,8 +184,6 @@ public class LogUtils {
 
     /**
      * 以年月日作为日志文件名称
-     *
-     * @return
      */
     private static String date() {
         return new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date(System.currentTimeMillis()));
@@ -212,10 +191,8 @@ public class LogUtils {
 
     /**
      * 保存到日志文件
-     *
-     * @param content
      */
-    public static synchronized void write(String content) {
+    private static synchronized void write(String content) {
         try {
             FileWriter writer = new FileWriter(getFile(), true);
             writer.write(content);
@@ -227,8 +204,6 @@ public class LogUtils {
 
     /**
      * 获取日志文件路径
-     *
-     * @return
      */
     public static String getFile() {
         File sdDir = null;
@@ -241,8 +216,6 @@ public class LogUtils {
             cacheDir.mkdir();
 
         File filePath = new File(cacheDir + File.separator + date() + ".log");
-
         return filePath.toString();
     }
-
 }
