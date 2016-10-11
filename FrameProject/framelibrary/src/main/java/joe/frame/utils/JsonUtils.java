@@ -25,6 +25,9 @@ public class JsonUtils {
                         builder.append("\n").append(getTabs(tab));
                     }
                     break;
+                case ' ':
+                case '\t':
+                case '\r':
                 case '\n':
                     if (inValue) {
                         builder.append(temp);
