@@ -3,19 +3,18 @@ package com.demo.activity;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.demo.fragment.DemoFragment;
 import com.demo.frameproject.R;
 import com.demo.service.DemoService;
 
 import joe.frame.activity.FrameBaseActivity;
-import joe.frame.annotations.ViewInject;
 import joe.frame.dialog.SweetAlertDialog;
 import joe.frame.service.MonitorService;
 import joe.frame.utils.LocationUtils;
@@ -31,6 +30,7 @@ public class DemoActivity extends FrameBaseActivity implements View.OnClickListe
     public ResideMenu residemenu;
     private int i = -1;
     ResideMenuItem firstitem, seconditem;
+    private Handler handler;
 
     @Override
     protected void onBaseActivityCreated(Bundle savedInstanceState) {

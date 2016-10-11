@@ -1,6 +1,7 @@
 package com.demo.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -10,13 +11,16 @@ import android.widget.ListView;
 
 import com.demo.frameproject.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import joe.frame.adapter.CommonAdapter;
 import joe.frame.adapter.ViewHolder;
 import joe.frame.annotations.ViewInject;
+import joe.frame.dialog.SweetAlertDialog;
 import joe.frame.fragment.FrameBaseFragment;
+import joe.frame.task.FileDownloadTask;
 
 /**
  * Description
@@ -29,6 +33,10 @@ public class DemoFragment extends FrameBaseFragment {
 
     @ViewInject(R.id.listView)
     private ListView listView;
+
+    FileDownloadTask downloadTask;
+
+    SweetAlertDialog dialog;
 
     @Override
     protected boolean isShowLoading() {
@@ -60,6 +68,75 @@ public class DemoFragment extends FrameBaseFragment {
             }
         };
         listView.setAdapter(myAdapter);
+
+        File file = new File(getContext().getExternalCacheDir(), "ireader.apk");
+        downloadTask = new FileDownloadTask("http://dl-sh-ctc-2.pchome.net/3r/bz/iReader_android_V5.6.0_.apk?key=434c4cd653149638ba1cd095b49521da&tmp=1476091326019", file);
+        downloadTask.setDownloadListener(new FileDownloadTask.DownloadListener() {
+            @Override
+            public void onStart() {
+            }
+
+            @Override
+            public void onDownloading(final long now, final long all) {
+                Log.d("DemoFragment", "onDownloading: " + now + "  " + all);
+                btn.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.setTitleText("总大小:" + String.valueOf(all));
+                        dialog.setContentText("已下载:" + String.valueOf(now));
+                    }
+                });
+            }
+
+            @Override
+            public void onDownloadFinished(File file) {
+                btn.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                        dialog.hideConfirmButton().hideOtherButton().setCancelText("确定").setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        });
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+        });
+        dialog = new SweetAlertDialog(context, SweetAlertDialog.NORMAL_TYPE);
+        dialog.setCancelable(false);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setTitleText("总大小:").setContentText("已下载:").setCancelText("停止下载").setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                downloadTask.cancel();
+                sweetAlertDialog.dismiss();
+            }
+        }).showConfirmButton().setConfirmText("暂停").setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                if (!downloadTask.isPaused && downloadTask.isDownloading) {
+                    downloadTask.pause();
+                    dialog.setConfirmText("继续");
+                } else if (downloadTask.isPaused) {
+                    dialog.setConfirmText("暂停");
+                    downloadTask.resume();
+                }
+            }
+        });
+
+        findViewById(R.id.download).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadTask.startDownload(true);
+                dialog.show();
+            }
+        });
     }
 
     @Override

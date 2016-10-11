@@ -1,6 +1,6 @@
 <resources>
     <!-- sweet dialog -->
-    <dimen name="alert_width">300dp</dimen>
+    <dimen name="alert_width">350dp</dimen>
     <dimen name="common_circle_width">3dp</dimen>
     <dimen name="progress_circle_radius">34dp</dimen>
     <dimen name="progress_wheel_width_height">80dp</dimen>

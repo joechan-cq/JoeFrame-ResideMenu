@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitesmoke">
+    android:background="@color/whitesmoke"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/jump"
+    <ListView
+        android:id="@+id/listView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="切换Fragment" />
+        android:layout_height="300dp" />
 
     <joe.frame.view.MarqueeTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_toRightOf="@+id/jump"
         android:paddingBottom="15px"
         android:paddingTop="15px"
         android:text="这是一个跑马灯\n这是跑马灯的2号\n这是三号\n这是测试的fjdksfjksdafsdaf的打"
@@ -26,11 +21,16 @@
         app:orientation="vertical"
         app:speed="0.3" />
 
-    <ListView
-        android:id="@+id/listView"
+    <Button
+        android:id="@+id/jump"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/jump"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-</RelativeLayout>
+        android:text="切换Fragment" />
+
+    <Button
+        android:id="@+id/download"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="下载文件" />
+
+</LinearLayout>

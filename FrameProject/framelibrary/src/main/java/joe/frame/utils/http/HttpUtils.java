@@ -138,7 +138,7 @@ public class HttpUtils {
         conn.setRequestProperty("accept", "*/*");
         conn.setRequestProperty("connection", "Keep-Alive");
         int code = conn.getResponseCode();
-        if (code == 200) {
+        if (code >= 200 && code < 300) {
             is = conn.getInputStream();
             baos = new ByteArrayOutputStream();
             int len;
@@ -154,7 +154,7 @@ public class HttpUtils {
             LogUtils.d("response:" + new String(result));
             return new HttpResponse(code, result, "");
         } else {
-            return new HttpResponse(code, null, "ResponseCode is not 200 but " + code);
+            return new HttpResponse(code, null, "ResponseCode is not 2xx but " + code);
         }
     }
 
@@ -199,7 +199,7 @@ public class HttpUtils {
             out.close();
         }
         int code = conn.getResponseCode();
-        if (code == 200) {
+        if (code >= 200 && code < 300) {
             InputStream is = conn.getInputStream();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             int len;
@@ -215,7 +215,7 @@ public class HttpUtils {
             LogUtils.d("response:" + new String(result));
             return new HttpResponse(code, result, "");
         } else {
-            return new HttpResponse(code, null, "ResponseCode is not 200 but " + code);
+            return new HttpResponse(code, null, "ResponseCode is not 2xx but " + code);
         }
     }
 
@@ -232,7 +232,8 @@ public class HttpUtils {
         conn.setRequestMethod("GET");
         conn.setRequestProperty("accept", "*/*");
         conn.setRequestProperty("connection", "Keep-Alive");
-        if (conn.getResponseCode() == 200) {
+        int code = conn.getResponseCode();
+        if (code >= 200 && code < 300) {
             is = conn.getInputStream();
             return is;
         } else {
