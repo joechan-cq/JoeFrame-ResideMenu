@@ -21,6 +21,7 @@ public class FileDownloadTask {
     private static final String TAG = "FileDownloadTask";
     private String downloadUrl;
     private File file;
+    private File dataFile;
     private RandomAccessFile saveFile;
 
     private long fileAvailable = 0;
@@ -42,6 +43,7 @@ public class FileDownloadTask {
     public FileDownloadTask(String url, File file) {
         this.downloadUrl = url;
         this.file = file;
+        this.dataFile = new File(file.getAbsolutePath() + ".tmp");
     }
 
     public void setDownloadListener(DownloadListener listener) {
@@ -66,20 +68,26 @@ public class FileDownloadTask {
             @Override
             public void run() {
                 long nowSize;
+                if (file.exists()) {
+                    if (listener != null) {
+                        listener.onDownloadFinished(file);
+                    }
+                    return;
+                }
                 if (!isResume) {
-                    file.deleteOnExit();
+                    dataFile.delete();
                 }
                 try {
-                    if (!file.exists()) {
-                        if (file.createNewFile()) {
+                    if (!dataFile.exists()) {
+                        if (dataFile.createNewFile()) {
                             Log.d(TAG, "File create success:" + file.getAbsolutePath());
                         } else {
                             Log.e(TAG, "File create failed:" + file.getAbsolutePath());
                         }
                     }
-                    saveFile = new RandomAccessFile(file, "rw");
+                    saveFile = new RandomAccessFile(dataFile, "rw");
                     InputStream inputStream;
-                    nowSize = file.length();
+                    nowSize = dataFile.length();
                     if (isResume && nowSize > 0) {
                         inputStream = getNetInputStream(downloadUrl, nowSize - 1);
                         if (httpCode == 206) {
@@ -139,6 +147,7 @@ public class FileDownloadTask {
                         }
                     }
                     if (listener != null && isFinished) {
+                        dataFile.renameTo(file);
                         listener.onDownloadFinished(file);
                     }
                 } catch (IOException e) {
