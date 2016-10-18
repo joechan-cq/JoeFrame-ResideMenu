@@ -212,10 +212,27 @@ public class LogUtils {
             sdDir = Environment.getExternalStorageDirectory();
 
         File cacheDir = new File(sdDir + File.separator + CACHE_DIR_NAME);
-        if (!cacheDir.exists())
+        if (!cacheDir.exists()) {
             cacheDir.mkdir();
+        } else {
+            File[] files = cacheDir.listFiles();
+            if (files.length > 10) {
+                //文件数量超过10条，根据最后修改时间，删除最老的一个．
+                long min = Long.MAX_VALUE;
+                File temp = null;
+                for (File file : files) {
+                    if (file.lastModified() < min) {
+                        temp = file;
+                        min = file.lastModified();
+                    }
+                }
+                if (temp != null) {
+                    temp.delete();
+                }
+            }
+        }
 
-        File filePath = new File(cacheDir + File.separator + date() + ".log");
+        File filePath = new File(cacheDir + File.separator + date() + ".txt");
         return filePath.toString();
     }
 }
