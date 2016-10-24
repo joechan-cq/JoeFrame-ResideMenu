@@ -25,7 +25,7 @@ import joe.framelibrary.R;
  */
 public class RoundImageView extends ImageView {
 
-    private static final int TYPE_CIRCLR = 0;
+    private static final int TYPE_CIRCLE = 0;
     private static final int TYPE_ROUND = 1;
     private int type;
 
@@ -65,20 +65,22 @@ public class RoundImageView extends ImageView {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView);
         mBorderRadius = a.getDimensionPixelSize(R.styleable.RoundImageView_borderRadius, (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, BORDER_RADIUS_DEFAULT, getResources().getDisplayMetrics()));
-        type = a.getInt(R.styleable.RoundImageView_type, TYPE_CIRCLR);
+        type = a.getInt(R.styleable.RoundImageView_type, TYPE_CIRCLE);
         a.recycle();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        if (type == TYPE_CIRCLR) {
+        if (type == TYPE_CIRCLE) {
             //是圆形，强行设为宽高一致，以小值为准
-            mWidth = Math.min(getMeasuredWidth(), getMeasuredHeight());
+            int width = MeasureSpec.getSize(widthMeasureSpec);
+            int height = MeasureSpec.getSize(heightMeasureSpec);
+            mWidth = Math.min(width, height);
             mRadius = mWidth / 2;
             int mHeight = mWidth;
             setMeasuredDimension(mWidth, mHeight);
+        } else {
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }
 
@@ -88,7 +90,7 @@ public class RoundImageView extends ImageView {
             return;
         }
         setShader();
-        if (type == TYPE_CIRCLR) {
+        if (type == TYPE_CIRCLE) {
             canvas.drawCircle(mRadius, mRadius, mRadius, mPaint);
         } else {
             canvas.drawRoundRect(mRoundRect, mBorderRadius, mBorderRadius, mPaint);
@@ -111,7 +113,7 @@ public class RoundImageView extends ImageView {
         bm = drawableToBitmap(drawable);
         BitmapShader mBitmapShader = new BitmapShader(bm, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         float scale = 1.0f;
-        if (type == TYPE_CIRCLR) {
+        if (type == TYPE_CIRCLE) {
             //计算图片与View的大小关系和缩放比例
             int bmSize = Math.min(bm.getWidth(), bm.getHeight()); //取宽高最小值
             scale = mWidth * 1.0f / bmSize; //将最小的缩放到View的大小（填充）
@@ -178,8 +180,8 @@ public class RoundImageView extends ImageView {
 
     public void setType(int type) {
         if (this.type != type) {
-            if (type != TYPE_ROUND && type != TYPE_CIRCLR) {
-                this.type = TYPE_CIRCLR;
+            if (type != TYPE_ROUND && type != TYPE_CIRCLE) {
+                this.type = TYPE_CIRCLE;
             }
             requestLayout();
         }
