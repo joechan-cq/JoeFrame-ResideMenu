@@ -34,9 +34,9 @@ public class ResourcesCompat {
     public static Drawable getDrawable(Context context, int resId, Theme theme) {
         Resources resources = context.getResources();
         if (VERSION.SDK_INT >= 21) {
-            return resources.getDrawable(resId, theme);//heigh than leve21
+            return resources.getDrawable(resId, theme);//higher than level 21
         } else {
-            return resources.getDrawable(resId);//small than leve21
+            return resources.getDrawable(resId);//smaller than level 21
         }
     }
 }

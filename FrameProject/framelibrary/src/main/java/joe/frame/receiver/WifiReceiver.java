@@ -15,6 +15,7 @@ import android.net.wifi.WifiManager;
  * <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
  * <action android:name="android.net.wifi.SCAN_RESULTS"/>
  * <action android:name="android.net.wifi.supplicant.STATE_CHANGE" />
+ * <action android:name="android.net.wifi.supplicant.CONNECTION_CHANGE" />
  * </intent-filter>
  * Created by chenqiao on 2015/11/10.
  */
@@ -63,15 +64,15 @@ public class WifiReceiver extends BroadcastReceiver {
             }
 
         } else if (intent.getAction().equals(WifiManager.WIFI_STATE_CHANGED_ACTION)) {// wifi打开与否
-            int wifistate = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
-            if (wifistate == WifiManager.WIFI_STATE_DISABLED) {
+            int wifiState = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE, WifiManager.WIFI_STATE_DISABLED);
+            if (wifiState == WifiManager.WIFI_STATE_DISABLED) {
                 System.out.println("系统关闭wifi");
-            } else if (wifistate == WifiManager.WIFI_STATE_ENABLED) {
+            } else if (wifiState == WifiManager.WIFI_STATE_ENABLED) {
                 System.out.println("系统开启wifi");
-            } else if (wifistate == WifiManager.WIFI_STATE_ENABLING) {
+            } else if (wifiState == WifiManager.WIFI_STATE_ENABLING) {
                 System.out.println("系统正在开启wifi");
             } else {
-                System.out.println("wifi处于其他状态：" + wifistate);
+                System.out.println("wifi处于其他状态：" + wifiState);
             }
         } else if (intent.getAction().equals(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)) {// wifi扫描结果可得
             System.out.println("Wifi扫描结果已得");

@@ -26,7 +26,7 @@ public class ZipUtils {
      * @param outPathString path to be unZIP
      * @throws Exception
      */
-    public static void UnZipFolder(String zipFileString, String outPathString) throws Exception {
+    public static void unZipFolder(String zipFileString, String outPathString) throws Exception {
         ZipInputStream inZip = new ZipInputStream(new FileInputStream(zipFileString));
         ZipEntry zipEntry;
         String szName = "";
@@ -65,13 +65,13 @@ public class ZipUtils {
      * @param zipFileString the path name of result ZIP
      * @throws Exception
      */
-    public static void ZipFolder(String srcFileString, String zipFileString) throws Exception {
+    public static void zipFolder(String srcFileString, String zipFileString) throws Exception {
         //create ZIP
         ZipOutputStream outZip = new ZipOutputStream(new FileOutputStream(zipFileString));
         //create the file
         File file = new File(srcFileString);
         //compress
-        ZipFiles(file.getParent() + File.separator, file.getName(), outZip);
+        zipFiles(file.getParent() + File.separator, file.getName(), outZip);
         //finish and close
         outZip.finish();
         outZip.close();
@@ -85,7 +85,7 @@ public class ZipUtils {
      * @param zipOutputSteam
      * @throws Exception
      */
-    private static void ZipFiles(String folderString, String fileString, ZipOutputStream zipOutputSteam) throws Exception {
+    private static void zipFiles(String folderString, String fileString, ZipOutputStream zipOutputSteam) throws Exception {
         if (zipOutputSteam == null)
             return;
         File file = new File(folderString + fileString);
@@ -110,7 +110,7 @@ public class ZipUtils {
             }
             //child files and recursion
             for (int i = 0; i < fileList.length; i++) {
-                ZipFiles(folderString, fileString + java.io.File.separator + fileList[i], zipOutputSteam);
+                zipFiles(folderString, fileString + java.io.File.separator + fileList[i], zipOutputSteam);
             }//end of for
         }
     }
@@ -123,7 +123,7 @@ public class ZipUtils {
      * @return InputStream
      * @throws Exception
      */
-    public static InputStream UpZip(String zipFileString, String fileString) throws Exception {
+    public static InputStream upZip(String zipFileString, String fileString) throws Exception {
         ZipFile zipFile = new ZipFile(zipFileString);
         ZipEntry zipEntry = zipFile.getEntry(fileString);
         return zipFile.getInputStream(zipEntry);
@@ -138,11 +138,11 @@ public class ZipUtils {
      * @return
      * @throws Exception
      */
-    public static List<File> GetFileList(String zipFileString, boolean bContainFolder, boolean bContainFile) throws Exception {
+    public static List<File> getFileList(String zipFileString, boolean bContainFolder, boolean bContainFile) throws Exception {
         List<File> fileList = new ArrayList<>();
         ZipInputStream inZip = new ZipInputStream(new FileInputStream(zipFileString));
         ZipEntry zipEntry;
-        String szName = "";
+        String szName;
         while ((zipEntry = inZip.getNextEntry()) != null) {
             szName = zipEntry.getName();
             if (zipEntry.isDirectory()) {

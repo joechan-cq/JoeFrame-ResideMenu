@@ -107,6 +107,9 @@ public class LogUtils {
      * try catch 时使用，上线产品可上传反馈。
      */
     public static void e(final String tag, final Throwable tr) {
+        if (isDebugModel) {
+            Log.e(tag, " [CRASH] --> " + getStackTraceString(tr) + "\n");
+        }
         if (isSaveCrashInfo) {
             singleThread.execute(new Runnable() {
                 @Override
