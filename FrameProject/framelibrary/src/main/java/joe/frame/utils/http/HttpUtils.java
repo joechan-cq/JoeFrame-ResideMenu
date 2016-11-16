@@ -85,7 +85,10 @@ public class HttpUtils {
                 e.printStackTrace();
             }
         }
-        String paramsStr = paramsBuilder.substring(0, paramsBuilder.length() - 1);
+        String paramsStr = "";
+        if (paramsBuilder.length() > 0) {
+            paramsStr = paramsBuilder.substring(0, paramsBuilder.length() - 1);
+        }
         LogUtils.d("doPost params:" + paramsStr);
         doPostAsync(urlString, paramsStr, callBack);
     }

@@ -81,6 +81,7 @@ public class MediaUtils {
     public static void releaseMediaPlayer() {
         if (mediaPlayer != null) {
             mediaPlayer.release();
+            mediaPlayer = null;
         }
     }
 }
