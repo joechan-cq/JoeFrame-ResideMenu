@@ -6,9 +6,12 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -129,8 +132,45 @@ public class WifiUtils {
     }
 
     public String getMacAddress() {
-        mWifiInfo = mWifiManager.getConnectionInfo();
-        return (mWifiInfo == null) ? "" : mWifiInfo.getMacAddress();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                NetworkInterface networkInterface = NetworkInterface.getByName("wlan0");
+                byte[] mac = networkInterface.getHardwareAddress();
+                return macBytesToString(mac);
+            } catch (SocketException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            mWifiInfo = mWifiManager.getConnectionInfo();
+            return (mWifiInfo == null) ? "" : mWifiInfo.getMacAddress();
+        }
+    }
+
+    /**
+     * bytes转换成十六进制字符串
+     *
+     * @param mac byte数组
+     * @return String
+     */
+    private String macBytesToString(byte[] mac) {
+        StringBuilder stringBuilder = new StringBuilder("");
+        if (mac == null || mac.length <= 0) {
+            return null;
+        }
+        for (int i = 0; i < mac.length; i++) {
+            int v = mac[i] & 0xFF;
+            String hv = Integer.toHexString(v);
+            if (hv.length() < 2) {
+                stringBuilder.append(0);
+            }
+            if (i != mac.length - 1) {
+                stringBuilder.append(hv).append(":");
+            } else {
+                stringBuilder.append(hv);
+            }
+        }
+        return stringBuilder.toString();
     }
 
     public String getSSID() {
