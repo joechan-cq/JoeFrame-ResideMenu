@@ -1,5 +1,9 @@
 package joe.frame.utils;
 
+import android.content.Context;
+import android.provider.Settings;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -63,5 +67,40 @@ public class TimeUtils {
      */
     public static String getCurrentTimeInString(SimpleDateFormat dateFormat) {
         return getTime(getCurrentTimeInLong(), dateFormat);
+    }
+
+    /**
+     * 设置系统时间，需要root权限
+     */
+    public static void setSystemTime(Date ServiceTime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd.HHmmss");
+        String datetime = sdf.format(ServiceTime);
+        String command = "date -s  \"" + datetime + "\"";
+        try {
+            Runtime.getRuntime().exec(new String[]{"su", "-c", "settings put global auto_time 0"});
+            Runtime.getRuntime().exec(new String[]{"su", "-c", command});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 设置是否开启自动获取时间，需要root权限
+     */
+    public static void enableAutoTime(boolean isAuto) {
+        try {
+            Runtime.getRuntime().exec(new String[]{"su", "-c", "settings put global auto_time " + (isAuto ? 1 : 0)});
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean isAutoTime(Context context) {
+        try {
+            return Settings.System.getInt(context.getContentResolver(), Settings.Global.AUTO_TIME) == 1;
+        } catch (Settings.SettingNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
