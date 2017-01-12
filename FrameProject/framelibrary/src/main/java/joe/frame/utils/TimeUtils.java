@@ -103,4 +103,19 @@ public class TimeUtils {
             return false;
         }
     }
+
+    public static boolean is24HourFormat(Context context) {
+        String format = Settings.System.getString(context.getContentResolver(), Settings.System.TIME_12_24);
+        return format.equals("24");
+    }
+
+    public static boolean set12Format(Context context) {
+        return Settings.System.putString(context.getContentResolver(),
+                Settings.System.TIME_12_24, "12");
+    }
+
+    public static boolean set24Format(Context context) {
+        return Settings.System.putString(context.getContentResolver(),
+                Settings.System.TIME_12_24, "24");
+    }
 }

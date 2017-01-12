@@ -41,7 +41,7 @@ public class MarqueeTextView extends TextView {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.MarqueeTextView);
-        orientation = a.getInt(R.styleable.MarqueeTextView_orientation, 1);
+        orientation = a.getInt(R.styleable.MarqueeTextView_tv_orientation, 1);
         speed = a.getFloat(R.styleable.MarqueeTextView_speed, 1.0f);
         newLine = a.getInt(R.styleable.MarqueeTextView_newLine, 100);
         if (speed < 0 || speed > 1.0f) {
