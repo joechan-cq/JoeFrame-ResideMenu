@@ -15,6 +15,10 @@ import android.widget.TextView;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+import android.text.TextUtils;
 
 /**
  * ViewUtils
@@ -45,7 +49,74 @@ public class ViewUtils {
     private ViewUtils() {
         throw new AssertionError();
     }
+    
+    private static class ClickInvocationHandler implements InvocationHandler {
 
+        private Object target;
+        private long clickTime = 0;
+        private long internalTime = 800;
+        private static String onClickName;
+
+        public ClickInvocationHandler(Object target) {
+            this(target, 800);
+        }
+
+        public ClickInvocationHandler(Object target, long internalTime) {
+            this.target = target;
+            this.internalTime = internalTime;
+            if (TextUtils.isEmpty(onClickName)) {
+                View.OnClickListener listener = new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    }
+                };
+                Method[] methods = listener.getClass().getDeclaredMethods();
+                if (methods == null || methods.length == 0) {
+                    onClickName = "onClick";
+                } else {
+                    onClickName = methods[0].getName();
+                }
+            }
+        }
+
+        @Override
+        public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            if (method.getName().equals(onClickName)) {
+                long nowTime = System.currentTimeMillis();
+                Object result = null;
+                if (nowTime - clickTime >= internalTime) {
+                    result = method.invoke(target, args);
+                    clickTime = nowTime;
+                }
+                return result;
+            } else {
+                return method.invoke(target, args);
+            }
+        }
+    }
+
+    /**
+     * 创建一个防止快速点击的ClickListener
+     *
+     * @param listener 原有ClickListener
+     * @return 包装后的ClickListener
+     */
+    public static View.OnClickListener createInternalClickListener(View.OnClickListener listener) {
+        return createInternalClickListener(listener, 800);
+    }
+
+    /**
+     * 创建一个防止快速点击的ClickListener
+     *
+     * @param listener     原有ClickListener
+     * @param internalTime 点击间隔时间
+     * @return 包装后的ClickListener
+     */
+    public static View.OnClickListener createInternalClickListener(View.OnClickListener listener, long internalTime) {
+        ClickInvocationHandler invocationHandler = new ClickInvocationHandler(listener, internalTime);
+        return (View.OnClickListener) Proxy.newProxyInstance(listener.getClass().getClassLoader(), listener.getClass
+                ().getInterfaces(), invocationHandler);
+    }
     /**
      * get ListView height according to every children
      *
